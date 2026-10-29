@@ -1,0 +1,1969 @@
+% !TEX program = pdflatex
+% =====================================================================
+%  End of Term 1 Exam – Training Booklet
+%  Grade 9 Advanced – Mathematics  ·  Reveal Math, Integrated I  ·  2026–2027
+%
+%  PILOT: Lesson 2-1 only (v2 – compact layout).
+%  The preamble is the reusable template. Each lesson is added at the
+%  bottom by filling in content only (see "LESSON 2-1" block).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------------------------------------------------------------------
+%  Page geometry – maximum usable A4 area, no running header
+% ---------------------------------------------------------------------
+\usepackage[a4paper,top=1.2cm,bottom=1.5cm,left=1.3cm,right=1.3cm,
+            headheight=12pt,headsep=0pt,footskip=0.8cm]{geometry}
+
+% ---------------------------------------------------------------------
+%  Fonts:  body = Charter (serif) · headings = Source Sans Pro
+% ---------------------------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{XCharter}
+\usepackage[xcharter,vvarbb]{newtxmath}
+\usepackage[semibold,scale=0.98]{sourcesanspro}
+\usepackage{microtype}
+
+% ---------------------------------------------------------------------
+%  Packages
+% ---------------------------------------------------------------------
+\usepackage{amsmath}
+\usepackage{stmaryrd}            % double brackets for the greatest integer function
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{positioning,calc,arrows.meta}
+\usepackage[most]{tcolorbox}
+\usepackage{tabularx,array}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{etoolbox}
+\usepackage{pifont}
+\usepackage[hidelinks]{hyperref}
+
+% ---------------------------------------------------------------------
+%  Colours: one accent (teal) + one soft secondary (apricot)
+% ---------------------------------------------------------------------
+\definecolor{accent}{HTML}{1F6E78}
+\definecolor{second}{HTML}{E9A15B}
+\definecolor{secondDark}{HTML}{B5651D}
+\definecolor{ink}{HTML}{2A2E35}
+\definecolor{muted}{HTML}{7C838E}
+\definecolor{rule}{HTML}{D5DBE1}
+\colorlet{accentSoft}{accent!8}
+\colorlet{accentMid}{accent!22}
+\colorlet{secondSoft}{second!16}
+\colorlet{equalSoft}{ink!8}
+\definecolor{frq}{HTML}{C0392B}   % written (free-response) questions
+\colorlet{qc}{accent}              % current question colour (set per practice section)
+
+% ---------------------------------------------------------------------
+%  General layout
+% ---------------------------------------------------------------------
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\raggedbottom
+\linespread{1.08}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+\newcommand{\hfont}{\sffamily}
+\newcommand{\spaced}[1]{\textls[180]{#1}}
+\newcommand{\good}{\textcolor{accent}{\ding{51}}}
+\newcommand{\bad}{\textcolor{secondDark}{\ding{55}}}
+
+% ---------------------------------------------------------------------
+%  Footer only (the Exam Focus box replaces the running header)
+% ---------------------------------------------------------------------
+\newif\ifshowlessonbar\showlessonbarfalse
+\newcommand{\LessonNum}{}
+\newcommand{\LessonTitle}{}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[L]{\hfont\scriptsize\textcolor{muted}{End of Term 1 Exam · Question Booklet}}
+\fancyfoot[C]{\hfont\bfseries\footnotesize\textcolor{accent}{\thepage}}
+\fancyfoot[R]{\hfont\scriptsize\textcolor{muted}{Grade 9 Advanced · Mathematics}}
+
+% =====================================================================
+%  COVER
+%  \MakeCover{line 1}{line 2}{grade line}{programme}{year}{top label}
+% =====================================================================
+\newcommand{\MakeCover}[6]{% #6 top label
+  \thispagestyle{empty}%
+  \begin{tikzpicture}[remember picture,overlay,shift={(current page.south west)}]
+    % soft geometric shapes
+    \fill[accentSoft] (17.6,25.4) circle (7.2cm);
+    \fill[secondSoft] (11.4,19.6) circle (1.9cm);
+    \fill[accent] (0,0) rectangle (0.55,29.7);
+    % operation symbols
+    \node[text=accent!70]      at (14.2,26.4) {\fontsize{50}{50}\selectfont$+$};
+    \node[text=secondDark!80]  at (17.4,23.6) {\fontsize{50}{50}\selectfont$-$};
+    \node[text=accent!45]      at (19.0,27.3) {\fontsize{40}{40}\selectfont$\times$};
+    \node[text=accent!70]      at (15.4,21.0) {\fontsize{40}{40}\selectfont$\div$};
+    \node[text=secondDark!80]  at (11.4,19.6) {\fontsize{40}{40}\selectfont$=$};
+    % top label
+    \node[anchor=north west,font=\hfont\small\bfseries,text=muted]
+      at (2.2,27.6) {\spaced{#6}};
+    % title block
+    \node[anchor=south west,align=left,inner sep=0pt] at (2.2,13.2) {%
+      {\hfont\fontsize{26}{32}\selectfont\textcolor{accent}{#1}}\\[4mm]
+      {\hfont\bfseries\fontsize{46}{52}\selectfont\textcolor{ink}{#2}}};
+    \fill[accent] (2.2,12.3) rectangle ++(3.2,0.09);
+    \node[anchor=north west,align=left,inner sep=0pt] at (2.2,11.6) {%
+      {\hfont\fontsize{17}{22}\selectfont\textcolor{ink}{#3}}\\[3mm]
+      {\hfont\large\textcolor{muted}{#4 · Academic Year #5}}};
+    % student fields
+    \node[anchor=south west,font=\hfont\small,text=muted] at (2.2,4.25) {Name};
+    \draw[rule,line width=0.7pt] (2.2,4.2) -- (12.6,4.2);
+    \node[anchor=south west,font=\hfont\small,text=muted] at (13.6,4.25) {Class};
+    \draw[rule,line width=0.7pt] (13.6,4.2) -- (18.8,4.2);
+  \end{tikzpicture}%
+  \clearpage}
+
+% =====================================================================
+%  SMALL GRAPHIC PIECES
+% =====================================================================
+% Exam question badge  (e.g. Q2)
+\newcommand{\QBadge}[1]{\tikz[baseline=(b.base)]\node[draw=qc,line width=0.9pt,text=qc,
+  rounded corners=2mm,inner xsep=6pt,inner ysep=4pt,font=\hfont\bfseries](b){#1};}
+% Type chip  (MCQ / FRQ)
+\newcommand{\TypeChip}[1]{%
+  \tikz[baseline=(c.base)]\node[draw=qc,text=qc,rounded corners=2mm,
+    inner xsep=5pt,inner ysep=3pt,font=\hfont\bfseries\small](c){#1};%
+  \ifstrequal{#1}{MCQ}{\hspace{1.5mm}{\hfont\scriptsize\textcolor{muted}{Multiple choice}}}{}%
+  \ifstrequal{#1}{FRQ}{\hspace{1.5mm}{\hfont\scriptsize\textcolor{muted}{Free response}}}{}}
+% Option letter bubble
+\newcommand{\OptLetter}[1]{\tikz[baseline=(o.base)]\node[circle,draw=accent,
+  line width=0.7pt,text=accent,minimum size=5.2mm,inner sep=0pt,
+  font=\hfont\bfseries\scriptsize](o){#1};}
+% Symbol chip for the word table
+\newcommand{\SymChip}[2][second]{\tikz[baseline=(s.base)]\node[circle,
+  draw=#1!70,line width=0.7pt,text=#1!60!black,minimum size=7.5mm,inner sep=0pt,
+  font=\large](s){#2};}
+% Difficulty dots: \LevelDots{1..3}
+\newcommand{\LevelDots}[1]{%
+  \tikz[baseline=-0.6ex]{\foreach \k in {1,2,3}{%
+    \ifnum\k>#1\relax
+      \draw[rule,line width=0.7pt] (\k*0.24cm,0) circle (0.07cm);
+    \else
+      \fill[qc] (\k*0.24cm,0) circle (0.08cm);
+    \fi}}}
+
+% =====================================================================
+%  LESSON START + EXAM FOCUS BOX  (replaces the running header)
+%  Usage:
+%     \StartLesson{number}{title}            (lesson title bar on the concept page)
+%     \ExamTarget{MCQ|FRQ}{learning outcome}{page}{exercises}   (one per question)
+%  The Exam Focus box is printed at the top of each practice page.
+%  Question numbers are automatic and run through the whole booklet:
+%  MCQs are Q1, Q2, Q3, ...   FRQs are Q21, Q22, ...
+%  Each \PracticeSection takes the next number of its lesson, in order.
+% =====================================================================
+\makeatletter
+\newcommand{\@examtargets}{}
+\newcommand{\@answerkey}{}
+
+\newcounter{examMCQ}                       % MCQ numbering: Q1, Q2, ...
+\newcounter{examFRQ}\setcounter{examFRQ}{20}  % FRQ numbering: Q21, Q22, ...
+\newcounter{targetidx}\newcounter{practiceidx}
+\NewDocumentCommand{\ExamTarget}{o m m m m}{%
+  \IfNoValueTF{#1}{%
+    \ifstrequal{#2}{FRQ}{\stepcounter{examFRQ}\edef\eq@num{Q\arabic{examFRQ}}}%
+                        {\stepcounter{examMCQ}\edef\eq@num{Q\arabic{examMCQ}}}}%
+    {\edef\eq@num{#1}}%
+  \ExamTarget@{#2}{#3}{#4}{#5}}
+\newcommand{\ExamTarget@}[4]{%
+  \stepcounter{targetidx}%
+  \expandafter\xdef\csname eq@\arabic{targetidx}\endcsname{\eq@num}%
+  \expandafter\xdef\csname eqtype@\arabic{targetidx}\endcsname{#1}%
+  \expandafter\xdef\csname eqrow@\arabic{targetidx}\endcsname{%
+    \noexpand\ExamTargetRow{\eq@num}{#1}{\unexpanded{#2}}{\unexpanded{#3}}{\unexpanded{#4}}}}
+
+\newcommand{\ExamTargetHead}{%
+  \noindent\begin{tabularx}{\linewidth}{@{}p{1.65cm}p{3.4cm}X>{\raggedleft\arraybackslash}p{4.4cm}@{}}
+    \hfont\scriptsize\bfseries\textcolor{muted}{\spaced{QUESTION}} &
+    \hfont\scriptsize\bfseries\textcolor{muted}{\spaced{TYPE}} &
+    \hfont\scriptsize\bfseries\textcolor{muted}{\spaced{LEARNING OUTCOME}} &
+    \hfont\scriptsize\bfseries\textcolor{muted}{\spaced{TEXTBOOK}}
+  \end{tabularx}\par\vspace{1mm}{\color{rule}\hrule height 0.5pt}\vspace{1.8mm}}
+
+\newcommand{\ExamTargetRow}[5]{%
+  \noindent\begin{tabularx}{\linewidth}{@{}p{1.65cm}>{\raggedright\arraybackslash}p{3.4cm}%
+      >{\raggedright\arraybackslash}X>{\raggedleft\arraybackslash}p{4.4cm}@{}}
+    \QBadge{#1} & \TypeChip{#2} &
+    {\hfont\large\textcolor{ink}{#3}} &
+    {\hfont\bfseries\textcolor{ink}{Page #4}\hspace{1.5mm}\textcolor{muted}{\mdseries\small· #5}}
+  \end{tabularx}\par\vspace{1.5mm}}
+
+% Lesson tag chip
+\newcommand{\LessonTag}[1]{\tikz[baseline=(t.base)]\node[draw=accent,line width=0.8pt,
+  text=accent,rounded corners=2mm,inner xsep=6pt,inner ysep=3pt,
+  font=\hfont\bfseries\small](t){\spaced{LESSON #1}};}
+
+% Lesson title bar (top of the concept page)
+\newcommand{\StartLesson}[2]{%
+  \clearpage
+  \renewcommand{\LessonNum}{#1}\renewcommand{\LessonTitle}{#2}%
+  \setcounter{question}{0}\gdef\@answerkey{}\setcounter{practiceidx}{0}\setcounter{targetidx}{0}%
+  \ifshowlessonbar\noindent{\hfont\LessonTag{#1}\hspace{3mm}%
+    {\fontsize{17}{20}\selectfont\bfseries\textcolor{ink}{#2}}\hfill
+    {\small\textcolor{muted}{Concept}}}\par
+  \vspace{2mm}{\color{rule}\hrule height 0.5pt}\vspace{4mm}\fi}
+
+% Exam focus box for one question (top of each practice page)
+\newcommand{\ExamFocusBox}[1]{%
+  \begin{tcolorbox}[enhanced,colback=white,colframe=qc,boxrule=0.9pt,arc=3mm,
+      left=4mm,right=4mm,top=4mm,bottom=0.5mm,before skip=4mm,after skip=2.5mm,
+      fonttitle=\hfont\bfseries\small,coltitle=qc,colbacktitle=white,
+      attach boxed title to top left={xshift=5mm,yshift=-3mm},
+      boxed title style={arc=2mm,boxrule=0pt,left=1mm,right=1mm},
+      title={\spaced{EXAM FOCUS}},
+      overlay={\node[anchor=east,fill=white,inner xsep=2mm,font=\hfont\large\bfseries]
+        at ([xshift=-5mm]frame.north east)
+        {\tikz[baseline=(t.base)]\node[fill=qc,text=white,rounded corners=1.6mm,inner xsep=5pt,
+           inner ysep=2.5pt,font=\hfont\small\bfseries](t){LESSON \LessonNum};\hspace{0.5em}%
+         \textcolor{ink}{\LessonTitle}};}]
+    \vspace{1mm}\ExamTargetHead
+    #1
+  \end{tcolorbox}}
+
+% =====================================================================
+%  CONCEPT PAGE
+%  \begin{ConceptPage}{heading} ... \end{ConceptPage}
+%  Building blocks: IdeaBox, StepStrip + \Step, WordTable + \WordRow,
+%                   WorkedExample + \PhraseMap, WatchOut
+% =====================================================================
+\newenvironment{ConceptPage}[1]{%
+  \label{concept:\LessonNum}%
+  {\hfont{\small\bfseries\textcolor{accent}{\spaced{THE BIG IDEA}}}\par\vspace{0.5mm}
+   {\fontsize{22}{26}\selectfont\bfseries\textcolor{ink}{#1}}\par}\vspace{3.5mm}}
+  {\clearpage}
+
+% Box title helper
+\newcommand{\BoxTitle}[2][accent]{{\hfont\bfseries\textcolor{#1}{#2}}\par\vspace{2mm}}
+
+\newtcolorbox{IdeaBox}[1][]{enhanced,colback=white,colframe=accentMid,boxrule=0.6pt,
+  arc=3mm,left=5mm,right=5mm,top=3mm,bottom=3mm,before skip=0pt,after skip=3.5mm,#1}
+
+\newtcolorbox{WatchOut}[1][]{enhanced,colback=white,colframe=second!60,boxrule=0.6pt,
+  arc=3mm,left=5mm,right=5mm,top=3.5mm,bottom=3.5mm,before skip=0pt,after skip=0mm,
+  #1}
+
+\newtcolorbox{WorkedExample}[1][]{enhanced,colback=white,colframe=rule,boxrule=0.6pt,
+  arc=3mm,left=5mm,right=5mm,top=3mm,bottom=3mm,before skip=0pt,after skip=3.5mm,#1}
+
+\newtcolorbox{WordTable}[1][]{enhanced,colback=white,colframe=rule,boxrule=0.6pt,
+  arc=3mm,left=5mm,right=5mm,top=3mm,bottom=3mm,before skip=0pt,after skip=3.5mm,#1}
+
+% Steps: \begin{StepStrip}{3} \Step{title}{text} ... \end{StepStrip}
+\newcounter{stepnum}
+\newenvironment{StepStrip}[1]{\setcounter{stepnum}{0}%
+  \begin{tcbraster}[raster columns=#1,raster equal height,raster column skip=3mm,
+    raster after skip=3.5mm]}{\end{tcbraster}}
+\newcommand{\Step}[2]{\stepcounter{stepnum}%
+  \begin{tcolorbox}[enhanced,colback=white,colframe=accentMid,boxrule=0.6pt,arc=3mm,
+      left=3mm,right=3mm,top=2.5mm,bottom=2.5mm]
+    {\hfont\tikz[baseline=(n.base)]\node[circle,draw=accent,line width=0.7pt,text=accent,minimum size=5.5mm,
+      inner sep=0pt,font=\hfont\bfseries\footnotesize](n){\arabic{stepnum}};%
+     \hspace{2mm}\bfseries\textcolor{ink}{#1}}\par\vspace{1.5mm}
+    {\small #2}
+  \end{tcolorbox}}
+
+% Word table: rows flow down two columns
+\newcommand{\WordRow}[3][second]{%
+  \noindent\begin{tabularx}{\linewidth}{@{}m{11mm}X@{}}
+    \SymChip[#1]{#2} & \raggedright\arraybackslash #3
+  \end{tabularx}\par\vspace{1.5mm}}
+
+% Phrase map: \PhraseMap{{kind/phrase/symbol},...}   kind: n = number/variable,
+%             o = operation, e = equals
+\newcommand{\pm@set}[1]{%
+  \def\pm@n{n}\def\pm@o{o}\def\pm@e{e}%
+  \ifx#1\pm@o \def\pmcol{secondDark}\def\pmfill{secondSoft}%
+  \else\ifx#1\pm@e \def\pmcol{ink}\def\pmfill{equalSoft}%
+  \else \def\pmcol{accent}\def\pmfill{accentSoft}\fi\fi}
+\newcommand{\PhraseMap}[1]{%
+  \begin{tikzpicture}
+    \coordinate (symline) at (0,-1.62);
+    \foreach \kind/\phrase/\sym [count=\i] in {#1}{%
+      \pm@set{\kind}%
+      \ifnum\i=1
+        \node[anchor=west,draw=\pmcol,line width=0.6pt,text=\pmcol,rounded corners=1.5mm,
+          inner xsep=5pt,text height=1.9ex,text depth=0.6ex] (p\i) at (0,0) {\phrase};
+      \else
+        \pgfmathtruncatemacro{\prev}{\i-1}%
+        \node[anchor=west,draw=\pmcol,line width=0.6pt,text=\pmcol,rounded corners=1.5mm,
+          inner xsep=5pt,text height=1.9ex,text depth=0.6ex,right=2.2mm of p\prev] (p\i) {\phrase};
+      \fi
+      \node[anchor=base,text=\pmcol,font=\Large] (s\i) at (p\i.south |- symline) {$\sym$};
+      \draw[-{Stealth[length=1.8mm]},\pmcol,line width=0.7pt,shorten >=2pt,shorten <=2pt]
+        (p\i.south) -- (p\i.south |- 0,-0.92);
+    }
+  \end{tikzpicture}}
+\newcommand{\MapLegend}{%
+  {\hfont\scriptsize\textcolor{muted}{%
+   \tikz\draw[accent,line width=0.6pt] (0,0) rectangle (0.28,0.28);\ number or variable\hspace{4mm}%
+   \tikz\draw[secondDark,line width=0.6pt] (0,0) rectangle (0.28,0.28);\ operation\hspace{4mm}%
+   \tikz\draw[ink,line width=0.6pt] (0,0) rectangle (0.28,0.28);\ equals}}}
+
+% Highlighted final equation
+\newcommand{\ResultEquation}[1]{%
+  \tikz[baseline=(r.base)]\node[draw=accent,line width=0.9pt,text=accent,rounded corners=2mm,
+    inner xsep=9pt,inner ysep=5pt,font=\large](r){$#1$};}
+
+% Step-by-step solution:  \begin{Solution} lhs & rhs & note \\ ... \end{Solution}
+%  (the = sign is added between lhs and rhs; last row via \SolutionResult)
+\newenvironment{Solution}{%
+  \renewcommand{\arraystretch}{1.55}%
+  \begin{tabular}{@{}>{$\displaystyle}r<{$}@{\;}>{$}c<{$}@{\;}>{$\displaystyle}l<{$}@{\hspace{5mm}}>{\hfont\footnotesize\color{secondDark}}l@{}}}
+  {\end{tabular}}
+\newcommand{\SolveRow}[3]{#1 & = & #2 & #3\\}
+% operation written under both sides (vertical method), in the operation colour
+\newcommand{\Op}[1]{\textcolor{secondDark}{#1}}
+\newcommand{\SolveUnder}[3]{\Op{#1} & {} & \Op{#2} & #3\\[-1mm]
+  \cline{1-3}\noalign{\vspace{0.5mm}}}
+\newcommand{\SolveResult}[2]{\multicolumn{3}{@{}l@{\hspace{5mm}}}{\ResultEquation{#1}} &
+  \hfont\footnotesize\color{secondDark}#2\\}
+\newcommand{\SolveStem}[1]{Solve\enspace {\large$\displaystyle #1$}\,.}
+
+% =====================================================================
+%  PRACTICE SECTION HEADING
+%  \PracticeSection{outcome title}{instruction line}   (number is automatic)
+% =====================================================================
+\newcommand{\PracticeSection}[2]{%
+  \stepcounter{practiceidx}%
+  \expandafter\let\expandafter\eq@cur\csname eq@\arabic{practiceidx}\endcsname
+  \PracticeHeading{\eq@cur}{#1}{#2}}
+\newcommand{\PracticeHeading}[3]{% #1 = Q number, #2 = outcome (shown in the box), #3 = instruction
+  \clearpage
+  \setcounter{question}{0}%
+  \expandafter\let\expandafter\eq@row\csname eqrow@\arabic{practiceidx}\endcsname
+  \edef\eq@type{\csname eqtype@\arabic{practiceidx}\endcsname}%
+  \ifdefstring{\eq@type}{FRQ}{\colorlet{qc}{frq}}{\colorlet{qc}{accent}}%
+  \ExamFocusBox{\eq@row}
+  {\hfont\small\textcolor{muted}{#3}}\par
+  \vspace{3.5mm}}
+
+% =====================================================================
+%  QUESTIONS
+%  MCQ (compact card, no work space by default):
+%     \begin{MCQGrid}                       % 2 cards per row
+%       \begin{MCQ}[qsource=..., qlevel=1..3, qanswer=A..D, workspace=4cm]
+%          sentence / stem ...
+%          \Options{math A}{math B}{math C}{math D}      (no $ needed)
+%       \end{MCQ}
+%       ...
+%     \end{MCQGrid}
+%     qsource = small tag on the card border (e.g. Textbook · Ex. 1); leave out for new ones
+%     qanswer = correct letter (kept in the source for the teacher; not printed)
+%     workspace = optional blank space (default none)
+%     wide      = card spans both columns, options in one row (for long equations)
+%     row       = options in one row inside a normal card (for short answers)
+%  \SolveStem{equation}  = "Solve <equation>." stem for equation-solving MCQs
+%  FRQ (full width, lined solving space):
+%     \begin{FRQ}[qsource=..., qlevel=..., lines=10, final={answer}] stem \end{FRQ}
+%  Every question is one unbreakable box: it is never split across pages.
+% =====================================================================
+\newcounter{question}
+\tcbset{
+  qsource/.store in=\QSource,
+  qlevel/.store in=\QLevel,
+  qanswer/.store in=\QAnswer,
+  workspace/.store in=\QWorkspace,
+  lines/.store in=\QLines,
+  final/.store in=\QFinal,
+  wide/.style={raster multicolumn=2,code={\def\QWide{1}}},
+  row/.style={code={\def\QWide{1}}},
+  stack/.style={code={\def\QWide{2}}},
+  widegrid/.style={raster multicolumn=2},
+}
+\def\QWide{0}
+\newcommand{\QTag}{%
+  \ifdefempty{\QSource}{}{\textcolor{muted}{\QSource}\hspace{2mm}}%
+  \LevelDots{\QLevel}}
+
+\newtcolorbox{QuestionBox}[1][]{enhanced,colback=white,colframe=rule,boxrule=0.6pt,
+  arc=2.5mm,left=9.8mm,right=3mm,top=2.8mm,bottom=2.2mm,before skip=0pt,after skip=4mm,
+  before upper={\refstepcounter{question}},
+  overlay={%
+    \node[circle,draw=qc,line width=0.8pt,fill=white,text=qc,font=\hfont\bfseries\small,minimum size=6.6mm,
+      inner sep=0pt] at ([xshift=5mm,yshift=-6.4mm]frame.north west) {\thequestion};
+    \node[anchor=east,fill=white,inner xsep=1.5mm,inner ysep=0.5mm,font=\hfont\scriptsize]
+      at ([xshift=-4mm]frame.north east) {\QTag};},
+  #1}
+
+\newenvironment{MCQGrid}{%
+  \begin{tcbraster}[raster columns=2,raster equal height=rows,raster column skip=4mm,
+    raster row skip=2.4mm]}{\end{tcbraster}}
+% Written questions: 2 cards per row, rows flow onto the next page
+\newenvironment{FRQGrid}{%
+  \begin{tcbraster}[raster columns=2,raster equal height=rows,raster column skip=4mm,
+    raster row skip=3mm]}{\end{tcbraster}}
+\newcommand{\FRQStem}[1]{Solve\enspace{\large$\displaystyle #1$}\,.}
+
+\newcommand{\Opt}[2]{\mbox{\OptLetter{#1}\hspace{1.2mm}#2}}
+\newcommand{\Options}[4]{%
+  \par\vspace{2.2mm}%
+  {\renewcommand{\arraystretch}{1.3}%
+  \noindent\ifnum\QWide=2
+    \renewcommand{\arraystretch}{1.2}%
+    \begin{tabular}{@{}l@{}}
+      \Opt{A}{$\displaystyle #1$}\\ \Opt{B}{$\displaystyle #2$}\\
+      \Opt{C}{$\displaystyle #3$}\\ \Opt{D}{$\displaystyle #4$}
+    \end{tabular}%
+  \else\ifnum\QWide=1
+    \begin{tabularx}{\linewidth}{@{}X@{\hspace{1mm}}X@{\hspace{1mm}}X@{\hspace{1mm}}X@{}}
+      \Opt{A}{$\displaystyle #1$} & \Opt{B}{$\displaystyle #2$} &
+      \Opt{C}{$\displaystyle #3$} & \Opt{D}{$\displaystyle #4$}
+    \end{tabularx}%
+  \else
+    \begin{tabularx}{\linewidth}{@{}X@{\hspace{2mm}}X@{}}
+      \Opt{A}{$\displaystyle #1$} & \Opt{B}{$\displaystyle #2$}\\[2.6mm]
+      \Opt{C}{$\displaystyle #3$} & \Opt{D}{$\displaystyle #4$}
+    \end{tabularx}%
+  \fi\fi}\par
+  \def\tmp@ans{??}%
+  \ifdefstring{\QAnswer}{A}{\def\tmp@ans{$\displaystyle #1$}}{}%
+  \ifdefstring{\QAnswer}{B}{\def\tmp@ans{$\displaystyle #2$}}{}%
+  \ifdefstring{\QAnswer}{C}{\def\tmp@ans{$\displaystyle #3$}}{}%
+  \ifdefstring{\QAnswer}{D}{\def\tmp@ans{$\displaystyle #4$}}{}%
+  \xdef\@answerkey{\unexpanded\expandafter{\@answerkey}%
+    \noexpand\KeyEntry{\number\value{question}}{\QAnswer}{\unexpanded\expandafter{\tmp@ans}}}}
+
+% ---------------------------------------------------------------------
+%  Graph helpers
+% ---------------------------------------------------------------------
+% Blank coordinate grid for graphing FRQs:  \GraphGrid[half-range]{cell size}
+\NewDocumentCommand{\GraphGrid}{O{8} O{0.24cm}}{%
+  \begin{tikzpicture}[x=#2,y=#2]
+    \draw[rule!70,line width=0.3pt] (-#1,-#1) grid (#1,#1);
+    \draw[-{Stealth[length=1.4mm]},ink!70,line width=0.6pt] (-#1-0.4,0) -- (#1+0.6,0) node[right,font=\scriptsize]{$x$};
+    \draw[-{Stealth[length=1.4mm]},ink!70,line width=0.6pt] (0,-#1-0.4) -- (0,#1+0.6) node[above,font=\scriptsize]{$y$};
+    \foreach \t in {-#1,-4,4,#1}{%
+      \node[font=\tiny,text=muted,below] at (\t,0) {$\t$};
+      \node[font=\tiny,text=muted,left] at (0,\t) {$\t$};}
+  \end{tikzpicture}}
+% Intercept answer panel + grid (graphing FRQ body)
+\newcommand{\InterceptGrid}{%
+  \par\vspace{2mm}\noindent
+  \begin{minipage}[c]{0.38\linewidth}
+    {\hfont\scriptsize\bfseries\textcolor{muted}{\spaced{X-INTERCEPT}}}\par\vspace{1mm}
+    $(\;\rule{12mm}{0.4pt}\;,\;0\;)$\par\vspace{4mm}
+    {\hfont\scriptsize\bfseries\textcolor{muted}{\spaced{Y-INTERCEPT}}}\par\vspace{1mm}
+    $(\;0\;,\;\rule{12mm}{0.4pt}\;)$\par\vspace{4mm}
+    {\hfont\scriptsize\bfseries\textcolor{muted}{\spaced{WORKING}}}\par
+    \foreach \k in {1,...,3}{\noindent\rule{0pt}{7mm}{\color{rule}\hrule height 0.5pt}}
+  \end{minipage}\hfill
+  \begin{minipage}[c]{0.6\linewidth}\centering\GraphGrid\end{minipage}\par}
+% Grid with working lines only (no intercept prompts)
+\newcommand{\WorkGrid}{%
+  \par\vspace{2mm}\noindent
+  \begin{minipage}[c]{0.38\linewidth}
+    {\hfont\scriptsize\bfseries\textcolor{muted}{\spaced{WORKING}}}\par
+    \foreach \k in {1,...,6}{\noindent\rule{0pt}{7mm}{\color{rule}\hrule height 0.5pt}}
+  \end{minipage}\hfill
+  \begin{minipage}[c]{0.6\linewidth}\centering\GraphGrid\end{minipage}\par}
+% Small graph of a line through two labelled points:  \SlopeGraph{x1}{y1}{x2}{y2}
+\newcommand{\SlopeGraph}[4]{%
+  \begin{tikzpicture}[x=0.215cm,y=0.215cm,baseline=(current bounding box.center)]
+    \draw[rule!70,line width=0.25pt] (-5,-5) grid (5,5);
+    \draw[ink!70,line width=0.5pt] (-5,0) -- (5,0); \draw[ink!70,line width=0.5pt] (0,-5) -- (0,5);
+    \node[font=\tiny,text=muted] at (-0.5,-0.6) {$O$};
+    \begin{scope}
+      \clip (-5,-5) rectangle (5,5);
+      \draw[accent,line width=0.8pt] ($(#1,#2)!-6!(#3,#4)$) -- ($(#1,#2)!7!(#3,#4)$);
+    \end{scope}
+    \fill[ink] (#1,#2) circle (0.22) node[font=\tiny,fill=white,inner sep=0.5pt,above left] {$(#1,#2)$};
+    \fill[ink] (#3,#4) circle (0.22) node[font=\tiny,fill=white,inner sep=0.5pt,below right] {$(#3,#4)$};
+  \end{tikzpicture}}
+% Number line with a ray:  \IneqLine[lo][hi]{point}{c|o}{l|r}   (c = closed dot, o = open)
+\NewDocumentCommand{\IneqLine}{O{-4} O{4} m m m}{%
+  \begin{tikzpicture}[x=0.3cm,baseline=-0.5ex]
+    \draw[{Stealth[length=1.2mm]}-{Stealth[length=1.2mm]},ink!70,line width=0.5pt] (#1-0.7,0) -- (#2+0.7,0);
+    \foreach \t in {#1,...,#2}{\draw[ink!70,line width=0.4pt] (\t,0.1) -- (\t,-0.1);
+      \node[font=\tiny,text=muted,below=0.5pt] at (\t,-0.06) {$\t$};}
+    \ifstrequal{#5}{l}{\draw[-{Stealth[length=1.4mm]},accent,line width=1.4pt] (#3,0) -- (#1-0.7,0);}
+                      {\draw[-{Stealth[length=1.4mm]},accent,line width=1.4pt] (#3,0) -- (#2+0.7,0);}
+    \ifstrequal{#4}{c}{\fill[accent] (#3,0) circle (0.17);}
+                      {\filldraw[draw=accent,fill=white,line width=0.8pt] (#3,0) circle (0.17);}
+  \end{tikzpicture}}
+% Blank number line for written answers:  \BlankNumLine[lo][hi]
+\NewDocumentCommand{\BlankNumLine}{O{-6} O{6}}{%
+  \begin{tikzpicture}[x=0.5cm]
+    \draw[{Stealth[length=1.4mm]}-{Stealth[length=1.4mm]},ink!70,line width=0.5pt] (#1-0.7,0) -- (#2+0.7,0);
+    \foreach \t in {#1,...,#2}{\draw[ink!70,line width=0.4pt] (\t,0.1) -- (\t,-0.1);
+      \node[font=\tiny,text=muted,below=0.5pt] at (\t,-0.06) {$\t$};}
+  \end{tikzpicture}}
+% Graph of y = |x - h| + k on a small grid:  \AbsGraph{h}{k}
+\newcommand{\AbsGraph}[2]{%
+  \begin{tikzpicture}[x=0.2cm,y=0.2cm,baseline=(current bounding box.center)]
+    \draw[rule!70,line width=0.25pt] (-6,-6) grid (6,6);
+    \draw[ink!70,line width=0.5pt] (-6,0) -- (6,0); \draw[ink!70,line width=0.5pt] (0,-6) -- (0,6);
+    \node[font=\tiny,text=muted] at (-0.6,-0.7) {$O$};
+    \begin{scope}\clip (-6,-6) rectangle (6,6);
+      \draw[accent,line width=0.9pt] ({#1-14},{#2+14}) -- (#1,#2) -- ({#1+14},{#2+14});
+    \end{scope}
+  \end{tikzpicture}}
+% Greatest integer graph y = [x + c] :  \StepGraph{c}{0|1}   (1 = dots drawn the wrong way round)
+\newcommand{\StepGraph}[2]{%
+  \begin{tikzpicture}[x=0.32cm,y=0.32cm,baseline=(current bounding box.center)]
+    \draw[rule!70,line width=0.25pt] (-4,-4) grid (4,4);
+    \draw[ink!70,line width=0.5pt] (-4,0) -- (4,0); \draw[ink!70,line width=0.5pt] (0,-4) -- (0,4);
+    \begin{scope}\clip (-4.05,-4.05) rectangle (4.05,4.05);
+    \foreach \n in {-5,...,4}{%
+      \pgfmathsetmacro{\xa}{\n-(#1)}\pgfmathsetmacro{\xb}{\n+1-(#1)}%
+      \draw[accent,line width=0.9pt] (\xa,\n) -- (\xb,\n);
+      \ifnum#2=0
+        \fill[accent] (\xa,\n) circle (0.16);
+        \filldraw[draw=accent,fill=white,line width=0.6pt] (\xb,\n) circle (0.16);
+      \else
+        \filldraw[draw=accent,fill=white,line width=0.6pt] (\xa,\n) circle (0.16);
+        \fill[accent] (\xb,\n) circle (0.16);
+      \fi}
+    \end{scope}
+  \end{tikzpicture}}
+% Short text inside an answer option
+\newcommand{\T}[1]{\text{\small #1}}
+% Equation stem beside a 2x2 option grid (compact cards for solving questions)
+%   \StemOptions[stem width][stem font]{equation}{A}{B}{C}{D}   (math, no $ needed)
+\NewDocumentCommand{\StemOptions}{O{0.36} O{\large} m m m m m}{%
+  \noindent\begin{minipage}[c]{#1\linewidth}\mbox{#2$\displaystyle #3$}\end{minipage}\hfill
+  \begin{minipage}[c]{\dimexpr 0.985\linewidth-#1\linewidth\relax}
+    {\renewcommand{\arraystretch}{1.25}\medmuskip=3mu\thickmuskip=4mu
+    \begin{tabularx}{\linewidth}{@{}X@{\hspace{1.5mm}}X@{}}
+      \Opt{A}{$\displaystyle #4$} & \Opt{B}{$\displaystyle #5$}\\[2mm]
+      \Opt{C}{$\displaystyle #6$} & \Opt{D}{$\displaystyle #7$}
+    \end{tabularx}}
+  \end{minipage}\par}
+
+\newcommand{\WorkSpace}[1]{%
+  \par\vspace{3mm}\noindent
+  \begin{tikzpicture}
+    \draw[rule!80!muted,dash pattern=on 3pt off 2.2pt,rounded corners=2mm,line width=0.6pt]
+      (0,0) rectangle (\linewidth-0.6pt,#1);
+    \node[anchor=north west,font=\hfont\scriptsize\bfseries,text=muted,inner sep=0pt]
+      at (3mm,#1-2.8mm) {\spaced{WORK SPACE}};
+  \end{tikzpicture}\par}
+
+\newcommand{\AnswerLines}[1]{%
+  \par\vspace{3mm}\noindent
+  {\hfont\scriptsize\bfseries\textcolor{muted}{\spaced{SOLUTION}}}\par\vspace{1mm}
+  \foreach \k in {1,...,#1}{\noindent\rule{0pt}{8mm}{\color{rule}\hrule height 0.5pt}}%
+  \par\vspace{3.5mm}\noindent
+  {\hfont\small\bfseries\textcolor{qc}{Final answer}}\hspace{3mm}%
+  \tikz[baseline=0.6ex]\draw[qc,line width=0.7pt,rounded corners=1.5mm]
+    (0,-0.2) rectangle (\linewidth-3.2cm,0.65);\par}
+
+\NewDocumentEnvironment{MCQ}{O{}}{%
+  \begin{QuestionBox}[qsource={},qlevel=1,qanswer={},workspace={},code={\def\QWide{0}},#1]}
+ {\ifdefempty{\QWorkspace}{}{\WorkSpace{\QWorkspace}}\end{QuestionBox}}
+
+\NewDocumentEnvironment{FRQ}{O{}}{%
+  \begin{QuestionBox}[qsource={},qlevel=1,lines=12,final={},#1]}
+ {\ifnum\QLines>0 \AnswerLines{\QLines}\fi
+  \xdef\@answerkey{\unexpanded\expandafter{\@answerkey}%
+    \noexpand\KeyEntry{\number\value{question}}{}{\unexpanded\expandafter{\QFinal}}}%
+  \end{QuestionBox}}
+
+% =====================================================================
+%  OPTIONAL ANSWER KEY  (not printed in this booklet; call \AnswerKey
+%  after a lesson's questions if a key is ever wanted)
+% =====================================================================
+\newcommand{\KeyLetter}[1]{\tikz[baseline=(o.base)]\node[circle,fill=accent,
+  text=white,minimum size=6mm,inner sep=0pt,font=\hfont\bfseries\small](o){#1};}
+\newcommand{\KeyEntry}[3]{%
+  \noindent\makebox[8mm][l]{\hfont\bfseries\textcolor{muted}{#1}}%
+  \ifstrempty{#2}{\makebox[6mm]{\textcolor{accent}{\ding{46}}}}{\KeyLetter{#2}}%
+  \hspace{4mm}{\large #3}\par\vspace{3.2mm}}
+\newcommand{\AnswerKey}{%
+  \clearpage
+  {\hfont{\small\bfseries\textcolor{accent}{\spaced{LESSON \LessonNum\ · ANSWER KEY}}}\par}
+  \vspace{4mm}
+  \begin{tcolorbox}[enhanced,colback=white,colframe=rule,boxrule=0.6pt,arc=3mm,
+      left=6mm,right=6mm,top=5mm,bottom=2mm]
+    \setlength{\columnsep}{10mm}%
+    \begin{multicols}{2}\@answerkey\end{multicols}
+  \end{tcolorbox}
+  \clearpage}
+\makeatother
+
+% =====================================================================
+\begin{document}
+\color{ink}
+
+\MakeCover{End of Term 1 Exam}{Question Booklet}%
+  {Grade 9 Advanced – Mathematics}{Reveal}{2026–2027}{REVEAL MATH · INTEGRATED I}
+
+% #####################################################################
+%  LESSON 2-1  ·  Writing and Interpreting Equations
+% #####################################################################
+\StartLesson{2-1}{Writing and Interpreting Equations}
+\ExamTarget{MCQ}{Translate sentences into equations}{71}{Exercises 1–4}
+
+% ---------------------------------------------------------------------
+%  Concept page
+% ---------------------------------------------------------------------
+
+% ---------------------------------------------------------------------
+%  Exercises: Q2 (MCQ) – all on one page
+% ---------------------------------------------------------------------
+\PracticeSection{Translate sentences into equations}%
+  {Multiple choice · Choose the equation that represents each sentence.}
+
+\begin{MCQGrid}
+% ---- Textbook exercises 1–4 (page 71) ----
+\begin{MCQ}[qsource={Textbook · Ex. 1},qlevel=2,qanswer=B]
+  Two added to three times a number $m$ is the same as 18.
+  \Options{3(m+2)=18}{3m+2=18}{3+m+2=18}{3m=2+18}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 2},qlevel=2,qanswer=C]
+  The product of five and the sum of a number $x$ and three is twelve.
+  \Options{5x+3=12}{5+(x+3)=12}{5(x+3)=12}{3(x+5)=12}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 3},qlevel=2,qanswer=D,wide]
+  The quotient of 24 and $x$ equals 14 minus 2 times $x$.
+  \Options{\dfrac{x}{24}=14-2x}{\dfrac{24}{x}=2x-14}{24x=14-2x}{\dfrac{24}{x}=14-2x}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 4},qlevel=3,qanswer=A,wide]
+  Nine times a number $y$ subtracted from 85 is seven times the sum of four and $y$.
+  \Options{85-9y=7(4+y)}{9y-85=7(4+y)}{85-9y=7\cdot 4+y}{9(y-85)=7(4+y)}
+\end{MCQ}
+% ---- New practice (same type, increasing difficulty) ----
+\begin{MCQ}[qlevel=1,qanswer=C]
+  Eight more than a number $n$ is 21.
+  \Options{8n=21}{n-8=21}{n+8=21}{n=8+21}
+\end{MCQ}
+\begin{MCQ}[qlevel=1,qanswer=B]
+  Twelve less than a number $k$ equals 30.
+  \Options{12-k=30}{k-12=30}{k+12=30}{30-k=12}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=D]
+  Four times a number $a$ decreased by 9 is the same as 23.
+  \Options{4(a-9)=23}{9-4a=23}{4a+9=23}{4a-9=23}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=A]
+  The quotient of a number $p$ and 6 is equal to five more than $p$.
+  \Options{\dfrac{p}{6}=p+5}{\dfrac{6}{p}=p+5}{\dfrac{p}{6}=5p}{\dfrac{p}{6}+5=p}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=C]
+  Three times the sum of a number $w$ and 8 is 45.
+  \Options{3w+8=45}{3+(w+8)=45}{3(w+8)=45}{8(w+3)=45}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=B]
+  Five times a number $x$ subtracted from 60 is the same as two times $x$.
+  \Options{5x-60=2x}{60-5x=2x}{5(60-x)=2x}{60-5x=x+2}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=D,wide]
+  The difference of 40 and twice a number $d$ equals the quotient of $d$ and 4.
+  \Options{2d-40=\dfrac{d}{4}}{40-2d=\dfrac{4}{d}}{2(40-d)=\dfrac{d}{4}}{40-2d=\dfrac{d}{4}}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=A,wide]
+  Six less than the product of 3 and a number $z$ is equal to four times the difference
+  of $z$ and 5.
+  \Options{3z-6=4(z-5)}{6-3z=4(z-5)}{3(z-6)=4(z-5)}{3z-6=4z-5}
+\end{MCQ}
+\end{MCQGrid}
+
+% #####################################################################
+%  LESSON 2-3  ·  Solving Multi-Step Equations
+% #####################################################################
+\StartLesson{2-3}{Solving Multi-Step Equations}
+\ExamTarget{MCQ}{Solve equations involving more than one operation}{88}{Exercises 1–12}
+
+% ---------------------------------------------------------------------
+%  Concept page
+% ---------------------------------------------------------------------
+
+% ---------------------------------------------------------------------
+%  Exercises (MCQ) – all on one page
+% ---------------------------------------------------------------------
+\PracticeSection{Solve equations involving more than one operation}%
+  {Multiple choice · Solve each equation, then choose the correct solution.}
+
+\begin{MCQGrid}
+% ---- Textbook exercises 1–12 (page 88) ----
+\begin{MCQ}[qsource={Textbook · Ex. 1},qlevel=1,qanswer=C]
+  \StemOptions{3t+7=-8}{t=5}{t=-\dfrac{1}{3}}{t=-5}{t=-45}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 2},qlevel=1,qanswer=A]
+  \StemOptions{8=16+8n}{n=-1}{n=1}{n=3}{n=-8}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 3},qlevel=1,qanswer=B]
+  \StemOptions{-34=6m-4}{m=-\dfrac{19}{3}}{m=-5}{m=5}{m=-30}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 4},qlevel=1,qanswer=D]
+  \StemOptions{9x+27=-72}{x=-99}{x=11}{x=-5}{x=-11}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 5},qlevel=2,qanswer=B]
+  \StemOptions{\dfrac{y}{5}-6=8}{y=10}{y=70}{y=\dfrac{14}{5}}{y=-70}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 6},qlevel=2,qanswer=A]
+  \StemOptions{\dfrac{f}{-7}-8=2}{f=-70}{f=70}{f=42}{f=-\dfrac{10}{7}}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 7},qlevel=2,qanswer=C]
+  \StemOptions{1+\dfrac{r}{9}=4}{r=\dfrac{1}{3}}{r=-27}{r=27}{r=45}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 8},qlevel=2,qanswer=D]
+  \StemOptions{\dfrac{k}{3}+4=-16}{k=-36}{k=-\dfrac{20}{3}}{k=60}{k=-60}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 9},qlevel=2,qanswer=C]
+  \StemOptions{\dfrac{n-2}{7}=2}{n=12}{n=9}{n=16}{n=-12}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 10},qlevel=3,qanswer=B]
+  \StemOptions{14=\dfrac{6+z}{-2}}{z=22}{z=-34}{z=-22}{z=34}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 11},qlevel=3,qanswer=A]
+  \StemOptions{-11=\dfrac{a-5}{6}}{a=-61}{a=-71}{a=-1}{a=61}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 12},qlevel=3,qanswer=D]
+  \StemOptions{\dfrac{22-w}{3}=-7}{w=1}{w=-43}{w=-1}{w=43}
+\end{MCQ}
+% ---- New practice (same type) ----
+\begin{MCQ}[qlevel=2,qanswer=C]
+  \StemOptions{7-2x=15}{x=4}{x=-11}{x=-4}{x=11}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=A]
+  \StemOptions{\dfrac{x+4}{3}=-5}{x=-19}{x=-11}{x=-9}{x=11}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=D]
+  \StemOptions{-2=\dfrac{m}{4}+6}{m=16}{m=-2}{m=32}{m=-32}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=B]
+  \StemOptions{5-\dfrac{k}{2}=9}{k=28}{k=-8}{k=8}{k=-2}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=C]
+  \StemOptions{3-4y=23}{y=5}{y=-\dfrac{13}{2}}{y=-5}{y=-80}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=B]
+  \StemOptions{\dfrac{2x-1}{5}=3}{x=7}{x=8}{x=2}{x=-7}
+\end{MCQ}
+\end{MCQGrid}
+
+% #####################################################################
+%  LESSON 2-4  ·  Solving Equations with the Variable on Each Side
+% #####################################################################
+\StartLesson{2-4}{Solving Equations with the Variable on Each Side}
+\ExamTarget{MCQ}{Solve equations with the variable on each side}{97}{Exercises 1–6}
+\ExamTarget{FRQ}{Solve equations by applying the Distributive Property}{97}{Exercises 7–16}
+
+% ---------------------------------------------------------------------
+%  Concept page
+% ---------------------------------------------------------------------
+
+% ---------------------------------------------------------------------
+%  Exercises (MCQ) – variable on each side
+% ---------------------------------------------------------------------
+\PracticeSection{Solve equations with the variable on each side}%
+  {Multiple choice · Solve each equation, then choose the correct solution.}
+
+\begin{MCQGrid}
+% ---- Textbook exercises 1–6 (page 97) ----
+\begin{MCQ}[qsource={Textbook · Ex. 1},qlevel=1,qanswer=C]
+  \StemOptions[0.41][\normalsize]{7c+12=-4c+78}{c=22}{c=-6}{c=6}{c=\dfrac{90}{11}}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 2},qlevel=1,qanswer=A]
+  \StemOptions[0.41][\small]{2m-13=-8m+27}{m=4}{m=-\dfrac{20}{3}}{m=-4}{m=\dfrac{7}{5}}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 3},qlevel=1,qanswer=D]
+  \StemOptions[0.41][\normalsize]{9x-4=2x+3}{x=\dfrac{7}{11}}{x=-1}{x=7}{x=1}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 4},qlevel=2,qanswer=B]
+  \StemOptions[0.41][\normalsize]{6+3t=8t-14}{t=-4}{t=4}{t=\dfrac{8}{5}}{t=\dfrac{20}{11}}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 5},qlevel=3,qanswer=C]
+  \StemOptions[0.41][\normalsize]{\dfrac{b-4}{6}=\dfrac{b}{2}}{b=2}{b=-\dfrac{4}{5}}{b=-2}{b=4}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 6},qlevel=3,qanswer=A]
+  \StemOptions[0.41][\normalsize]{\dfrac{3v+12}{6}=\dfrac{4v}{3}}{v=\dfrac{12}{5}}{v=12}{v=4}{v=-\dfrac{12}{5}}
+\end{MCQ}
+% ---- New practice (same type) ----
+\begin{MCQ}[qlevel=1,qanswer=B]
+  \StemOptions[0.41][\normalsize]{5x+3=2x+18}{x=3}{x=5}{x=7}{x=-5}
+\end{MCQ}
+\begin{MCQ}[qlevel=1,qanswer=D]
+  \StemOptions[0.41][\normalsize]{4y-7=y+11}{y=\dfrac{18}{5}}{y=-6}{y=\dfrac{4}{3}}{y=6}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=A]
+  \StemOptions[0.41][\normalsize]{3a+10=8a-5}{a=3}{a=1}{a=-3}{a=\dfrac{5}{11}}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=C]
+  \StemOptions[0.41][\normalsize]{12-n=3n+4}{n=4}{n=-2}{n=2}{n=8}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=B]
+  \StemOptions[0.41][\normalsize]{9k+5=4k-20}{k=5}{k=-5}{k=-3}{k=-\dfrac{25}{13}}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=D]
+  \StemOptions[0.41][\normalsize]{-2p+9=3p-11}{p=2}{p=-4}{p=20}{p=4}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=A]
+  \StemOptions[0.41][\normalsize]{8-3x=2x-17}{x=5}{x=-9}{x=-5}{x=25}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=C]
+  \StemOptions[0.41][\normalsize]{11d-4=5d+26}{d=-5}{d=\dfrac{11}{8}}{d=5}{d=4}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=C]
+  \StemOptions[0.41][\normalsize]{\dfrac{x}{3}=\dfrac{x+8}{5}}{x=4}{x=3}{x=12}{x=-12}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=B]
+  \StemOptions[0.41][\normalsize]{\dfrac{y+2}{4}=\dfrac{y}{2}}{y=-2}{y=2}{y=4}{y=1}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=D]
+  \StemOptions[0.41][\normalsize]{\dfrac{2m-6}{4}=\dfrac{m}{3}}{m=3}{m=-9}{m=6}{m=9}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=A]
+  \StemOptions[0.41][\normalsize]{6-4c=2c+6}{c=0}{c=2}{c=1}{c=-2}
+\end{MCQ}
+\end{MCQGrid}
+
+% ---------------------------------------------------------------------
+%  Exercises (FRQ) – Distributive Property
+% ---------------------------------------------------------------------
+\PracticeSection{Solve equations by applying the Distributive Property}%
+  {Written answer · Solve each equation. Show every step, then write your final answer in the box.}
+
+\begin{FRQGrid}
+% ---- Textbook exercises 7–16 (page 97) ----
+\begin{FRQ}[qsource={Textbook · Ex. 7},qlevel=1,lines=5,final={$r=-2$}]
+  \FRQStem{2(r+6)=4(r+4)}
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · Ex. 8},qlevel=1,lines=5,final={$n=6$}]
+  \FRQStem{6(n+5)=3(n+16)}
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · Ex. 9},qlevel=2,lines=5,final={$g=14$}]
+  \FRQStem{5(g+8)-7=117-g}
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · Ex. 10},qlevel=3,lines=5,final={$x=-5$}]
+  \FRQStem{12-\tfrac{4}{5}(x+15)=\tfrac{2}{5}x+6}
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · Ex. 11},qlevel=2,lines=5,final={$m=4$}]
+  \FRQStem{3(3m-2)=2(3m+3)}
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · Ex. 12},qlevel=2,lines=5,final={$a=1$}]
+  \FRQStem{6(3a+1)-30=3(2a-4)}
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · Ex. 13},qlevel=1,lines=5,final={$n=-5$}]
+  \FRQStem{7n+6=4n-9}
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · Ex. 14},qlevel=3,lines=5,final={$r=-39$}]
+  \FRQStem{-6(2r+8)=-10(r-3)}
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · Ex. 15},qlevel=3,lines=5,final={$w=0$}]
+  \FRQStem{5-3(w+4)=w-7}
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · Ex. 16},qlevel=3,lines=5,final={$x=7$}]
+  \FRQStem{2x-5(x-3)=2(x-10)}
+\end{FRQ}
+% ---- New practice (same type) ----
+\begin{FRQ}[qlevel=2,lines=5,final={$x=9$}]
+  \FRQStem{4(x-2)=2(x+5)}
+\end{FRQ}
+\begin{FRQ}[qlevel=3,lines=5,final={$y=2$}]
+  \FRQStem{3-2(y+1)=4y-11}
+\end{FRQ}
+\end{FRQGrid}
+
+% #####################################################################
+%  LESSON 2-5  ·  Solving Equations Involving Absolute Value
+% #####################################################################
+\StartLesson{2-5}{Solving Equations Involving Absolute Value}
+\ExamTarget{MCQ}{Solve absolute value equations}{106}{Exercises 19–23}
+
+
+\PracticeSection{Solve absolute value equations}%
+  {Multiple choice · Write the absolute value equation and solve it, then choose the correct answer.}
+
+\begin{MCQGrid}
+% ---- Textbook exercises 19–23 (page 106) ----
+\begin{MCQ}[wide,qsource={Textbook · Ex. 19},qlevel=1,qanswer=A]
+  An oven is set to $400^\circ$F with a tolerance of $\pm15^\circ$F. Write and solve an absolute
+  value equation. What are the minimum and maximum temperatures?
+  \Options{385^\circ\text{ and }415^\circ\text{F}}{400^\circ\text{ and }415^\circ\text{F}}{370^\circ\text{ and }430^\circ\text{F}}{385^\circ\text{ and }400^\circ\text{F}}
+\end{MCQ}
+\begin{MCQ}[wide,qsource={Textbook · Ex. 20},qlevel=1,qanswer=C]
+  A poll is accurate within $\pm5\%$, and $38\%$ of voters chose Candidate A. Write and solve an
+  absolute value equation. What are the minimum and maximum percents for Candidate A?
+  \Options{38\%\text{ and }43\%}{33\%\text{ and }38\%}{33\%\text{ and }43\%}{28\%\text{ and }48\%}
+\end{MCQ}
+\begin{MCQ}[wide,qsource={Textbook · Ex. 21a},qlevel=2,qanswer=B]
+  The ACT math mean is $20.9$ with a standard deviation of $5.3$. Which equation gives the
+  scores one standard deviation from the mean?
+  \Options{|x-5.3|=20.9}{|x-20.9|=5.3}{|x+20.9|=5.3}{|x-20.9|=10.6}
+\end{MCQ}
+\begin{MCQ}[wide,qsource={Textbook · Ex. 21b},qlevel=2,qanswer=D]
+  Using Exercise 21a, what is the range of scores within \textbf{two} standard deviations
+  of the mean?
+  \Options{15.6\text{ to }26.2}{5.3\text{ to }20.9}{18.2\text{ to }23.6}{10.3\text{ to }31.5}
+\end{MCQ}
+\begin{MCQ}[wide,qsource={Textbook · Ex. 22},qlevel=3,qanswer=A]
+  $21\%$ of about 40 million students chose “finding new resources”, with a margin of error
+  of $\pm3\%$. What is the range of the number of students?
+  \Options{7.2\text{ to }9.6\text{ million}}{8.4\text{ to }9.6\text{ million}}{18\text{ to }24\text{ million}}{8.1\text{ to }8.7\text{ million}}
+\end{MCQ}
+\begin{MCQ}[wide,qsource={Textbook · Ex. 23},qlevel=3,qanswer=C]
+  Bags of rock salt are labeled 35 lb, and their weight is within 8 ounces of the label
+  ($16$ oz $=1$ lb). What are the minimum and maximum weights?
+  \Options{27\text{ and }43\text{ lb}}{34.2\text{ and }35.8\text{ lb}}{34.5\text{ and }35.5\text{ lb}}{34.92\text{ and }35.08\text{ lb}}
+\end{MCQ}
+% ---- New practice ----
+\begin{MCQ}[qlevel=1,qanswer=B]
+  \StemOptions{|x+3|=7}{\{4\}}{\{-10,\,4\}}{\{-4,\,10\}}{\{-7,\,7\}}
+\end{MCQ}
+\begin{MCQ}[qlevel=1,qanswer=C]
+  \StemOptions{|2t-4|=8}{\{-6,\,2\}}{\{6\}}{\{-2,\,6\}}{\{-4,\,4\}}
+\end{MCQ}
+\begin{MCQ}[qlevel=1,qanswer=D]
+  \StemOptions{|y-5|=-2}{\{3,\,7\}}{\{7\}}{\{3\}}{\varnothing}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=B]
+  \StemOptions{|x-1|+2=5}{\{-4,\,2\}}{\{-2,\,4\}}{\{-6,\,8\}}{\{4\}}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=D]
+  \StemOptions{2|n-4|=10}{\{-6,\,14\}}{\{9\}}{\{-9,\,1\}}{\{-1,\,9\}}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=A]
+  \StemOptions{|3x+1|-4=6}{\left\{-\tfrac{11}{3},\,3\right\}}{\left\{-\tfrac{7}{3},\,\tfrac{5}{3}\right\}}{\left\{-3,\,\tfrac{11}{3}\right\}}{\{3\}}
+\end{MCQ}
+\end{MCQGrid}
+
+% #####################################################################
+%  LESSON 2-6  ·  Solving Proportions
+% #####################################################################
+\StartLesson{2-6}{Solving Proportions}
+\ExamTarget{MCQ}{Solve proportions}{113}{Exercises 19–26}
+
+
+\PracticeSection{Solve proportions}%
+  {Multiple choice · Solve each proportion. If necessary, round to the nearest hundredth.}
+
+\begin{MCQGrid}
+% ---- Textbook exercises 19–26 (page 113) ----
+\begin{MCQ}[qsource={Textbook · Ex. 19},qlevel=2,qanswer=A]
+  \StemOptions[0.42][\normalsize]{\dfrac{4v+7}{15}=\dfrac{6v+2}{10}}{v=0.8}{v=1.25}{v=-0.8}{v=2}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 20},qlevel=2,qanswer=B]
+  \StemOptions[0.42][\normalsize]{\dfrac{9b-3}{9}=\dfrac{5b+5}{3}}{b=3}{b=-3}{b=-1}{b=-0.5}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 21},qlevel=2,qanswer=C]
+  \StemOptions[0.42][\normalsize]{\dfrac{2n-4}{5}=\dfrac{3n+3}{10}}{n=5}{n=-11}{n=11}{n=1}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 22},qlevel=3,qanswer=D]
+  \StemOptions[0.42][\normalsize]{\dfrac{2}{g+6}=\dfrac{4}{5g+10}}{g=-0.67}{g=2}{g=0.5}{g=0.67}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 23},qlevel=1,qanswer=A]
+  \StemOptions[0.42][\normalsize]{\dfrac{x}{3}=\dfrac{3x+2}{6}}{x=-2}{x=2}{x=-0.67}{x=6}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 24},qlevel=2,qanswer=B]
+  \StemOptions[0.42][\normalsize]{\dfrac{w+3}{7}=\dfrac{w-1}{8}}{w=31}{w=-31}{w=17}{w=-3}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 25},qlevel=3,qanswer=C]
+  \StemOptions[0.42][\normalsize]{\dfrac{4q-3}{5}=\dfrac{2q+1}{7}}{q=0.33}{q=-1.44}{q=1.44}{q=2.6}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 26},qlevel=3,qanswer=D]
+  \StemOptions[0.42][\normalsize]{\dfrac{5}{7k+4}=\dfrac{2}{2k-3}}{k=5.75}{k=-0.25}{k=-1.75}{k=-5.75}
+\end{MCQ}
+% ---- New practice ----
+\begin{MCQ}[qlevel=1,qanswer=A]
+  \StemOptions[0.42][\normalsize]{\dfrac{x}{4}=\dfrac{x+6}{10}}{x=4}{x=-4}{x=6}{x=2.4}
+\end{MCQ}
+\begin{MCQ}[qlevel=1,qanswer=B]
+  \StemOptions[0.42][\normalsize]{\dfrac{a+2}{3}=\dfrac{a-1}{2}}{a=-7}{a=7}{a=1}{a=5}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=C]
+  \StemOptions[0.42][\normalsize]{\dfrac{3m-1}{4}=\dfrac{m+5}{2}}{m=9}{m=-11}{m=11}{m=3}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=D]
+  \StemOptions[0.42][\normalsize]{\dfrac{6}{y+1}=\dfrac{3}{y-2}}{y=-5}{y=3}{y=1}{y=5}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=A]
+  \StemOptions[0.42][\normalsize]{\dfrac{2p+3}{5}=\dfrac{p-1}{3}}{p=-14}{p=14}{p=-4}{p=2}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=B]
+  \StemOptions[0.42][\normalsize]{\dfrac{5x-2}{6}=\dfrac{2x+1}{3}}{x=0.67}{x=4}{x=-4}{x=2.67}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=C]
+  \StemOptions[0.42][\normalsize]{\dfrac{4}{z-3}=\dfrac{2}{z+1}}{z=5}{z=-1}{z=-5}{z=3}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=D]
+  \StemOptions[0.42][\normalsize]{\dfrac{k+4}{8}=\dfrac{k-2}{5}}{k=-12}{k=1.33}{k=2}{k=12}
+\end{MCQ}
+\end{MCQGrid}
+
+% #####################################################################
+%  LESSON 2-7  ·  Using Formulas
+% #####################################################################
+\StartLesson{2-7}{Using Formulas}
+\ExamTarget{FRQ}{Solve equations for specific variables}{120, 126}{Example 4 · Exercises 23–24}
+
+
+\PracticeSection{Solve equations for specific variables}%
+  {Written answer · Answer every part. Show your steps and write the final answers in the box.}
+
+\begin{FRQGrid}
+\begin{FRQ}[fontupper=\small,qsource={Textbook · p.\,120 Ex. 4},qlevel=2,lines=3,final={6 cheese/5 pepperoni max; $c=\frac{T-15.49p}{13.49}$; 2}]
+  \textbf{Pizza.} $T=13.49c+15.49p$, where $c$ = cheese pizzas and $p$ = pepperoni pizzas.\par
+  \textbf{a.} Kishi has \$85. Describe the constraints.\quad
+  \textbf{b.} Solve for $c$.\quad
+  \textbf{c.} She buys 3 pepperoni pizzas. Find the maximum number of cheese pizzas.
+\end{FRQ}
+\begin{FRQ}[fontupper=\small,qsource={Textbook · p.\,126 Ex. 23},qlevel=2,lines=3,final={7 plain/5 flavored max; $f=\frac{T-5.50p}{7}$; 3}]
+  \textbf{Coffee.} $T=5.50p+7f$, where $p$ = packages of plain and $f$ = packages of flavored coffee.\par
+  \textbf{a.} Consuelo has \$40. Describe the constraints.\quad
+  \textbf{b.} Solve for $f$.\quad
+  \textbf{c.} She buys 3 plain packages. Find the maximum number of flavored packages.
+\end{FRQ}
+\begin{FRQ}[fontupper=\small,qsource={Textbook · p.\,126 Ex. 24},qlevel=2,lines=3,final={14 towels/42 washcloths max; $b=\frac{T-2w}{6}$; 7}]
+  \textbf{Towels.} $T=6b+2w$, where $b$ = bath towels and $w$ = washcloths.\par
+  \textbf{a.} The budget is \$85. Describe the constraints.\quad
+  \textbf{b.} Solve for $b$.\quad
+  \textbf{c.} She orders 20 washcloths. How many bath towels can she order and stay under budget?
+\end{FRQ}
+\begin{FRQ}[fontupper=\small,qlevel=2,lines=3,final={8 mangoes/12 bananas max; $b=\frac{T-3m}{2}$; 4}]
+  \textbf{Fruit.} $T=3m+2b$, where $m$ = mangoes (\$3 each) and $b$ = bananas (\$2 each).\par
+  \textbf{a.} The budget is \$24. Describe the constraints.\quad
+  \textbf{b.} Solve for $b$.\quad
+  \textbf{c.} She buys 5 mangoes. Find the maximum number of bananas.
+\end{FRQ}
+\begin{FRQ}[fontupper=\small,qlevel=1,lines=3,final={$y=\frac{12-3x}{2}$; $y=3$}]
+  \textbf{a.} Solve $3x+2y=12$ for $y$.\par
+  \textbf{b.} Use your answer to find $y$ when $x=2$.
+\end{FRQ}
+\begin{FRQ}[fontupper=\small,qlevel=3,lines=3,final={$w=\frac{P-2\ell}{2}$; $w=4$ cm}]
+  \textbf{Perimeter.} $P=2\ell+2w$.\par
+  \textbf{a.} Solve for $w$.\quad
+  \textbf{b.} Find the width of a rectangle with $P=30$ cm and $\ell=11$ cm.
+\end{FRQ}
+\end{FRQGrid}
+
+% #####################################################################
+%  LESSON 4-1  ·  Graphing Linear Functions
+% #####################################################################
+\StartLesson{4-1}{Graphing Linear Functions}
+\ExamTarget{FRQ}{Graph linear functions by using the x- and y-intercepts}{216}{Exercises 9–14}
+
+
+\PracticeSection{Graph linear functions by using the x- and y-intercepts}%
+  {Written answer · Find both intercepts, then graph the equation on the grid.}
+
+\begin{FRQGrid}
+\begin{FRQ}[qsource={Textbook · Ex. 9},qlevel=1,lines=0,final={$(-2,0)$, $(0,4)$}]
+  Graph\enspace{\large$y=4+2x$}\ by using the intercepts.\InterceptGrid
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · Ex. 10},qlevel=2,lines=0,final={$(-\frac53,0)$, $(0,5)$}]
+  Graph\enspace{\large$5-y=-3x$}\ by using the intercepts.\InterceptGrid
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · Ex. 11},qlevel=2,lines=0,final={$(5,0)$, $(0,-1)$}]
+  Graph\enspace{\large$x=5y+5$}\ by using the intercepts.\WorkGrid
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · Ex. 12},qlevel=1,lines=0,final={$(4,0)$, $(0,4)$}]
+  Graph\enspace{\large$x+y=4$}\ by using the intercepts.\WorkGrid
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · Ex. 13},qlevel=1,lines=0,final={$(-3,0)$, $(0,3)$}]
+  Graph\enspace{\large$x-y=-3$}\ by using the intercepts.\WorkGrid
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · Ex. 14},qlevel=2,lines=0,final={$(\frac43,0)$, $(0,8)$}]
+  Graph\enspace{\large$y=8-6x$}\ by using the intercepts.\WorkGrid
+\end{FRQ}
+\end{FRQGrid}
+
+% #####################################################################
+%  LESSON 4-2  ·  Rate of Change and Slope
+% #####################################################################
+\StartLesson{4-2}{Rate of Change and Slope}
+\ExamTarget{MCQ}{Find the slope of a line}{227}{Exercises 50–52}
+
+
+\PracticeSection{Find the slope of a line}%
+  {Multiple choice · Find the slope of the line, then choose the correct answer.}
+
+\begin{MCQGrid}
+% ---- Textbook exercises 50–52 (page 227) ----
+\begin{MCQ}[qsource={Textbook · Ex. 50},qlevel=1,qanswer=A]
+  \StemOptions[0.4][]{\SlopeGraph{0}{1}{2}{5}}{m=2}{m=\dfrac{1}{2}}{m=-2}{m=4}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 51},qlevel=1,qanswer=B]
+  \StemOptions[0.4][]{\SlopeGraph{0}{0}{3}{1}}{m=3}{m=\dfrac{1}{3}}{m=-\dfrac{1}{3}}{m=1}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 52},qlevel=2,qanswer=C]
+  \StemOptions[0.4][]{\SlopeGraph{0}{1}{1}{-2}}{m=3}{m=-\dfrac{1}{3}}{m=-3}{m=-1}
+\end{MCQ}
+% ---- New practice: graphs ----
+\begin{MCQ}[qlevel=1,qanswer=D]
+  \StemOptions[0.4][]{\SlopeGraph{-2}{-1}{2}{1}}{m=2}{m=-\dfrac{1}{2}}{m=1}{m=\dfrac{1}{2}}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=A]
+  \StemOptions[0.4][]{\SlopeGraph{-3}{2}{1}{-2}}{m=-1}{m=1}{m=-4}{m=0}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=B]
+  \StemOptions[0.4][]{\SlopeGraph{-3}{3}{2}{3}}{\text{\small undefined}}{m=0}{m=1}{m=3}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=C]
+  \StemOptions[0.4][]{\SlopeGraph{1}{-3}{2}{1}}{m=\dfrac{1}{4}}{m=-4}{m=4}{m=-2}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=D]
+  \StemOptions[0.4][]{\SlopeGraph{-1}{4}{3}{-2}}{m=-\dfrac{2}{3}}{m=\dfrac{3}{2}}{m=-6}{m=-\dfrac{3}{2}}
+\end{MCQ}
+% ---- New practice: two points ----
+\begin{MCQ}[qlevel=1,qanswer=A]
+  \StemOptions[0.42][\normalsize]{(2,3),\ (5,9)}{m=2}{m=\dfrac{1}{2}}{m=-2}{m=6}
+\end{MCQ}
+\begin{MCQ}[qlevel=1,qanswer=B]
+  \StemOptions[0.42][\normalsize]{(-1,4),\ (3,-4)}{m=2}{m=-2}{m=-\dfrac{1}{2}}{m=0}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=C]
+  \StemOptions[0.42][\normalsize]{(0,-2),\ (6,1)}{m=2}{m=-\dfrac{1}{2}}{m=\dfrac{1}{2}}{m=\dfrac{1}{6}}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=D]
+  \StemOptions[0.42][\normalsize]{(-3,5),\ (2,5)}{\text{\small undefined}}{m=1}{m=-2}{m=0}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=A]
+  \StemOptions[0.42][\normalsize]{(4,1),\ (4,7)}{\text{\small undefined}}{m=0}{m=6}{m=\dfrac{1}{6}}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=B]
+  \StemOptions[0.42][\normalsize]{(-6,1),\ (-2,-5)}{m=\dfrac{3}{2}}{m=-\dfrac{3}{2}}{m=-\dfrac{2}{3}}{m=-1}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=C]
+  \StemOptions[0.42][\normalsize]{(-5,-2),\ (5,2)}{m=\dfrac{5}{2}}{m=-\dfrac{2}{5}}{m=\dfrac{2}{5}}{m=0}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=D]
+  \StemOptions[0.42][\normalsize]{(2,-4),\ (6,8)}{m=\dfrac{1}{3}}{m=1}{m=-3}{m=3}
+\end{MCQ}
+\end{MCQGrid}
+
+% #####################################################################
+%  LESSON 4-3  ·  Slope-Intercept Form
+% #####################################################################
+\StartLesson{4-3}{Slope-Intercept Form}
+\ExamTarget{MCQ}{Rewrite linear equations in slope-intercept form}{235}{Exercises 1–8}
+
+
+\PracticeSection{Rewrite linear equations in slope-intercept form}%
+  {Multiple choice · Choose the equation in slope-intercept form, $y=mx+b$.}
+
+\begin{MCQGrid}
+% ---- Textbook exercises 1–8 (page 235) ----
+\begin{MCQ}[qsource={Textbook · Ex. 1},qlevel=1,qanswer=A]
+  Slope $5$, \ $y$-intercept $-3$.\Options{y=5x-3}{y=-3x+5}{y=5x+3}{y=3x-5}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 2},qlevel=1,qanswer=B]
+  Slope $-2$, \ $y$-intercept $7$.\Options{y=7x-2}{y=-2x+7}{y=2x+7}{y=-2x-7}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 3},qlevel=1,qanswer=C]
+  Slope $-6$, \ $y$-intercept $-2$.\Options{y=-2x-6}{y=6x-2}{y=-6x-2}{y=-6x+2}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 4},qlevel=1,qanswer=D]
+  Slope $7$, \ $y$-intercept $1$.\Options{y=x+7}{y=7x-1}{y=7x}{y=7x+1}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 5},qlevel=1,qanswer=A]
+  Slope $3$, \ $y$-intercept $2$.\Options{y=3x+2}{y=2x+3}{y=3x-2}{y=5x}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 6},qlevel=1,qanswer=B]
+  Slope $-4$, \ $y$-intercept $-9$.\Options{y=-9x-4}{y=-4x-9}{y=4x-9}{y=-4x+9}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 7},qlevel=2,qanswer=C]
+  Slope $1$, \ $y$-intercept $-12$.\Options{y=-12x+1}{y=x+12}{y=x-12}{y=-12x}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 8},qlevel=2,qanswer=D]
+  Slope $0$, \ $y$-intercept $8$.\Options{y=8x}{x=8}{y=0}{y=8}
+\end{MCQ}
+% ---- New practice: rewrite in slope-intercept form ----
+\begin{MCQ}[qlevel=1,qanswer=A]
+  Rewrite\enspace{\large$3x+y=7$}\,.\Options{y=-3x+7}{y=3x+7}{y=7x-3}{y=-3x-7}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=B]
+  Rewrite\enspace{\large$6x+2y=10$}\,.\Options{y=-6x+10}{y=-3x+5}{y=3x+5}{y=-3x+10}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=C]
+  Rewrite\enspace{\large$4x-2y=8$}\,.\Options{y=-2x+4}{y=2x+4}{y=2x-4}{y=4x-8}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=B]
+  Rewrite\enspace{\large$x+3y=9$}\,.\Options{y=-3x+9}{y=-\tfrac{1}{3}x+3}{y=\tfrac{1}{3}x+3}{y=-x+3}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=C]
+  Rewrite\enspace{\large$-8x+4y=-12$}\,.\Options{y=-2x-3}{y=2x+3}{y=2x-3}{y=-8x-12}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=D]
+  Rewrite\enspace{\large$3y-2x=12$}\,.\Options{y=2x+12}{y=-\tfrac{2}{3}x+4}{y=\tfrac{3}{2}x+4}{y=\tfrac{2}{3}x+4}
+\end{MCQ}
+\end{MCQGrid}
+
+% #####################################################################
+%  LESSON 4-4  ·  Transformations of Linear Functions
+% #####################################################################
+\StartLesson{4-4}{Transformations of Linear Functions}
+\ExamTarget{MCQ}{Apply dilations to linear functions}{248}{Exercises 10–15}
+
+
+\PracticeSection{Apply dilations to linear functions}%
+  {Multiple choice · Describe the dilation of $g(x)$ compared with the parent function $f(x)=x$.}
+
+\begin{MCQGrid}
+\begin{MCQ}[stack,qsource={Textbook · Ex. 10},qlevel=1,qanswer=A]
+  {\large$g(x)=5(x)$}\Options{\T{vertical stretch, factor $5$ (steeper)}}{\T{vertical compression, factor $\tfrac{1}{5}$ (less steep)}}{\T{vertical compression, factor $5$ (less steep)}}{\T{horizontal stretch, factor $5$ (less steep)}}
+\end{MCQ}
+\begin{MCQ}[stack,qsource={Textbook · Ex. 11},qlevel=1,qanswer=B]
+  {\large$g(x)=\tfrac13(x)$}\Options{\T{vertical stretch, factor $3$ (steeper)}}{\T{vertical compression, factor $\tfrac{1}{3}$ (less steep)}}{\T{vertical compression, factor $3$ (less steep)}}{\T{horizontal compression, factor $\tfrac{1}{3}$ (steeper)}}
+\end{MCQ}
+\begin{MCQ}[stack,qsource={Textbook · Ex. 12},qlevel=1,qanswer=C]
+  {\large$g(x)=1.5(x)$}\Options{\T{vertical compression, factor $1.5$ (less steep)}}{\T{vertical stretch, factor $\tfrac{2}{3}$ (steeper)}}{\T{vertical stretch, factor $1.5$ (steeper)}}{\T{horizontal stretch, factor $1.5$ (less steep)}}
+\end{MCQ}
+\begin{MCQ}[stack,qsource={Textbook · Ex. 13},qlevel=2,qanswer=D]
+  {\large$g(x)=(3x)$}\Options{\T{vertical compression, factor $\tfrac{1}{3}$ (less steep)}}{\T{horizontal compression, factor $3$ (steeper)}}{\T{horizontal stretch, factor $3$ (less steep)}}{\T{horizontal compression, factor $\tfrac{1}{3}$ (steeper)}}
+\end{MCQ}
+\begin{MCQ}[stack,qsource={Textbook · Ex. 14},qlevel=2,qanswer=A]
+  {\large$g(x)=\left(\tfrac34x\right)$}\Options{\T{horizontal stretch, factor $\tfrac{4}{3}$ (less steep)}}{\T{horizontal stretch, factor $\tfrac{3}{4}$ (less steep)}}{\T{vertical stretch, factor $\tfrac{4}{3}$ (steeper)}}{\T{horizontal compression, factor $\tfrac{4}{3}$ (steeper)}}
+\end{MCQ}
+\begin{MCQ}[stack,qsource={Textbook · Ex. 15},qlevel=2,qanswer=B]
+  {\large$g(x)=(0.4x)$}\Options{\T{horizontal compression, factor $0.4$ (steeper)}}{\T{horizontal stretch, factor $2.5$ (less steep)}}{\T{vertical stretch, factor $2.5$ (steeper)}}{\T{horizontal stretch, factor $0.4$ (less steep)}}
+\end{MCQ}
+\begin{MCQ}[stack,qlevel=1,qanswer=C]
+  {\large$g(x)=4(x)$}\Options{\T{horizontal stretch, factor $4$ (less steep)}}{\T{vertical compression, factor $\tfrac{1}{4}$ (less steep)}}{\T{vertical stretch, factor $4$ (steeper)}}{\T{vertical compression, factor $4$ (less steep)}}
+\end{MCQ}
+\begin{MCQ}[stack,qlevel=1,qanswer=D]
+  {\large$g(x)=\tfrac12(x)$}\Options{\T{vertical stretch, factor $2$ (steeper)}}{\T{vertical stretch, factor $\tfrac{1}{2}$ (steeper)}}{\T{vertical compression, factor $2$ (less steep)}}{\T{vertical compression, factor $\tfrac{1}{2}$ (less steep)}}
+\end{MCQ}
+\begin{MCQ}[stack,qlevel=2,qanswer=A]
+  {\large$g(x)=(5x)$}\Options{\T{horizontal compression, factor $\tfrac{1}{5}$ (steeper)}}{\T{horizontal compression, factor $5$ (steeper)}}{\T{vertical compression, factor $\tfrac{1}{5}$ (less steep)}}{\T{horizontal stretch, factor $5$ (less steep)}}
+\end{MCQ}
+\begin{MCQ}[stack,qlevel=2,qanswer=B]
+  {\large$g(x)=\left(\tfrac15x\right)$}\Options{\T{horizontal compression, factor $\tfrac{1}{5}$ (steeper)}}{\T{horizontal stretch, factor $5$ (less steep)}}{\T{vertical stretch, factor $5$ (steeper)}}{\T{horizontal stretch, factor $\tfrac{1}{5}$ (less steep)}}
+\end{MCQ}
+\end{MCQGrid}
+
+% #####################################################################
+%  LESSON 4-5  ·  Arithmetic Sequences
+% #####################################################################
+\StartLesson{4-5}{Arithmetic Sequences}
+\ExamTarget{FRQ}{Apply the arithmetic sequence formula}{256}{Exercises 23–26}
+
+
+\PracticeSection{Apply the arithmetic sequence formula}%
+  {Written answer · Write the function, graph it, then answer part c. Show your steps.}
+
+\begin{FRQGrid}
+\begin{FRQ}[qsource={Textbook · Ex. 23},qlevel=2,lines=3,final={$a_n=128-4n$; 72 oz}]
+  \textbf{Water.} Each cup holds 4 oz. Wanda starts with a 128-oz cooler.\par
+  \textbf{a.} Write a function.\quad \textbf{b.} Graph it.\quad \textbf{c.} How much water is left after the 14th cup?
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · Ex. 24},qlevel=1,lines=3,final={$a_n=2n+18$; 68 seats}]
+  \textbf{Theater.} 20 seats in row 1, 22 in row 2, 24 in row 3, and so on for 25 rows.\par
+  \textbf{a.} Write a function.\quad \textbf{b.} Graph it.\quad \textbf{c.} How many seats are in the last row?
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · Ex. 25},qlevel=3,lines=3,final={$a_n=0.17n+0.71$; 8 oz}]
+  \textbf{Postage.} \$0.88 for the first ounce, \$0.17 for each extra ounce: \$0.88, \$1.05, \$1.22, \dots\par
+  \textbf{a.} Write a function.\quad \textbf{b.} Graph it.\quad \textbf{c.} How much did an envelope weigh that cost \$2.07?
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · Ex. 26},qlevel=1,lines=3,final={$a_n=1.99n$; \$17.91}]
+  \textbf{Downloads.} 1 episode costs \$1.99, 2 cost \$3.98, 3 cost \$5.97.\par
+  \textbf{a.} Write a function.\quad \textbf{b.} Graph it.\quad \textbf{c.} What is the cost of 9 episodes?
+\end{FRQ}
+\begin{FRQ}[qlevel=2,lines=3,final={$a_n=15n+35$; \$185}]
+  \textbf{Savings.} Omar has \$50 in week 1 and adds \$15 every week: \$50, \$65, \$80, \dots\par
+  \textbf{a.} Write a function.\quad \textbf{b.} Graph it.\quad \textbf{c.} How much does he have in week 10?
+\end{FRQ}
+\begin{FRQ}[qlevel=3,lines=3,final={$a_n=3n+9$; day 17}]
+  \textbf{Training.} Sara runs 12 min on day 1, then 3 min more each day: 12, 15, 18, \dots\par
+  \textbf{a.} Write a function.\quad \textbf{b.} Graph it.\quad \textbf{c.} On which day does she run 60 min?
+\end{FRQ}
+\end{FRQGrid}
+
+% #####################################################################
+%  LESSON 4-6  ·  Piecewise and Step Functions
+% #####################################################################
+\StartLesson{4-6}{Piecewise and Step Functions}
+\ExamTarget{MCQ}{Identify and graph step functions}{261}{Example 2}
+\ExamTarget{MCQ}{Identify and graph step functions}{265}{Exercises 18a–d}
+
+
+\PracticeSection{Identify and graph step functions}%
+  {Multiple choice · Use the greatest integer function $\llbracket x\rrbracket$ (round down).}
+
+\begin{MCQGrid}
+\begin{MCQ}[wide,qsource={Textbook · Ex. 2},qlevel=2,qanswer=B]
+  Which graph shows $f(x)=\llbracket x+1\rrbracket$?\par\vspace{1mm}
+  \Options{\StepGraph{0}{0}}{\StepGraph{1}{0}}{\StepGraph{-1}{0}}{\StepGraph{1}{1}}
+\end{MCQ}
+\begin{MCQ}[wide,qlevel=2,qanswer=C]
+  Which graph shows $f(x)=\llbracket x-2\rrbracket$?\par\vspace{1mm}
+  \Options{\StepGraph{2}{0}}{\StepGraph{-2}{1}}{\StepGraph{-2}{0}}{\StepGraph{0}{0}}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 2},qlevel=1,qanswer=A]
+  \StemOptions[0.42][\normalsize]{\llbracket x+1\rrbracket\text{ at }x=-1.75}{-1}{0}{-2}{-0.75}
+\end{MCQ}
+\begin{MCQ}[qlevel=1,qanswer=D]
+  \StemOptions[0.42][\normalsize]{\llbracket x-2\rrbracket\text{ at }x=0.25}{-1.75}{-1}{0}{-2}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 2},qlevel=2,qanswer=C]
+  What is the \textbf{domain} of $f(x)=\llbracket x+1\rrbracket$?
+  \Options{\T{all integers}}{\T{$x\ge -1$}}{\T{all real numbers}}{\T{whole numbers}}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 2},qlevel=2,qanswer=B]
+  What is the \textbf{range} of $f(x)=\llbracket x+1\rrbracket$?
+  \Options{\T{all real numbers}}{\T{all integers}}{\T{$y\ge 1$}}{\T{$y\ge 0$}}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=A]
+  How does the graph of $\llbracket x+3\rrbracket$ compare with the graph of $\llbracket x\rrbracket$?
+  \Options{\T{3 units left}}{\T{3 units right}}{\T{3 units down}}{\T{3 times as steep}}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=D]
+  For $f(x)=\llbracket x\rrbracket$, which point is \textbf{not} on the graph?
+  \Options{(0.5,\,0)}{(-0.5,\,-1)}{(2,\,2)}{(1,\,0)}
+\end{MCQ}
+\end{MCQGrid}
+
+\PracticeSection{Identify and graph step functions}%
+  {Multiple choice · Evaluate each step function. Inside first, round down, then multiply.}
+
+\begin{MCQGrid}
+% ---- Textbook exercise 18 (page 265) ----
+\begin{MCQ}[qsource={Textbook · Ex. 18a},qlevel=1,qanswer=A]
+  \StemOptions[0.42][\normalsize]{\begin{array}{l}f(x)=2\llbracket x-1\rrbracket\\[1mm]f(1.5)=\ ?\end{array}}{0}{1}{2}{-1}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 18b},qlevel=1,qanswer=B]
+  \StemOptions[0.42][\normalsize]{\begin{array}{l}f(x)=2\llbracket x-1\rrbracket\\[1mm]f(2.2)=\ ?\end{array}}{2.4}{2}{4}{1}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 18c},qlevel=2,qanswer=C]
+  \StemOptions[0.42][\normalsize]{\begin{array}{l}f(x)=2\llbracket x-1\rrbracket\\[1mm]f(9.7)=\ ?\end{array}}{18}{17.4}{16}{8}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 18d},qlevel=3,qanswer=D]
+  \StemOptions[0.42][\normalsize]{\begin{array}{l}f(x)=2\llbracket x-1\rrbracket\\[1mm]f(-1.25)=\ ?\end{array}}{-4}{-4.5}{-2}{-6}
+\end{MCQ}
+% ---- New practice ----
+\begin{MCQ}[qlevel=1,qanswer=A]
+  \StemOptions[0.42][\normalsize]{\begin{array}{l}g(x)=3\llbracket x+2\rrbracket\\[1mm]g(0.5)=\ ?\end{array}}{6}{7.5}{9}{2}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=B]
+  \StemOptions[0.42][\normalsize]{\begin{array}{l}g(x)=3\llbracket x+2\rrbracket\\[1mm]g(-0.5)=\ ?\end{array}}{6}{3}{4.5}{0}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=C]
+  \StemOptions[0.42][\normalsize]{\begin{array}{l}g(x)=3\llbracket x+2\rrbracket\\[1mm]g(-2.5)=\ ?\end{array}}{0}{-1.5}{-3}{-6}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=D]
+  \StemOptions[0.42][\normalsize]{\begin{array}{l}h(x)=\llbracket x\rrbracket+4\\[1mm]h(-1.2)=\ ?\end{array}}{3}{2.8}{-5}{2}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=A]
+  \StemOptions[0.42][\normalsize]{\begin{array}{l}k(x)=-2\llbracket x\rrbracket\\[1mm]k(3.6)=\ ?\end{array}}{-6}{-8}{6}{-7.2}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=B]
+  \StemOptions[0.42][\normalsize]{\begin{array}{l}m(x)=\llbracket 2x\rrbracket\\[1mm]m(1.7)=\ ?\end{array}}{2}{3}{4}{3.4}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=C]
+  \StemOptions[0.42][\normalsize]{\begin{array}{l}q(x)=4\llbracket x-0.5\rrbracket\\[1mm]q(3)=\ ?\end{array}}{10}{12}{8}{2}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=D]
+  \StemOptions[0.42][\normalsize]{\begin{array}{l}r(x)=\llbracket \tfrac{x}{2}\rrbracket\\[1mm]r(-3)=\ ?\end{array}}{-1.5}{-1}{1}{-2}
+\end{MCQ}
+\end{MCQGrid}
+
+% #####################################################################
+%  LESSON 4-7  ·  Absolute Value Functions
+% #####################################################################
+\StartLesson{4-7}{Absolute Value Functions}
+\ExamTarget{MCQ}{Apply translations to absolute value functions}{267}{Example 1}
+\ExamTarget{MCQ}{Graph absolute value functions}{277}{Exercises 7–12}
+
+
+\PracticeSection{Apply translations to absolute value functions}%
+  {Multiple choice · Describe the translation of $g(x)$ compared with $f(x)=|x|$.}
+
+\begin{MCQGrid}
+\begin{MCQ}[qsource={Textbook · Ex. 1},qlevel=1,qanswer=A]
+  \StemOptions[0.3][\normalsize]{g(x)=|x|-3}{\T{3 units down}}{\T{3 units up}}{\T{3 units left}}{\T{3 units right}}
+\end{MCQ}
+\begin{MCQ}[qlevel=1,qanswer=B]
+  \StemOptions[0.3][\normalsize]{g(x)=|x|+4}{\T{4 units down}}{\T{4 units up}}{\T{4 units right}}{\T{4 units left}}
+\end{MCQ}
+\begin{MCQ}[qlevel=1,qanswer=C]
+  \StemOptions[0.3][\normalsize]{g(x)=|x-3|}{\T{3 units left}}{\T{3 units down}}{\T{3 units right}}{\T{3 units up}}
+\end{MCQ}
+\begin{MCQ}[qlevel=1,qanswer=D]
+  \StemOptions[0.3][\normalsize]{g(x)=|x+6|}{\T{6 units right}}{\T{6 units up}}{\T{6 units down}}{\T{6 units left}}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=A]
+  \StemOptions[0.3][\normalsize]{g(x)=|x|-7}{\T{7 units down}}{\T{7 units left}}{\T{7 units up}}{\T{7 units right}}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=B]
+  \StemOptions[0.3][\normalsize]{g(x)=|x+1|}{\T{1 unit right}}{\T{1 unit left}}{\T{1 unit up}}{\T{1 unit down}}
+\end{MCQ}
+\begin{MCQ}[wide,qlevel=2,qanswer=C]
+  Describe $g(x)=|x-2|+5$ compared with $f(x)=|x|$.
+  \Options{\T{2 left, 5 up}}{\T{2 right, 5 down}}{\T{2 right, 5 up}}{\T{5 right, 2 up}}
+\end{MCQ}
+\begin{MCQ}[wide,qlevel=3,qanswer=D]
+  Describe $g(x)=|x+4|-1$ compared with $f(x)=|x|$.
+  \Options{\T{4 right, 1 down}}{\T{4 left, 1 up}}{\T{1 left, 4 down}}{\T{4 left, 1 down}}
+\end{MCQ}
+\begin{MCQ}[wide,qlevel=3,qanswer=A]
+  Which function is $f(x)=|x|$ translated \textbf{5 units right and 2 units down}?
+  \Options{g(x)=|x-5|-2}{g(x)=|x+5|-2}{g(x)=|x-2|+5}{g(x)=|x-5|+2}
+\end{MCQ}
+\begin{MCQ}[wide,qlevel=3,qanswer=B]
+  What is the vertex of $g(x)=|x+3|+6$?
+  \Options{(3,\,6)}{(-3,\,6)}{(6,\,-3)}{(-3,\,-6)}
+\end{MCQ}
+\end{MCQGrid}
+
+\PracticeSection{Graph absolute value functions}%
+  {Multiple choice · Use the graph to choose the equation of the function.}
+
+\begin{MCQGrid}
+% ---- Textbook exercises 7–12 (page 277) ----
+\begin{MCQ}[qsource={Textbook · Ex. 7},qlevel=1,qanswer=A]
+  \StemOptions[0.36][]{\AbsGraph{-2}{0}}{|x+2|}{|x-2|}{|x|+2}{|x|-2}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 8},qlevel=2,qanswer=B]
+  \StemOptions[0.36][]{\AbsGraph{-1}{-2}}{|x-1|-2}{|x+1|-2}{|x+2|-1}{|x+1|+2}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 9},qlevel=1,qanswer=C]
+  \StemOptions[0.36][]{\AbsGraph{0}{-3}}{|x-3|}{|x|+3}{|x|-3}{|x+3|}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 10},qlevel=2,qanswer=D]
+  \StemOptions[0.36][]{\AbsGraph{-5}{0}}{|x-5|}{|x|-5}{|x|+5}{|x+5|}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 11},qlevel=1,qanswer=A]
+  \StemOptions[0.36][]{\AbsGraph{0}{1}}{|x|+1}{|x|-1}{|x+1|}{|x-1|}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 12},qlevel=3,qanswer=B]
+  \StemOptions[0.36][]{\AbsGraph{4}{-2}}{|x+4|-2}{|x-4|-2}{|x-2|-4}{|x-4|+2}
+\end{MCQ}
+% ---- New practice ----
+\begin{MCQ}[qlevel=2,qanswer=C]
+  \StemOptions[0.36][]{\AbsGraph{3}{1}}{|x+3|+1}{|x-1|+3}{|x-3|+1}{|x-3|-1}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=D]
+  \StemOptions[0.36][]{\AbsGraph{-2}{3}}{|x-2|+3}{|x+3|-2}{|x+2|-3}{|x+2|+3}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=A]
+  \StemOptions[0.36][]{\AbsGraph{2}{0}}{|x-2|}{|x+2|}{|x|-2}{|x|+2}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=B]
+  \StemOptions[0.36][]{\AbsGraph{-3}{-4}}{|x-3|-4}{|x+3|-4}{|x+4|-3}{|x+3|+4}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=C]
+  \StemOptions[0.36][]{\AbsGraph{0}{4}}{|x+4|}{|x|-4}{|x|+4}{|x-4|}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=D]
+  \StemOptions[0.36][]{\AbsGraph{1}{-5}}{|x+1|-5}{|x-5|+1}{|x-1|+5}{|x-1|-5}
+\end{MCQ}
+\end{MCQGrid}
+
+% #####################################################################
+%  LESSON 5-1  ·  Writing Equations in Slope-Intercept Form
+% #####################################################################
+\StartLesson{5-1}{Writing Equations in Slope-Intercept Form}
+\ExamTarget{MCQ}{Write an equation of a line in slope-intercept form given the slope and one point}{293}{Exercises 33–42}
+
+
+\PracticeSection{Write an equation of a line in slope-intercept form given the slope and one point}%
+  {Multiple choice · Choose the correct answer.}
+
+\begin{MCQGrid}
+% ---- Textbook exercises 33–42 (page 293) ----
+\begin{MCQ}[qsource={Textbook · Ex. 33},qlevel=1,qanswer=B]
+  Is $(3,-1)$ on $y=\tfrac13x+5$?
+  \Options{\T{Yes: $y=-1$}}{\T{No: $y=6$}}{\T{No: $y=4$}}{\T{Yes: $y=6$}}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 34},qlevel=1,qanswer=A]
+  Is $(6,-2)$ on $y=\tfrac12x-5$?
+  \Options{\T{Yes: $y=-2$}}{\T{No: $y=-8$}}{\T{No: $y=2$}}{\T{Yes: $y=8$}}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 35},qlevel=2,qanswer=C]
+  Is $(15,-13)$ on $y=-\tfrac15x-10$?
+  \Options{\T{No: $y=-7$}}{\T{No: $y=-25$}}{\T{Yes: $y=-13$}}{\T{No: $y=13$}}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 36},qlevel=2,qanswer=D]
+  Is $(3,3)$ on $y=-\tfrac23x+1$?
+  \Options{\T{Yes: $y=3$}}{\T{No: $y=3$}}{\T{Yes: $y=-1$}}{\T{No: $y=-1$}}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 37},qlevel=1,qanswer=A]
+  Another point on the line through $(2,-4)$, $(4,-2)$?
+  \Options{(6,\,0)}{(6,\,-6)}{(0,\,-4)}{(3,\,-4)}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 38},qlevel=1,qanswer=B]
+  Another point on the line through $(0,5)$, $(4,1)$?
+  \Options{(8,\,5)}{(2,\,3)}{(1,\,1)}{(5,\,4)}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 39},qlevel=2,qanswer=C]
+  Another point on the line through $(-3,1)$, $(-1,-3)$?
+  \Options{(1,\,-1)}{(0,\,-4)}{(1,\,-7)}{(-5,\,-3)}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 40},qlevel=2,qanswer=D]
+  Another point on the line through $(0,4)$, $(2,5)$?
+  \Options{(4,\,8)}{(1,\,6)}{(-2,\,5)}{(4,\,6)}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 41},qlevel=3,qanswer=A]
+  Another point on the line through $(-2,9)$, $(2,-1)$?
+  \Options{(6,\,-11)}{(6,\,9)}{(4,\,-3)}{(0,\,5)}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 42},qlevel=3,qanswer=B]
+  Another point on the line through $(3,0)$, $(12,3)$?
+  \Options{(6,\,3)}{(6,\,1)}{(9,\,1)}{(0,\,3)}
+\end{MCQ}
+% ---- New practice: slope and one point ----
+\begin{MCQ}[qlevel=1,qanswer=C]
+  Slope $3$, through $(1,5)$.
+  \Options{y=3x+5}{y=3x-2}{y=3x+2}{y=5x+3}
+\end{MCQ}
+\begin{MCQ}[qlevel=1,qanswer=D]
+  Slope $-2$, through $(2,1)$.
+  \Options{y=-2x+1}{y=-2x-3}{y=2x-3}{y=-2x+5}
+\end{MCQ}
+\end{MCQGrid}
+
+% #####################################################################
+%  LESSON 5-2  ·  Writing Equations in Standard and Point-Slope Forms
+% #####################################################################
+\StartLesson{5-2}{Writing Equations in Standard and Point-Slope Forms}
+\ExamTarget{MCQ}{Write equations of lines in point-slope form given two points}{297, 303}{Example 2 · Exercises 4–7}
+\ExamTarget{MCQ}{Write an equation of the line that passes through a given point, parallel to a given line}{304}{Exercises 25–29}
+\ExamTarget{MCQ}{Create and identify equations of parallel or perpendicular lines}{304, 305}{Exercises 31–43}
+\ExamTarget{FRQ}{Create and identify equations of parallel or perpendicular lines}{301, 302}{Examples 8–9}
+
+
+\PracticeSection{Write equations of lines in point-slope form given two points}%
+  {Multiple choice · Choose an equation in point-slope form for the line through the two points.}
+
+\begin{MCQGrid}
+\begin{MCQ}[qsource={Textbook · Ex. 2},qlevel=1,qanswer=A]
+  $(2,-7)$ and $(6,-3)$
+  \Options{y+7=x-2}{y-7=x+2}{y+7=2(x-2)}{y+7=-(x-2)}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 4},qlevel=2,qanswer=B]
+  $(-4,6)$ and $(-2,22)$
+  \Options{y-6=8(x-4)}{y-6=8(x+4)}{y+6=8(x+4)}{y-6=\tfrac18(x+4)}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 5},qlevel=2,qanswer=C]
+  $(1,-3)$ and $(4,-15)$
+  \Options{y-3=-4(x-1)}{y+3=4(x-1)}{y+3=-4(x-1)}{y+3=-4(x+1)}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 6},qlevel=1,qanswer=D]
+  $(4,-6)$ and $(6,-4)$
+  \Options{y-6=x-4}{y+6=-(x-4)}{y+6=x+4}{y+6=x-4}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 7},qlevel=2,qanswer=A]
+  $(3,3)$ and $(6,7)$
+  \Options{y-3=\tfrac43(x-3)}{y-3=\tfrac34(x-3)}{y+3=\tfrac43(x+3)}{y-3=4(x-3)}
+\end{MCQ}
+\begin{MCQ}[qlevel=1,qanswer=B]
+  $(1,2)$ and $(3,8)$
+  \Options{y-2=2(x-1)}{y-2=3(x-1)}{y+2=3(x+1)}{y-1=3(x-2)}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=C]
+  $(-2,5)$ and $(2,-3)$
+  \Options{y-5=2(x+2)}{y+5=-2(x-2)}{y-5=-2(x+2)}{y-5=-\tfrac12(x+2)}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=D]
+  $(0,-1)$ and $(5,9)$
+  \Options{y-1=2x}{y+1=\tfrac12x}{y+1=2(x+5)}{y+1=2x}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=A]
+  $(-6,4)$ and $(3,-2)$
+  \Options{y-4=-\tfrac23(x+6)}{y-4=-\tfrac32(x+6)}{y+4=-\tfrac23(x-6)}{y-4=\tfrac23(x+6)}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=B]
+  $(-5,-1)$ and $(-1,7)$
+  \Options{y-1=2(x-5)}{y+1=2(x+5)}{y+1=\tfrac12(x+5)}{y+1=-2(x+5)}
+\end{MCQ}
+\end{MCQGrid}
+
+\PracticeSection{Write an equation of the line that passes through a given point, parallel to a given line}%
+  {Multiple choice · Choose the line in slope-intercept form through the point, parallel to the given line.}
+
+\begin{MCQGrid}
+% ---- Textbook exercises 25–29 (page 304) ----
+\begin{MCQ}[qsource={Textbook · Ex. 25},qlevel=1,qanswer=A]
+  $(3,-2)$;\ \ parallel to $y=x+4$
+  \Options{y=x-5}{y=x+4}{y=-x+1}{y=x+1}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 26},qlevel=1,qanswer=B]
+  $(4,-3)$;\ \ parallel to $y=3x-5$
+  \Options{y=3x-5}{y=3x-15}{y=-\tfrac13x-\tfrac53}{y=3x+9}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 27},qlevel=1,qanswer=C]
+  $(0,2)$;\ \ parallel to $y=-5x+8$
+  \Options{y=\tfrac15x+2}{y=-5x+8}{y=-5x+2}{y=2x-5}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 28},qlevel=2,qanswer=D]
+  $(-4,2)$;\ \ parallel to $y=-\tfrac12x+6$
+  \Options{y=2x+10}{y=-\tfrac12x+4}{y=-\tfrac12x+6}{y=-\tfrac12x}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 29},qlevel=3,qanswer=A]
+  $(-2,3)$;\ \ parallel to $y=-\tfrac34x+4$
+  \Options{y=-\tfrac34x+\tfrac32}{y=-\tfrac34x+\tfrac92}{y=\tfrac43x+\tfrac{17}{3}}{y=-\tfrac34x+4}
+\end{MCQ}
+\begin{MCQ}[qlevel=1,qanswer=B]
+  $(1,6)$;\ \ parallel to $y=2x-7$
+  \Options{y=2x-7}{y=2x+4}{y=-\tfrac12x+\tfrac{13}{2}}{y=2x+6}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=C]
+  $(-3,-1)$;\ \ parallel to $y=-4x+2$
+  \Options{y=-4x-1}{y=4x+11}{y=-4x-13}{y=\tfrac14x-\tfrac14}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=D]
+  $(6,0)$;\ \ parallel to $y=\tfrac13x+5$
+  \Options{y=\tfrac13x+5}{y=-3x+18}{y=\tfrac13x+2}{y=\tfrac13x-2}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=A]
+  $(2,-5)$;\ \ parallel to $2x+y=7$
+  \Options{y=-2x-1}{y=2x-9}{y=-2x+7}{y=\tfrac12x-6}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=B]
+  $(-4,1)$;\ \ parallel to $x-2y=6$
+  \Options{y=-2x-7}{y=\tfrac12x+3}{y=\tfrac12x-3}{y=-\tfrac12x-1}
+\end{MCQ}
+\end{MCQGrid}
+
+\PracticeSection{Create and identify equations of parallel or perpendicular lines}%
+  {Multiple choice · Decide how the lines are related, or rewrite the equation.}
+
+\begin{MCQGrid}
+% ---- Textbook exercises 31–43 (pages 304–305) ----
+\begin{MCQ}[qsource={Textbook · Ex. 31},qlevel=1,qanswer=C]
+  {\large$y=4x+3$}\quad and\quad {\large$4x+y=3$}\Options{\T{parallel}}{\T{perpendicular}}{\T{neither}}{\T{same line}}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 32},qlevel=1,qanswer=A]
+  {\large$y=-2x$}\quad and\quad {\large$2x+y=3$}\Options{\T{parallel}}{\T{perpendicular}}{\T{neither}}{\T{same line}}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 33},qlevel=2,qanswer=B]
+  {\large$3x+5y=10$}\quad and\quad {\large$5x-3y=-6$}\Options{\T{parallel}}{\T{perpendicular}}{\T{neither}}{\T{same line}}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 34},qlevel=2,qanswer=C]
+  {\large$-3x+4y=8$}\quad and\quad {\large$-4x+3y=-6$}\Options{\T{parallel}}{\T{perpendicular}}{\T{neither}}{\T{same line}}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 35},qlevel=2,qanswer=C]
+  {\large$2x+5y=15$}\quad and\quad {\large$3x+5y=15$}\Options{\T{parallel}}{\T{perpendicular}}{\T{neither}}{\T{same line}}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 36},qlevel=2,qanswer=A]
+  {\large$2x+7y=-35$}\quad and\quad {\large$4x+14y=-42$}\Options{\T{parallel}}{\T{perpendicular}}{\T{neither}}{\T{same line}}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 37},qlevel=3,qanswer=D]
+  Standard form: $x$-int.\ $4$, $y$-int.\ $5$
+  \Options{4x+5y=20}{5x-4y=20}{x+y=9}{5x+4y=20}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 38},qlevel=2,qanswer=B]
+  $y=mx+b$ for $y+3=-\tfrac13(2x+6)$:
+  \Options{y=-\tfrac23x-1}{y=-\tfrac23x-5}{y=-\tfrac23x+5}{y=-2x-9}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 39},qlevel=1,qanswer=A]
+  $y=mx+b$ for $y+4=3(3x+3)$:
+  \Options{y=9x+5}{y=9x+13}{y=3x+5}{y=9x-1}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 40},qlevel=1,qanswer=C]
+  $y=mx+b$ for $y-6=-3(x+2)$:
+  \Options{y=-3x+12}{y=-3x+4}{y=-3x}{y=3x}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 41},qlevel=2,qanswer=D]
+  $y=mx+b$ for $y-9=-6(x+9)$:
+  \Options{y=-6x+63}{y=-6x-63}{y=-6x+45}{y=-6x-45}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 42},qlevel=3,qanswer=B]
+  $y=mx+b$ for $y+4=\tfrac23(x+7)$:
+  \Options{y=\tfrac23x+3}{y=\tfrac23x+\tfrac23}{y=\tfrac23x-\tfrac{26}{3}}{y=\tfrac32x+\tfrac{13}{2}}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 43},qlevel=3,qanswer=C]
+  $Ax+By=C$ for $y+7=\tfrac{9}{10}(x+3)$:
+  \Options{9x-10y=-43}{9x+10y=43}{9x-10y=43}{10x-9y=43}
+\end{MCQ}
+\end{MCQGrid}
+
+\PracticeSection{Create and identify equations of parallel or perpendicular lines}%
+  {Written answer · Show every step. Write the final equation in slope-intercept form.}
+
+\begin{FRQGrid}
+\begin{FRQ}[qsource={Textbook · Ex. 8},qlevel=2,lines=4,final={$y=\frac23x-\frac83$}]
+  Write an equation of the line through $(1,-2)$ that is \textbf{perpendicular} to $3x+2y=12$.
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · p.\,302},qlevel=2,lines=4,final={$y=-6x+30$}]
+  Write an equation of the line through $(5,0)$ that is \textbf{perpendicular} to $x-6y=1$.
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · p.\,301},qlevel=1,lines=4,final={$y=\frac34x-4$}]
+  Write an equation of the line through $(8,2)$ that is \textbf{parallel} to $y=\tfrac34x+2$.
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · Ex. 9},qlevel=2,lines=4,final={neither ($\frac34$ and $\frac43$)}]
+  Are $\overleftrightarrow{AB}$ and $\overleftrightarrow{EF}$ parallel, perpendicular, or neither?
+  $A(6,8)$, $B(2,5)$, $E(-6,-3)$, $F(0,5)$.
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · p.\,302},qlevel=2,lines=4,final={parallel (both $-\frac25$)}]
+  Are $\overleftrightarrow{CD}$ and $\overleftrightarrow{KL}$ parallel, perpendicular, or neither?
+  $C(4,10)$, $D(-1,12)$, $K(6,-5)$, $L(1,-3)$.
+\end{FRQ}
+\begin{FRQ}[qlevel=3,lines=4,final={$y=-\frac13x$}]
+  Write an equation of the line through $(-3,1)$ that is \textbf{perpendicular} to $y=3x-2$.
+\end{FRQ}
+\end{FRQGrid}
+
+% #####################################################################
+%  LESSON 5-6  ·  Inverses of Linear Functions
+% #####################################################################
+\StartLesson{5-6}{Inverses of Linear Functions}
+\ExamTarget{MCQ}{Construct the inverses of relations}{331}{Exercises 4–9}
+
+
+\PracticeSection{Construct the inverses of relations}%
+  {Multiple choice · Find the inverse of each relation.}
+
+\begin{MCQGrid}
+% ---- Textbook exercises 4–9 (page 331) ----
+\begin{MCQ}[widegrid,qsource={Textbook · Ex. 4},qlevel=1,qanswer=A]
+  $\{(-3,2),\ (-1,8),\ (1,14),\ (3,20)\}$
+  \Options{\{(2,-3),(8,-1),(14,1),(20,3)\}}{\{(3,-2),(1,-8),(-1,-14),(-3,-20)\}}{\{(-2,3),(-8,1),(-14,-1),(-20,-3)\}}{\{(2,3),(8,1),(14,-1),(20,-3)\}}
+\end{MCQ}
+\begin{MCQ}[widegrid,qsource={Textbook · Ex. 5},qlevel=1,qanswer=B]
+  $\{(5,-3),\ (2,-9),\ (-1,-15),\ (-4,-21)\}$
+  \Options{\{(-5,3),(-2,9),(1,15),(4,21)\}}{\{(-3,5),(-9,2),(-15,-1),(-21,-4)\}}{\{(3,-5),(9,-2),(15,1),(21,4)\}}{\{(-3,-5),(-9,-2),(-15,1),(-21,4)\}}
+\end{MCQ}
+\begin{MCQ}[widegrid,qsource={Textbook · Ex. 6},qlevel=1,qanswer=C]
+  $\{(4,6),\ (3,1),\ (2,-4),\ (1,-9)\}$
+  \Options{\{(-4,-6),(-3,-1),(-2,4),(-1,9)\}}{\{(6,-4),(1,-3),(-4,-2),(-9,-1)\}}{\{(6,4),(1,3),(-4,2),(-9,1)\}}{\{(4,6),(3,1),(2,-4),(1,-9)\}}
+\end{MCQ}
+\begin{MCQ}[widegrid,qsource={Textbook · Ex. 7},qlevel=2,qanswer=D]
+  $\{(-1,16),\ (-2,12),\ (-3,8),\ (-4,4)\}$
+  \Options{\{(1,-16),(2,-12),(3,-8),(4,-4)\}}{\{(16,1),(12,2),(8,3),(4,4)\}}{\{(-16,1),(-12,2),(-8,3),(-4,4)\}}{\{(16,-1),(12,-2),(8,-3),(4,-4)\}}
+\end{MCQ}
+\begin{MCQ}[widegrid,qsource={Textbook · Ex. 8},qlevel=2,qanswer=A]
+  $\{(-5,13),\ (6,10.8),\ (3,11.4),\ (-10,14)\}$
+  \Options{\{(13,-5),(10.8,6),(11.4,3),(14,-10)\}}{\{(5,-13),(-6,-10.8),(-3,-11.4),(10,-14)\}}{\{(13,5),(10.8,-6),(11.4,-3),(14,10)\}}{\{(-13,5),(-10.8,-6),(-11.4,-3),(-14,10)\}}
+\end{MCQ}
+\begin{MCQ}[widegrid,qsource={Textbook · Ex. 9},qlevel=2,qanswer=B]
+  $\{(-4,-49),\ (8,35),\ (-1,-28),\ (4,7)\}$
+  \Options{\{(4,49),(-8,-35),(1,28),(-4,-7)\}}{\{(-49,-4),(35,8),(-28,-1),(7,4)\}}{\{(49,4),(-35,-8),(28,1),(-7,-4)\}}{\{(-49,4),(35,-8),(-28,1),(7,-4)\}}
+\end{MCQ}
+% ---- New practice ----
+\begin{MCQ}[qlevel=1,qanswer=C]
+  The inverse of the point $(7,-2)$ is
+  \Options{(-7,2)}{(2,-7)}{(-2,7)}{(7,2)}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=D]
+  A relation has range $\{0,2,4\}$. What is the \textbf{domain} of its inverse?
+  \Options{\{0,-2,-4\}}{\T{all real numbers}}{\{1,2,3\}}{\{0,2,4\}}
+\end{MCQ}
+\end{MCQGrid}
+
+% #####################################################################
+%  LESSON 6-1  ·  Solving One-Step Inequalities
+% #####################################################################
+\StartLesson{6-1}{Solving One-Step Inequalities}
+\ExamTarget{MCQ}{Solve linear inequalities by using subtraction}{347}{Exercises 7–12}
+
+
+\PracticeSection{Solve linear inequalities by using subtraction}%
+  {Multiple choice · Write the inequality shown by the graph, or solve the inequality.}
+
+\begin{MCQGrid}
+% ---- Textbook exercises 7–12 (page 347) ----
+\begin{MCQ}[qsource={Textbook · Ex. 7},qlevel=1,qanswer=A]
+  \StemOptions[0.5][]{\IneqLine{-1}{o}{l}}{x<-1}{x\le-1}{x>-1}{x\ge-1}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 8},qlevel=1,qanswer=B]
+  \StemOptions[0.5][]{\IneqLine[-8][0]{-6}{o}{r}}{x<-6}{x>-6}{x\ge-6}{x\le-6}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 9},qlevel=1,qanswer=C]
+  \StemOptions[0.5][]{\IneqLine[0][8]{5}{o}{l}}{x>5}{x\le5}{x<5}{x\ge5}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 10},qlevel=1,qanswer=D]
+  \StemOptions[0.5][]{\IneqLine{1}{c}{l}}{x<1}{x\ge1}{x>1}{x\le1}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 11},qlevel=2,qanswer=A]
+  \StemOptions[0.5][]{\IneqLine[-8][0]{-5}{c}{r}}{x\ge-5}{x>-5}{x\le-5}{x<-5}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 12},qlevel=2,qanswer=B]
+  \StemOptions[0.5][]{\IneqLine[-8][0]{-6}{c}{l}}{x<-6}{x\le-6}{x\ge-6}{x>-6}
+\end{MCQ}
+% ---- New practice: solve by subtraction ----
+\begin{MCQ}[qlevel=1,qanswer=C]
+  \StemOptions[0.42][\normalsize]{m+4<9}{m<13}{m>5}{m<5}{m\le5}
+\end{MCQ}
+\begin{MCQ}[qlevel=1,qanswer=D]
+  \StemOptions[0.42][\normalsize]{x+7\ge3}{x\ge10}{x\le-4}{x\ge4}{x\ge-4}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=A]
+  \StemOptions[0.42][\normalsize]{13>18+r}{r<-5}{r>-5}{r<5}{r<31}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=B]
+  \StemOptions[0.42][\normalsize]{5+c\le1}{c\le6}{c\le-4}{c\ge-4}{c\le4}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=C]
+  \StemOptions[0.42][\normalsize]{11+m\ge15}{m\ge26}{m\le4}{m\ge4}{m>4}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=D]
+  \StemOptions[0.42][\normalsize]{-7>20+c}{c>-27}{c<13}{c<27}{c<-27}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=A]
+  \StemOptions[0.42][\normalsize]{2a\le-4+a}{a\le-4}{a\ge-4}{a\le4}{a\le-\tfrac43}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=B]
+  \StemOptions[0.42][\normalsize]{3y\le2y-6}{y\ge-6}{y\le-6}{y\le6}{y\le-\tfrac65}
+\end{MCQ}
+\end{MCQGrid}
+
+% #####################################################################
+%  LESSON 6-2  ·  Solving Multi-Step Inequalities
+% #####################################################################
+\StartLesson{6-2}{Solving Multi-Step Inequalities}
+\ExamTarget{MCQ}{Solve linear inequalities involving more than one operation}{354}{Examples 2–3}
+
+
+\PracticeSection{Solve linear inequalities involving more than one operation}%
+  {Multiple choice · Write the inequality if needed, then solve it.}
+
+\begin{MCQGrid}
+\begin{MCQ}[qsource={Textbook · Ex. 6},qlevel=1,qanswer=A]
+  Five times a number minus one is greater than or equal to negative eleven.
+  \Options{n\ge-2}{n\le-2}{n\ge-\tfrac{12}{5}}{n\ge2}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 7},qlevel=1,qanswer=B]
+  Twenty-one is greater than the sum of fifteen and two times a number.
+  \Options{n>3}{n<3}{n<18}{n<\tfrac{3}{2}}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 9},qlevel=2,qanswer=C]
+  A number divided by eight minus thirteen is greater than negative six.
+  \Options{n>-56}{n>\tfrac78}{n>56}{n<56}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 10},qlevel=2,qanswer=D]
+  The sum of the opposite of a number and six is less than or equal to five.
+  \Options{n\le1}{n\le-1}{n\ge11}{n\ge1}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 11},qlevel=3,qanswer=A]
+  Thirty-seven is less than the difference of seven and ten times a number.
+  \Options{n<-3}{n>-3}{n<3}{n>3}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 12},qlevel=3,qanswer=B]
+  Eight minus a number divided by three is greater than or equal to eleven.
+  \Options{n\ge-9}{n\le-9}{n\le9}{n\ge-1}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 14},qlevel=3,qanswer=C]
+  The difference of three times a number and six is greater than or equal to the sum of fifteen and twenty-four times a number.
+  \Options{n\ge-1}{n\le1}{n\le-1}{n\ge1}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 15},qlevel=3,qanswer=D]
+  The sum of fifteen times a number and thirty is less than the difference of ten times a number and forty-five.
+  \Options{n>-15}{n<-3}{n<15}{n<-15}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 16},qlevel=2,qanswer=A]
+  \StemOptions[0.42][\normalsize]{-3(7n+3)<6n}{n>-\tfrac13}{n<-\tfrac13}{n>\tfrac13}{n>-3}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 17},qlevel=2,qanswer=B]
+  \StemOptions[0.42][\normalsize]{21\ge3(a-7)+9}{a\ge11}{a\le11}{a\le7}{a\le\tfrac{11}{3}}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 18},qlevel=3,qanswer=C]
+  \StemOptions[0.42][\normalsize]{2y+4>2(3+y)}{y>1}{\T{all reals}}{\varnothing}{y>0}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 19},qlevel=3,qanswer=D]
+  \StemOptions[0.48][\small]{3(2-b)<10-3(b-6)}{\varnothing}{b<4}{b>-4}{\T{all reals}}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 20},qlevel=2,qanswer=A]
+  \StemOptions[0.42][\normalsize]{7+t\le2(t+3)+2}{t\ge-1}{t\le-1}{t\ge1}{t\ge-3}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 21},qlevel=3,qanswer=B]
+  \StemOptions[0.42][\normalsize]{8a+2(1-5a)\le20}{a\le-9}{a\ge-9}{a\ge-11}{a\le9}
+\end{MCQ}
+\end{MCQGrid}
+
+% #####################################################################
+%  LESSON 6-3  ·  Solving Compound Inequalities
+% #####################################################################
+\StartLesson{6-3}{Solving Compound Inequalities}
+\ExamTarget[Q21]{FRQ}{Solve and graph linear inequalities containing the word and}{363}{Exercises 1, 2, 5, 6, 7, 10, 11, 12}
+
+
+\PracticeSection{Solve and graph linear inequalities containing the word and}%
+  {Written answer · Solve each compound inequality, then graph the solution set on the number line.}
+
+\begin{FRQGrid}
+\begin{FRQ}[qsource={Textbook · Ex. 1},qlevel=1,lines=1,final={$6\le f<11$}]
+  Solve\enspace{\large$f-6<5$ and $f-4\ge2$}.\par\vspace{1mm}\centering\BlankNumLine[0][12]
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · Ex. 2},qlevel=1,lines=1,final={$-12\le n\le-7$}]
+  Solve\enspace{\large$n+2\le-5$ and $n+6\ge-6$}.\par\vspace{1mm}\centering\BlankNumLine[-13][-1]
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · Ex. 5},qlevel=2,lines=1,final={$-4<p\le5$}]
+  Solve\enspace{\large$-5<3p+7\le22$}.\par\vspace{1mm}\centering\BlankNumLine
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · Ex. 6},qlevel=2,lines=1,final={$-1\le c<2$}]
+  Solve\enspace{\large$-3\le7c+4<18$}.\par\vspace{1mm}\centering\BlankNumLine
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · Ex. 7},qlevel=2,lines=1,final={$2\le h<3$}]
+  Solve\enspace{\large$5h-4\ge6$ and $7h+11<32$}.\par\vspace{1mm}\centering\BlankNumLine
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · Ex. 10},qlevel=3,lines=1,final={$\varnothing$}]
+  Solve\enspace{\large$-4a+13\ge29$ and $10<6a-14$}.\par\vspace{1mm}\centering\BlankNumLine
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · Ex. 11},qlevel=3,lines=1,final={$4<b\le5$}]
+  Solve\enspace{\large$3b+2<5b-6\le2b+9$}.\par\vspace{1mm}\centering\BlankNumLine
+\end{FRQ}
+\begin{FRQ}[qsource={Textbook · Ex. 12},qlevel=3,lines=1,final={$-3<a\le\frac12$}]
+  Solve\enspace{\large$-2a+3\ge6a-1>3a-10$}.\par\vspace{1mm}\centering\BlankNumLine
+\end{FRQ}
+\end{FRQGrid}
+
+% #####################################################################
+%  LESSON 6-4  ·  Solving Absolute Value Inequalities
+% #####################################################################
+\StartLesson{6-4}{Solving Absolute Value Inequalities}
+\ExamTarget{MCQ}{Solve and graph absolute value inequalities (<)}{371}{Exercises 1–10}
+
+
+\PracticeSection{Solve and graph absolute value inequalities (<)}%
+  {Multiple choice · Solve each inequality and choose the solution set.}
+
+\begin{MCQGrid}
+% ---- Textbook exercises 1–10 (page 371) ----
+\begin{MCQ}[qsource={Textbook · Ex. 1},qlevel=1,qanswer=A]
+  \hspace*{0mm}{\large$|x+8|<16$}
+  \Options{-24<x<8}{-8<x<24}{x<-24\T{ or }x>8}{x<8}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 2},qlevel=1,qanswer=B]
+  {\large$|r+1|\le2$}
+  \Options{-1\le r\le3}{-3\le r\le1}{r\le-3\T{ or }r\ge1}{r\le1}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 3},qlevel=2,qanswer=C]
+  {\large$|2c-1|\le7$}
+  \Options{-4\le c\le3}{-6\le c\le8}{-3\le c\le4}{c\le-3\T{ or }c\ge4}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 4},qlevel=2,qanswer=D]
+  {\large$|3h-3|<12$}
+  \Options{-5<h<3}{-4<h<4}{h<-3\T{ or }h>5}{-3<h<5}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 5},qlevel=2,qanswer=A]
+  {\large$|m+4|<-2$}
+  \Options{\varnothing}{-6<m<-2}{\T{all reals}}{m<-6}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 6},qlevel=2,qanswer=B]
+  {\large$|w+5|<-8$}
+  \Options{-13<w<3}{\varnothing}{\T{all reals}}{w<3}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 7},qlevel=2,qanswer=C]
+  {\large$|r+2|>6$}
+  \Options{-8<r<4}{r<-4\T{ or }r>8}{r<-8\T{ or }r>4}{r>4}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 8},qlevel=2,qanswer=D]
+  {\large$|k-4|>3$}
+  \Options{1<k<7}{k<-7\T{ or }k>-1}{k>7}{k<1\T{ or }k>7}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 9},qlevel=3,qanswer=A]
+  {\large$|2h-3|\ge9$}
+  \Options{h\le-3\T{ or }h\ge6}{-3\le h\le6}{h\le-6\T{ or }h\ge3}{h\ge6}
+\end{MCQ}
+\begin{MCQ}[qsource={Textbook · Ex. 10},qlevel=3,qanswer=B]
+  {\large$|4p+2|\ge10$}
+  \Options{-3\le p\le2}{p\le-3\T{ or }p\ge2}{p\le-2\T{ or }p\ge3}{p\ge2}
+\end{MCQ}
+% ---- New practice ----
+\begin{MCQ}[qlevel=1,qanswer=C]
+  {\large$|x-3|<5$}
+  \Options{-8<x<2}{x<-2\T{ or }x>8}{-2<x<8}{x<8}
+\end{MCQ}
+\begin{MCQ}[qlevel=2,qanswer=A]
+  {\large$|2x+4|<6$}
+  \Options{-5<x<1}{-1<x<5}{-10<x<2}{x<-5\T{ or }x>1}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=C]
+  {\large$|x-5|\ge-1$}
+  \Options{\varnothing}{4\le x\le6}{\T{all reals}}{x\ge6}
+\end{MCQ}
+\begin{MCQ}[qlevel=3,qanswer=D]
+  {\large$|x|>2$}
+  \Options{-2<x<2}{x>2}{x>-2}{x<-2\T{ or }x>2}
+\end{MCQ}
+\end{MCQGrid}
+
+\end{document}

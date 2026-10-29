@@ -1,0 +1,4224 @@
+{
+ "source": "Grade 9 Advanced – End of Term 1 Question Booklet (Reveal Math Integrated I)",
+ "order": [
+  "Q1",
+  "Q2",
+  "Q3",
+  "Q21",
+  "Q4",
+  "Q5",
+  "Q22",
+  "Q23",
+  "Q6",
+  "Q7",
+  "Q8",
+  "Q24",
+  "Q9",
+  "Q10",
+  "Q11",
+  "Q12",
+  "Q13",
+  "Q14",
+  "Q15",
+  "Q16",
+  "Q25",
+  "Q17",
+  "Q18",
+  "Q19",
+  "Q21 (part 2)",
+  "Q20"
+ ],
+ "bank": {
+  "Q1": {
+   "exam_question": "Q1",
+   "type": "MCQ",
+   "lesson": "2-1 Writing and Interpreting Equations",
+   "learning_outcome": "Translate sentences into equations",
+   "textbook": "page 71, Exercises 1–4",
+   "instruction": "Multiple choice · Choose the equation that represents each sentence.",
+   "questions": [
+    {
+     "n": 1,
+     "source": "Textbook · Ex. 1",
+     "level": 2,
+     "answer": "B",
+     "stem": "Two added to three times a number $m$ is the same as 18.",
+     "options": {
+      "A": "$3(m+2)=18$",
+      "B": "$3m+2=18$",
+      "C": "$3+m+2=18$",
+      "D": "$3m=2+18$"
+     }
+    },
+    {
+     "n": 2,
+     "source": "Textbook · Ex. 2",
+     "level": 2,
+     "answer": "C",
+     "stem": "The product of five and the sum of a number $x$ and three is twelve.",
+     "options": {
+      "A": "$5x+3=12$",
+      "B": "$5+(x+3)=12$",
+      "C": "$5(x+3)=12$",
+      "D": "$3(x+5)=12$"
+     }
+    },
+    {
+     "n": 3,
+     "source": "Textbook · Ex. 3",
+     "level": 2,
+     "answer": "D",
+     "stem": "The quotient of 24 and $x$ equals 14 minus 2 times $x$.",
+     "options": {
+      "A": "$\\dfrac{x}{24}=14-2x$",
+      "B": "$\\dfrac{24}{x}=2x-14$",
+      "C": "$24x=14-2x$",
+      "D": "$\\dfrac{24}{x}=14-2x$"
+     }
+    },
+    {
+     "n": 4,
+     "source": "Textbook · Ex. 4",
+     "level": 3,
+     "answer": "A",
+     "stem": "Nine times a number $y$ subtracted from 85 is seven times the sum of four and $y$.",
+     "options": {
+      "A": "$85-9y=7(4+y)$",
+      "B": "$9y-85=7(4+y)$",
+      "C": "$85-9y=7\\cdot 4+y$",
+      "D": "$9(y-85)=7(4+y)$"
+     }
+    },
+    {
+     "n": 5,
+     "source": "new practice",
+     "level": 1,
+     "answer": "C",
+     "stem": "Eight more than a number $n$ is 21.",
+     "options": {
+      "A": "$8n=21$",
+      "B": "$n-8=21$",
+      "C": "$n+8=21$",
+      "D": "$n=8+21$"
+     }
+    },
+    {
+     "n": 6,
+     "source": "new practice",
+     "level": 1,
+     "answer": "B",
+     "stem": "Twelve less than a number $k$ equals 30.",
+     "options": {
+      "A": "$12-k=30$",
+      "B": "$k-12=30$",
+      "C": "$k+12=30$",
+      "D": "$30-k=12$"
+     }
+    },
+    {
+     "n": 7,
+     "source": "new practice",
+     "level": 2,
+     "answer": "D",
+     "stem": "Four times a number $a$ decreased by 9 is the same as 23.",
+     "options": {
+      "A": "$4(a-9)=23$",
+      "B": "$9-4a=23$",
+      "C": "$4a+9=23$",
+      "D": "$4a-9=23$"
+     }
+    },
+    {
+     "n": 8,
+     "source": "new practice",
+     "level": 2,
+     "answer": "A",
+     "stem": "The quotient of a number $p$ and 6 is equal to five more than $p$.",
+     "options": {
+      "A": "$\\dfrac{p}{6}=p+5$",
+      "B": "$\\dfrac{6}{p}=p+5$",
+      "C": "$\\dfrac{p}{6}=5p$",
+      "D": "$\\dfrac{p}{6}+5=p$"
+     }
+    },
+    {
+     "n": 9,
+     "source": "new practice",
+     "level": 2,
+     "answer": "C",
+     "stem": "Three times the sum of a number $w$ and 8 is 45.",
+     "options": {
+      "A": "$3w+8=45$",
+      "B": "$3+(w+8)=45$",
+      "C": "$3(w+8)=45$",
+      "D": "$8(w+3)=45$"
+     }
+    },
+    {
+     "n": 10,
+     "source": "new practice",
+     "level": 3,
+     "answer": "B",
+     "stem": "Five times a number $x$ subtracted from 60 is the same as two times $x$.",
+     "options": {
+      "A": "$5x-60=2x$",
+      "B": "$60-5x=2x$",
+      "C": "$5(60-x)=2x$",
+      "D": "$60-5x=x+2$"
+     }
+    },
+    {
+     "n": 11,
+     "source": "new practice",
+     "level": 3,
+     "answer": "D",
+     "stem": "The difference of 40 and twice a number $d$ equals the quotient of $d$ and 4.",
+     "options": {
+      "A": "$2d-40=\\dfrac{d}{4}$",
+      "B": "$40-2d=\\dfrac{4}{d}$",
+      "C": "$2(40-d)=\\dfrac{d}{4}$",
+      "D": "$40-2d=\\dfrac{d}{4}$"
+     }
+    },
+    {
+     "n": 12,
+     "source": "new practice",
+     "level": 3,
+     "answer": "A",
+     "stem": "Six less than the product of 3 and a number $z$ is equal to four times the difference of $z$ and 5.",
+     "options": {
+      "A": "$3z-6=4(z-5)$",
+      "B": "$6-3z=4(z-5)$",
+      "C": "$3(z-6)=4(z-5)$",
+      "D": "$3z-6=4z-5$"
+     }
+    }
+   ]
+  },
+  "Q2": {
+   "exam_question": "Q2",
+   "type": "MCQ",
+   "lesson": "2-3 Solving Multi-Step Equations",
+   "learning_outcome": "Solve equations involving more than one operation",
+   "textbook": "page 88, Exercises 1–12",
+   "instruction": "Multiple choice · Solve each equation, then choose the correct solution.",
+   "questions": [
+    {
+     "n": 1,
+     "source": "Textbook · Ex. 1",
+     "level": 1,
+     "answer": "C",
+     "stem": "$3t+7=-8$",
+     "options": {
+      "A": "$t=5$",
+      "B": "$t=-\\dfrac{1}{3}$",
+      "C": "$t=-5$",
+      "D": "$t=-45$"
+     }
+    },
+    {
+     "n": 2,
+     "source": "Textbook · Ex. 2",
+     "level": 1,
+     "answer": "A",
+     "stem": "$8=16+8n$",
+     "options": {
+      "A": "$n=-1$",
+      "B": "$n=1$",
+      "C": "$n=3$",
+      "D": "$n=-8$"
+     }
+    },
+    {
+     "n": 3,
+     "source": "Textbook · Ex. 3",
+     "level": 1,
+     "answer": "B",
+     "stem": "$-34=6m-4$",
+     "options": {
+      "A": "$m=-\\dfrac{19}{3}$",
+      "B": "$m=-5$",
+      "C": "$m=5$",
+      "D": "$m=-30$"
+     }
+    },
+    {
+     "n": 4,
+     "source": "Textbook · Ex. 4",
+     "level": 1,
+     "answer": "D",
+     "stem": "$9x+27=-72$",
+     "options": {
+      "A": "$x=-99$",
+      "B": "$x=11$",
+      "C": "$x=-5$",
+      "D": "$x=-11$"
+     }
+    },
+    {
+     "n": 5,
+     "source": "Textbook · Ex. 5",
+     "level": 2,
+     "answer": "B",
+     "stem": "$\\dfrac{y}{5}-6=8$",
+     "options": {
+      "A": "$y=10$",
+      "B": "$y=70$",
+      "C": "$y=\\dfrac{14}{5}$",
+      "D": "$y=-70$"
+     }
+    },
+    {
+     "n": 6,
+     "source": "Textbook · Ex. 6",
+     "level": 2,
+     "answer": "A",
+     "stem": "$\\dfrac{f}{-7}-8=2$",
+     "options": {
+      "A": "$f=-70$",
+      "B": "$f=70$",
+      "C": "$f=42$",
+      "D": "$f=-\\dfrac{10}{7}$"
+     }
+    },
+    {
+     "n": 7,
+     "source": "Textbook · Ex. 7",
+     "level": 2,
+     "answer": "C",
+     "stem": "$1+\\dfrac{r}{9}=4$",
+     "options": {
+      "A": "$r=\\dfrac{1}{3}$",
+      "B": "$r=-27$",
+      "C": "$r=27$",
+      "D": "$r=45$"
+     }
+    },
+    {
+     "n": 8,
+     "source": "Textbook · Ex. 8",
+     "level": 2,
+     "answer": "D",
+     "stem": "$\\dfrac{k}{3}+4=-16$",
+     "options": {
+      "A": "$k=-36$",
+      "B": "$k=-\\dfrac{20}{3}$",
+      "C": "$k=60$",
+      "D": "$k=-60$"
+     }
+    },
+    {
+     "n": 9,
+     "source": "Textbook · Ex. 9",
+     "level": 2,
+     "answer": "C",
+     "stem": "$\\dfrac{n-2}{7}=2$",
+     "options": {
+      "A": "$n=12$",
+      "B": "$n=9$",
+      "C": "$n=16$",
+      "D": "$n=-12$"
+     }
+    },
+    {
+     "n": 10,
+     "source": "Textbook · Ex. 10",
+     "level": 3,
+     "answer": "B",
+     "stem": "$14=\\dfrac{6+z}{-2}$",
+     "options": {
+      "A": "$z=22$",
+      "B": "$z=-34$",
+      "C": "$z=-22$",
+      "D": "$z=34$"
+     }
+    },
+    {
+     "n": 11,
+     "source": "Textbook · Ex. 11",
+     "level": 3,
+     "answer": "A",
+     "stem": "$-11=\\dfrac{a-5}{6}$",
+     "options": {
+      "A": "$a=-61$",
+      "B": "$a=-71$",
+      "C": "$a=-1$",
+      "D": "$a=61$"
+     }
+    },
+    {
+     "n": 12,
+     "source": "Textbook · Ex. 12",
+     "level": 3,
+     "answer": "D",
+     "stem": "$\\dfrac{22-w}{3}=-7$",
+     "options": {
+      "A": "$w=1$",
+      "B": "$w=-43$",
+      "C": "$w=-1$",
+      "D": "$w=43$"
+     }
+    },
+    {
+     "n": 13,
+     "source": "new practice",
+     "level": 2,
+     "answer": "C",
+     "stem": "$7-2x=15$",
+     "options": {
+      "A": "$x=4$",
+      "B": "$x=-11$",
+      "C": "$x=-4$",
+      "D": "$x=11$"
+     }
+    },
+    {
+     "n": 14,
+     "source": "new practice",
+     "level": 3,
+     "answer": "A",
+     "stem": "$\\dfrac{x+4}{3}=-5$",
+     "options": {
+      "A": "$x=-19$",
+      "B": "$x=-11$",
+      "C": "$x=-9$",
+      "D": "$x=11$"
+     }
+    },
+    {
+     "n": 15,
+     "source": "new practice",
+     "level": 2,
+     "answer": "D",
+     "stem": "$-2=\\dfrac{m}{4}+6$",
+     "options": {
+      "A": "$m=16$",
+      "B": "$m=-2$",
+      "C": "$m=32$",
+      "D": "$m=-32$"
+     }
+    },
+    {
+     "n": 16,
+     "source": "new practice",
+     "level": 3,
+     "answer": "B",
+     "stem": "$5-\\dfrac{k}{2}=9$",
+     "options": {
+      "A": "$k=28$",
+      "B": "$k=-8$",
+      "C": "$k=8$",
+      "D": "$k=-2$"
+     }
+    },
+    {
+     "n": 17,
+     "source": "new practice",
+     "level": 2,
+     "answer": "C",
+     "stem": "$3-4y=23$",
+     "options": {
+      "A": "$y=5$",
+      "B": "$y=-\\dfrac{13}{2}$",
+      "C": "$y=-5$",
+      "D": "$y=-80$"
+     }
+    },
+    {
+     "n": 18,
+     "source": "new practice",
+     "level": 3,
+     "answer": "B",
+     "stem": "$\\dfrac{2x-1}{5}=3$",
+     "options": {
+      "A": "$x=7$",
+      "B": "$x=8$",
+      "C": "$x=2$",
+      "D": "$x=-7$"
+     }
+    }
+   ]
+  },
+  "Q3": {
+   "exam_question": "Q3",
+   "type": "MCQ",
+   "lesson": "2-4 Solving Equations with the Variable on Each Side",
+   "learning_outcome": "Solve equations with the variable on each side",
+   "textbook": "page 97, Exercises 1–6",
+   "instruction": "Multiple choice · Solve each equation, then choose the correct solution.",
+   "questions": [
+    {
+     "n": 1,
+     "source": "Textbook · Ex. 1",
+     "level": 1,
+     "answer": "C",
+     "stem": "$7c+12=-4c+78$",
+     "options": {
+      "A": "$c=22$",
+      "B": "$c=-6$",
+      "C": "$c=6$",
+      "D": "$c=\\dfrac{90}{11}$"
+     }
+    },
+    {
+     "n": 2,
+     "source": "Textbook · Ex. 2",
+     "level": 1,
+     "answer": "A",
+     "stem": "$2m-13=-8m+27$",
+     "options": {
+      "A": "$m=4$",
+      "B": "$m=-\\dfrac{20}{3}$",
+      "C": "$m=-4$",
+      "D": "$m=\\dfrac{7}{5}$"
+     }
+    },
+    {
+     "n": 3,
+     "source": "Textbook · Ex. 3",
+     "level": 1,
+     "answer": "D",
+     "stem": "$9x-4=2x+3$",
+     "options": {
+      "A": "$x=\\dfrac{7}{11}$",
+      "B": "$x=-1$",
+      "C": "$x=7$",
+      "D": "$x=1$"
+     }
+    },
+    {
+     "n": 4,
+     "source": "Textbook · Ex. 4",
+     "level": 2,
+     "answer": "B",
+     "stem": "$6+3t=8t-14$",
+     "options": {
+      "A": "$t=-4$",
+      "B": "$t=4$",
+      "C": "$t=\\dfrac{8}{5}$",
+      "D": "$t=\\dfrac{20}{11}$"
+     }
+    },
+    {
+     "n": 5,
+     "source": "Textbook · Ex. 5",
+     "level": 3,
+     "answer": "C",
+     "stem": "$\\dfrac{b-4}{6}=\\dfrac{b}{2}$",
+     "options": {
+      "A": "$b=2$",
+      "B": "$b=-\\dfrac{4}{5}$",
+      "C": "$b=-2$",
+      "D": "$b=4$"
+     }
+    },
+    {
+     "n": 6,
+     "source": "Textbook · Ex. 6",
+     "level": 3,
+     "answer": "A",
+     "stem": "$\\dfrac{3v+12}{6}=\\dfrac{4v}{3}$",
+     "options": {
+      "A": "$v=\\dfrac{12}{5}$",
+      "B": "$v=12$",
+      "C": "$v=4$",
+      "D": "$v=-\\dfrac{12}{5}$"
+     }
+    },
+    {
+     "n": 7,
+     "source": "new practice",
+     "level": 1,
+     "answer": "B",
+     "stem": "$5x+3=2x+18$",
+     "options": {
+      "A": "$x=3$",
+      "B": "$x=5$",
+      "C": "$x=7$",
+      "D": "$x=-5$"
+     }
+    },
+    {
+     "n": 8,
+     "source": "new practice",
+     "level": 1,
+     "answer": "D",
+     "stem": "$4y-7=y+11$",
+     "options": {
+      "A": "$y=\\dfrac{18}{5}$",
+      "B": "$y=-6$",
+      "C": "$y=\\dfrac{4}{3}$",
+      "D": "$y=6$"
+     }
+    },
+    {
+     "n": 9,
+     "source": "new practice",
+     "level": 2,
+     "answer": "A",
+     "stem": "$3a+10=8a-5$",
+     "options": {
+      "A": "$a=3$",
+      "B": "$a=1$",
+      "C": "$a=-3$",
+      "D": "$a=\\dfrac{5}{11}$"
+     }
+    },
+    {
+     "n": 10,
+     "source": "new practice",
+     "level": 2,
+     "answer": "C",
+     "stem": "$12-n=3n+4$",
+     "options": {
+      "A": "$n=4$",
+      "B": "$n=-2$",
+      "C": "$n=2$",
+      "D": "$n=8$"
+     }
+    },
+    {
+     "n": 11,
+     "source": "new practice",
+     "level": 2,
+     "answer": "B",
+     "stem": "$9k+5=4k-20$",
+     "options": {
+      "A": "$k=5$",
+      "B": "$k=-5$",
+      "C": "$k=-3$",
+      "D": "$k=-\\dfrac{25}{13}$"
+     }
+    },
+    {
+     "n": 12,
+     "source": "new practice",
+     "level": 2,
+     "answer": "D",
+     "stem": "$-2p+9=3p-11$",
+     "options": {
+      "A": "$p=2$",
+      "B": "$p=-4$",
+      "C": "$p=20$",
+      "D": "$p=4$"
+     }
+    },
+    {
+     "n": 13,
+     "source": "new practice",
+     "level": 2,
+     "answer": "A",
+     "stem": "$8-3x=2x-17$",
+     "options": {
+      "A": "$x=5$",
+      "B": "$x=-9$",
+      "C": "$x=-5$",
+      "D": "$x=25$"
+     }
+    },
+    {
+     "n": 14,
+     "source": "new practice",
+     "level": 2,
+     "answer": "C",
+     "stem": "$11d-4=5d+26$",
+     "options": {
+      "A": "$d=-5$",
+      "B": "$d=\\dfrac{11}{8}$",
+      "C": "$d=5$",
+      "D": "$d=4$"
+     }
+    },
+    {
+     "n": 15,
+     "source": "new practice",
+     "level": 3,
+     "answer": "C",
+     "stem": "$\\dfrac{x}{3}=\\dfrac{x+8}{5}$",
+     "options": {
+      "A": "$x=4$",
+      "B": "$x=3$",
+      "C": "$x=12$",
+      "D": "$x=-12$"
+     }
+    },
+    {
+     "n": 16,
+     "source": "new practice",
+     "level": 3,
+     "answer": "B",
+     "stem": "$\\dfrac{y+2}{4}=\\dfrac{y}{2}$",
+     "options": {
+      "A": "$y=-2$",
+      "B": "$y=2$",
+      "C": "$y=4$",
+      "D": "$y=1$"
+     }
+    },
+    {
+     "n": 17,
+     "source": "new practice",
+     "level": 3,
+     "answer": "D",
+     "stem": "$\\dfrac{2m-6}{4}=\\dfrac{m}{3}$",
+     "options": {
+      "A": "$m=3$",
+      "B": "$m=-9$",
+      "C": "$m=6$",
+      "D": "$m=9$"
+     }
+    },
+    {
+     "n": 18,
+     "source": "new practice",
+     "level": 3,
+     "answer": "A",
+     "stem": "$6-4c=2c+6$",
+     "options": {
+      "A": "$c=0$",
+      "B": "$c=2$",
+      "C": "$c=1$",
+      "D": "$c=-2$"
+     }
+    }
+   ]
+  },
+  "Q21": {
+   "exam_question": "Q21",
+   "type": "FRQ",
+   "lesson": "2-4 Solving Equations with the Variable on Each Side",
+   "learning_outcome": "Solve equations by applying the Distributive Property",
+   "textbook": "page 97, Exercises 7–16",
+   "instruction": "Written answer · Solve each equation. Show every step, then write your final answer in the box.",
+   "questions": [
+    {
+     "n": 1,
+     "source": "Textbook · Ex. 7",
+     "level": 1,
+     "final_answer": "$r=-2$",
+     "prompt": "Solve $2(r+6)=4(r+4)$."
+    },
+    {
+     "n": 2,
+     "source": "Textbook · Ex. 8",
+     "level": 1,
+     "final_answer": "$n=6$",
+     "prompt": "Solve $6(n+5)=3(n+16)$."
+    },
+    {
+     "n": 3,
+     "source": "Textbook · Ex. 9",
+     "level": 2,
+     "final_answer": "$g=14$",
+     "prompt": "Solve $5(g+8)-7=117-g$."
+    },
+    {
+     "n": 4,
+     "source": "Textbook · Ex. 10",
+     "level": 3,
+     "final_answer": "$x=-5$",
+     "prompt": "Solve $12-\\tfrac{4}{5}(x+15)=\\tfrac{2}{5}x+6$."
+    },
+    {
+     "n": 5,
+     "source": "Textbook · Ex. 11",
+     "level": 2,
+     "final_answer": "$m=4$",
+     "prompt": "Solve $3(3m-2)=2(3m+3)$."
+    },
+    {
+     "n": 6,
+     "source": "Textbook · Ex. 12",
+     "level": 2,
+     "final_answer": "$a=1$",
+     "prompt": "Solve $6(3a+1)-30=3(2a-4)$."
+    },
+    {
+     "n": 7,
+     "source": "Textbook · Ex. 13",
+     "level": 1,
+     "final_answer": "$n=-5$",
+     "prompt": "Solve $7n+6=4n-9$."
+    },
+    {
+     "n": 8,
+     "source": "Textbook · Ex. 14",
+     "level": 3,
+     "final_answer": "$r=-39$",
+     "prompt": "Solve $-6(2r+8)=-10(r-3)$."
+    },
+    {
+     "n": 9,
+     "source": "Textbook · Ex. 15",
+     "level": 3,
+     "final_answer": "$w=0$",
+     "prompt": "Solve $5-3(w+4)=w-7$."
+    },
+    {
+     "n": 10,
+     "source": "Textbook · Ex. 16",
+     "level": 3,
+     "final_answer": "$x=7$",
+     "prompt": "Solve $2x-5(x-3)=2(x-10)$."
+    },
+    {
+     "n": 11,
+     "source": "new practice",
+     "level": 2,
+     "final_answer": "$x=9$",
+     "prompt": "Solve $4(x-2)=2(x+5)$."
+    },
+    {
+     "n": 12,
+     "source": "new practice",
+     "level": 3,
+     "final_answer": "$y=2$",
+     "prompt": "Solve $3-2(y+1)=4y-11$."
+    }
+   ]
+  },
+  "Q4": {
+   "exam_question": "Q4",
+   "type": "MCQ",
+   "lesson": "2-5 Solving Equations Involving Absolute Value",
+   "learning_outcome": "Solve absolute value equations",
+   "textbook": "page 106, Exercises 19–23",
+   "instruction": "Multiple choice · Write the absolute value equation and solve it, then choose the correct answer.",
+   "questions": [
+    {
+     "n": 1,
+     "source": "Textbook · Ex. 19",
+     "level": 1,
+     "answer": "A",
+     "stem": "An oven is set to $400^\\circ$F with a tolerance of $\\pm15^\\circ$F. Write and solve an absolute value equation. What are the minimum and maximum temperatures?",
+     "options": {
+      "A": "$385^\\circ\\text{ and }415^\\circ\\text{F}$",
+      "B": "$400^\\circ\\text{ and }415^\\circ\\text{F}$",
+      "C": "$370^\\circ\\text{ and }430^\\circ\\text{F}$",
+      "D": "$385^\\circ\\text{ and }400^\\circ\\text{F}$"
+     }
+    },
+    {
+     "n": 2,
+     "source": "Textbook · Ex. 20",
+     "level": 1,
+     "answer": "C",
+     "stem": "A poll is accurate within $\\pm5\\%$, and $38\\%$ of voters chose Candidate A. Write and solve an absolute value equation. What are the minimum and maximum percents for Candidate A?",
+     "options": {
+      "A": "$38\\%\\text{ and }43\\%$",
+      "B": "$33\\%\\text{ and }38\\%$",
+      "C": "$33\\%\\text{ and }43\\%$",
+      "D": "$28\\%\\text{ and }48\\%$"
+     }
+    },
+    {
+     "n": 3,
+     "source": "Textbook · Ex. 21a",
+     "level": 2,
+     "answer": "B",
+     "stem": "The ACT math mean is $20.9$ with a standard deviation of $5.3$. Which equation gives the scores one standard deviation from the mean?",
+     "options": {
+      "A": "$|x-5.3|=20.9$",
+      "B": "$|x-20.9|=5.3$",
+      "C": "$|x+20.9|=5.3$",
+      "D": "$|x-20.9|=10.6$"
+     }
+    },
+    {
+     "n": 4,
+     "source": "Textbook · Ex. 21b",
+     "level": 2,
+     "answer": "D",
+     "stem": "Using Exercise 21a, what is the range of scores within **two** standard deviations of the mean?",
+     "options": {
+      "A": "$15.6\\text{ to }26.2$",
+      "B": "$5.3\\text{ to }20.9$",
+      "C": "$18.2\\text{ to }23.6$",
+      "D": "$10.3\\text{ to }31.5$"
+     }
+    },
+    {
+     "n": 5,
+     "source": "Textbook · Ex. 22",
+     "level": 3,
+     "answer": "A",
+     "stem": "$21\\%$ of about 40 million students chose “finding new resources”, with a margin of error of $\\pm3\\%$. What is the range of the number of students?",
+     "options": {
+      "A": "$7.2\\text{ to }9.6\\text{ million}$",
+      "B": "$8.4\\text{ to }9.6\\text{ million}$",
+      "C": "$18\\text{ to }24\\text{ million}$",
+      "D": "$8.1\\text{ to }8.7\\text{ million}$"
+     }
+    },
+    {
+     "n": 6,
+     "source": "Textbook · Ex. 23",
+     "level": 3,
+     "answer": "C",
+     "stem": "Bags of rock salt are labeled 35 lb, and their weight is within 8 ounces of the label ($16$ oz $=1$ lb). What are the minimum and maximum weights?",
+     "options": {
+      "A": "$27\\text{ and }43\\text{ lb}$",
+      "B": "$34.2\\text{ and }35.8\\text{ lb}$",
+      "C": "$34.5\\text{ and }35.5\\text{ lb}$",
+      "D": "$34.92\\text{ and }35.08\\text{ lb}$"
+     }
+    },
+    {
+     "n": 7,
+     "source": "new practice",
+     "level": 1,
+     "answer": "B",
+     "stem": "$|x+3|=7$",
+     "options": {
+      "A": "$\\{4\\}$",
+      "B": "$\\{-10, 4\\}$",
+      "C": "$\\{-4, 10\\}$",
+      "D": "$\\{-7, 7\\}$"
+     }
+    },
+    {
+     "n": 8,
+     "source": "new practice",
+     "level": 1,
+     "answer": "C",
+     "stem": "$|2t-4|=8$",
+     "options": {
+      "A": "$\\{-6, 2\\}$",
+      "B": "$\\{6\\}$",
+      "C": "$\\{-2, 6\\}$",
+      "D": "$\\{-4, 4\\}$"
+     }
+    },
+    {
+     "n": 9,
+     "source": "new practice",
+     "level": 1,
+     "answer": "D",
+     "stem": "$|y-5|=-2$",
+     "options": {
+      "A": "$\\{3, 7\\}$",
+      "B": "$\\{7\\}$",
+      "C": "$\\{3\\}$",
+      "D": "$\\varnothing$"
+     }
+    },
+    {
+     "n": 10,
+     "source": "new practice",
+     "level": 2,
+     "answer": "B",
+     "stem": "$|x-1|+2=5$",
+     "options": {
+      "A": "$\\{-4, 2\\}$",
+      "B": "$\\{-2, 4\\}$",
+      "C": "$\\{-6, 8\\}$",
+      "D": "$\\{4\\}$"
+     }
+    },
+    {
+     "n": 11,
+     "source": "new practice",
+     "level": 3,
+     "answer": "D",
+     "stem": "$2|n-4|=10$",
+     "options": {
+      "A": "$\\{-6, 14\\}$",
+      "B": "$\\{9\\}$",
+      "C": "$\\{-9, 1\\}$",
+      "D": "$\\{-1, 9\\}$"
+     }
+    },
+    {
+     "n": 12,
+     "source": "new practice",
+     "level": 3,
+     "answer": "A",
+     "stem": "$|3x+1|-4=6$",
+     "options": {
+      "A": "$\\left\\{-\\tfrac{11}{3}, 3\\right\\}$",
+      "B": "$\\left\\{-\\tfrac{7}{3}, \\tfrac{5}{3}\\right\\}$",
+      "C": "$\\left\\{-3, \\tfrac{11}{3}\\right\\}$",
+      "D": "$\\{3\\}$"
+     }
+    }
+   ]
+  },
+  "Q5": {
+   "exam_question": "Q5",
+   "type": "MCQ",
+   "lesson": "2-6 Solving Proportions",
+   "learning_outcome": "Solve proportions",
+   "textbook": "page 113, Exercises 19–26",
+   "instruction": "Multiple choice · Solve each proportion. If necessary, round to the nearest hundredth.",
+   "questions": [
+    {
+     "n": 1,
+     "source": "Textbook · Ex. 19",
+     "level": 2,
+     "answer": "A",
+     "stem": "$\\dfrac{4v+7}{15}=\\dfrac{6v+2}{10}$",
+     "options": {
+      "A": "$v=0.8$",
+      "B": "$v=1.25$",
+      "C": "$v=-0.8$",
+      "D": "$v=2$"
+     }
+    },
+    {
+     "n": 2,
+     "source": "Textbook · Ex. 20",
+     "level": 2,
+     "answer": "B",
+     "stem": "$\\dfrac{9b-3}{9}=\\dfrac{5b+5}{3}$",
+     "options": {
+      "A": "$b=3$",
+      "B": "$b=-3$",
+      "C": "$b=-1$",
+      "D": "$b=-0.5$"
+     }
+    },
+    {
+     "n": 3,
+     "source": "Textbook · Ex. 21",
+     "level": 2,
+     "answer": "C",
+     "stem": "$\\dfrac{2n-4}{5}=\\dfrac{3n+3}{10}$",
+     "options": {
+      "A": "$n=5$",
+      "B": "$n=-11$",
+      "C": "$n=11$",
+      "D": "$n=1$"
+     }
+    },
+    {
+     "n": 4,
+     "source": "Textbook · Ex. 22",
+     "level": 3,
+     "answer": "D",
+     "stem": "$\\dfrac{2}{g+6}=\\dfrac{4}{5g+10}$",
+     "options": {
+      "A": "$g=-0.67$",
+      "B": "$g=2$",
+      "C": "$g=0.5$",
+      "D": "$g=0.67$"
+     }
+    },
+    {
+     "n": 5,
+     "source": "Textbook · Ex. 23",
+     "level": 1,
+     "answer": "A",
+     "stem": "$\\dfrac{x}{3}=\\dfrac{3x+2}{6}$",
+     "options": {
+      "A": "$x=-2$",
+      "B": "$x=2$",
+      "C": "$x=-0.67$",
+      "D": "$x=6$"
+     }
+    },
+    {
+     "n": 6,
+     "source": "Textbook · Ex. 24",
+     "level": 2,
+     "answer": "B",
+     "stem": "$\\dfrac{w+3}{7}=\\dfrac{w-1}{8}$",
+     "options": {
+      "A": "$w=31$",
+      "B": "$w=-31$",
+      "C": "$w=17$",
+      "D": "$w=-3$"
+     }
+    },
+    {
+     "n": 7,
+     "source": "Textbook · Ex. 25",
+     "level": 3,
+     "answer": "C",
+     "stem": "$\\dfrac{4q-3}{5}=\\dfrac{2q+1}{7}$",
+     "options": {
+      "A": "$q=0.33$",
+      "B": "$q=-1.44$",
+      "C": "$q=1.44$",
+      "D": "$q=2.6$"
+     }
+    },
+    {
+     "n": 8,
+     "source": "Textbook · Ex. 26",
+     "level": 3,
+     "answer": "D",
+     "stem": "$\\dfrac{5}{7k+4}=\\dfrac{2}{2k-3}$",
+     "options": {
+      "A": "$k=5.75$",
+      "B": "$k=-0.25$",
+      "C": "$k=-1.75$",
+      "D": "$k=-5.75$"
+     }
+    },
+    {
+     "n": 9,
+     "source": "new practice",
+     "level": 1,
+     "answer": "A",
+     "stem": "$\\dfrac{x}{4}=\\dfrac{x+6}{10}$",
+     "options": {
+      "A": "$x=4$",
+      "B": "$x=-4$",
+      "C": "$x=6$",
+      "D": "$x=2.4$"
+     }
+    },
+    {
+     "n": 10,
+     "source": "new practice",
+     "level": 1,
+     "answer": "B",
+     "stem": "$\\dfrac{a+2}{3}=\\dfrac{a-1}{2}$",
+     "options": {
+      "A": "$a=-7$",
+      "B": "$a=7$",
+      "C": "$a=1$",
+      "D": "$a=5$"
+     }
+    },
+    {
+     "n": 11,
+     "source": "new practice",
+     "level": 2,
+     "answer": "C",
+     "stem": "$\\dfrac{3m-1}{4}=\\dfrac{m+5}{2}$",
+     "options": {
+      "A": "$m=9$",
+      "B": "$m=-11$",
+      "C": "$m=11$",
+      "D": "$m=3$"
+     }
+    },
+    {
+     "n": 12,
+     "source": "new practice",
+     "level": 2,
+     "answer": "D",
+     "stem": "$\\dfrac{6}{y+1}=\\dfrac{3}{y-2}$",
+     "options": {
+      "A": "$y=-5$",
+      "B": "$y=3$",
+      "C": "$y=1$",
+      "D": "$y=5$"
+     }
+    },
+    {
+     "n": 13,
+     "source": "new practice",
+     "level": 2,
+     "answer": "A",
+     "stem": "$\\dfrac{2p+3}{5}=\\dfrac{p-1}{3}$",
+     "options": {
+      "A": "$p=-14$",
+      "B": "$p=14$",
+      "C": "$p=-4$",
+      "D": "$p=2$"
+     }
+    },
+    {
+     "n": 14,
+     "source": "new practice",
+     "level": 2,
+     "answer": "B",
+     "stem": "$\\dfrac{5x-2}{6}=\\dfrac{2x+1}{3}$",
+     "options": {
+      "A": "$x=0.67$",
+      "B": "$x=4$",
+      "C": "$x=-4$",
+      "D": "$x=2.67$"
+     }
+    },
+    {
+     "n": 15,
+     "source": "new practice",
+     "level": 3,
+     "answer": "C",
+     "stem": "$\\dfrac{4}{z-3}=\\dfrac{2}{z+1}$",
+     "options": {
+      "A": "$z=5$",
+      "B": "$z=-1$",
+      "C": "$z=-5$",
+      "D": "$z=3$"
+     }
+    },
+    {
+     "n": 16,
+     "source": "new practice",
+     "level": 3,
+     "answer": "D",
+     "stem": "$\\dfrac{k+4}{8}=\\dfrac{k-2}{5}$",
+     "options": {
+      "A": "$k=-12$",
+      "B": "$k=1.33$",
+      "C": "$k=2$",
+      "D": "$k=12$"
+     }
+    }
+   ]
+  },
+  "Q22": {
+   "exam_question": "Q22",
+   "type": "FRQ",
+   "lesson": "2-7 Using Formulas",
+   "learning_outcome": "Solve equations for specific variables",
+   "textbook": "page 120, 126, Example 4 · Exercises 23–24",
+   "instruction": "Written answer · Answer every part. Show your steps and write the final answers in the box.",
+   "questions": [
+    {
+     "n": 1,
+     "source": "Textbook · p. 120 Ex. 4",
+     "level": 2,
+     "final_answer": "6 cheese/5 pepperoni max; $c=\\frac{T-15.49p}{13.49}$; 2",
+     "prompt": "**Pizza.** $T=13.49c+15.49p$, where $c$ = cheese pizzas and $p$ = pepperoni pizzas. **a.** Kishi has \\$85. Describe the constraints. **b.** Solve for $c$. **c.** She buys 3 pepperoni pizzas. Find the maximum number of cheese pizzas."
+    },
+    {
+     "n": 2,
+     "source": "Textbook · p. 126 Ex. 23",
+     "level": 2,
+     "final_answer": "7 plain/5 flavored max; $f=\\frac{T-5.50p}{7}$; 3",
+     "prompt": "**Coffee.** $T=5.50p+7f$, where $p$ = packages of plain and $f$ = packages of flavored coffee. **a.** Consuelo has \\$40. Describe the constraints. **b.** Solve for $f$. **c.** She buys 3 plain packages. Find the maximum number of flavored packages."
+    },
+    {
+     "n": 3,
+     "source": "Textbook · p. 126 Ex. 24",
+     "level": 2,
+     "final_answer": "14 towels/42 washcloths max; $b=\\frac{T-2w}{6}$; 7",
+     "prompt": "**Towels.** $T=6b+2w$, where $b$ = bath towels and $w$ = washcloths. **a.** The budget is \\$85. Describe the constraints. **b.** Solve for $b$. **c.** She orders 20 washcloths. How many bath towels can she order and stay under budget?"
+    },
+    {
+     "n": 4,
+     "source": "new practice",
+     "level": 2,
+     "final_answer": "8 mangoes/12 bananas max; $b=\\frac{T-3m}{2}$; 4",
+     "prompt": "**Fruit.** $T=3m+2b$, where $m$ = mangoes (\\$3 each) and $b$ = bananas (\\$2 each). **a.** The budget is \\$24. Describe the constraints. **b.** Solve for $b$. **c.** She buys 5 mangoes. Find the maximum number of bananas."
+    },
+    {
+     "n": 5,
+     "source": "new practice",
+     "level": 1,
+     "final_answer": "$y=\\frac{12-3x}{2}$; $y=3$",
+     "prompt": "**a.** Solve $3x+2y=12$ for $y$. **b.** Use your answer to find $y$ when $x=2$."
+    },
+    {
+     "n": 6,
+     "source": "new practice",
+     "level": 3,
+     "final_answer": "$w=\\frac{P-2\\ell}{2}$; $w=4$ cm",
+     "prompt": "**Perimeter.** $P=2\\ell+2w$. **a.** Solve for $w$. **b.** Find the width of a rectangle with $P=30$ cm and $\\ell=11$ cm."
+    }
+   ]
+  },
+  "Q23": {
+   "exam_question": "Q23",
+   "type": "FRQ",
+   "lesson": "4-1 Graphing Linear Functions",
+   "learning_outcome": "Graph linear functions by using the x- and y-intercepts",
+   "textbook": "page 216, Exercises 9–14",
+   "instruction": "Written answer · Find both intercepts, then graph the equation on the grid.",
+   "questions": [
+    {
+     "n": 1,
+     "source": "Textbook · Ex. 9",
+     "level": 1,
+     "final_answer": "$(-2,0)$, $(0,4)$",
+     "prompt": "Graph $y=4+2x$ by using the intercepts.",
+     "needs": "coordinate grid; student finds x- and y-intercepts"
+    },
+    {
+     "n": 2,
+     "source": "Textbook · Ex. 10",
+     "level": 2,
+     "final_answer": "$(-\\frac53,0)$, $(0,5)$",
+     "prompt": "Graph $5-y=-3x$ by using the intercepts.",
+     "needs": "coordinate grid; student finds x- and y-intercepts"
+    },
+    {
+     "n": 3,
+     "source": "Textbook · Ex. 11",
+     "level": 2,
+     "final_answer": "$(5,0)$, $(0,-1)$",
+     "prompt": "Graph $x=5y+5$ by using the intercepts.",
+     "needs": "coordinate grid; student finds x- and y-intercepts"
+    },
+    {
+     "n": 4,
+     "source": "Textbook · Ex. 12",
+     "level": 1,
+     "final_answer": "$(4,0)$, $(0,4)$",
+     "prompt": "Graph $x+y=4$ by using the intercepts.",
+     "needs": "coordinate grid; student finds x- and y-intercepts"
+    },
+    {
+     "n": 5,
+     "source": "Textbook · Ex. 13",
+     "level": 1,
+     "final_answer": "$(-3,0)$, $(0,3)$",
+     "prompt": "Graph $x-y=-3$ by using the intercepts.",
+     "needs": "coordinate grid; student finds x- and y-intercepts"
+    },
+    {
+     "n": 6,
+     "source": "Textbook · Ex. 14",
+     "level": 2,
+     "final_answer": "$(\\frac43,0)$, $(0,8)$",
+     "prompt": "Graph $y=8-6x$ by using the intercepts.",
+     "needs": "coordinate grid; student finds x- and y-intercepts"
+    }
+   ]
+  },
+  "Q6": {
+   "exam_question": "Q6",
+   "type": "MCQ",
+   "lesson": "4-2 Rate of Change and Slope",
+   "learning_outcome": "Find the slope of a line",
+   "textbook": "page 227, Exercises 50–52",
+   "instruction": "Multiple choice · Find the slope of the line, then choose the correct answer.",
+   "questions": [
+    {
+     "n": 1,
+     "source": "Textbook · Ex. 50",
+     "level": 1,
+     "answer": "A",
+     "graph": {
+      "type": "line_through_points",
+      "points": [
+       [
+        0,
+        1
+       ],
+       [
+        2,
+        5
+       ]
+      ],
+      "grid": "-5..5"
+     },
+     "stem": "(see graph)",
+     "options": {
+      "A": "$m=2$",
+      "B": "$m=\\dfrac{1}{2}$",
+      "C": "$m=-2$",
+      "D": "$m=4$"
+     }
+    },
+    {
+     "n": 2,
+     "source": "Textbook · Ex. 51",
+     "level": 1,
+     "answer": "B",
+     "graph": {
+      "type": "line_through_points",
+      "points": [
+       [
+        0,
+        0
+       ],
+       [
+        3,
+        1
+       ]
+      ],
+      "grid": "-5..5"
+     },
+     "stem": "(see graph)",
+     "options": {
+      "A": "$m=3$",
+      "B": "$m=\\dfrac{1}{3}$",
+      "C": "$m=-\\dfrac{1}{3}$",
+      "D": "$m=1$"
+     }
+    },
+    {
+     "n": 3,
+     "source": "Textbook · Ex. 52",
+     "level": 2,
+     "answer": "C",
+     "graph": {
+      "type": "line_through_points",
+      "points": [
+       [
+        0,
+        1
+       ],
+       [
+        1,
+        -2
+       ]
+      ],
+      "grid": "-5..5"
+     },
+     "stem": "(see graph)",
+     "options": {
+      "A": "$m=3$",
+      "B": "$m=-\\dfrac{1}{3}$",
+      "C": "$m=-3$",
+      "D": "$m=-1$"
+     }
+    },
+    {
+     "n": 4,
+     "source": "new practice",
+     "level": 1,
+     "answer": "D",
+     "graph": {
+      "type": "line_through_points",
+      "points": [
+       [
+        -2,
+        -1
+       ],
+       [
+        2,
+        1
+       ]
+      ],
+      "grid": "-5..5"
+     },
+     "stem": "(see graph)",
+     "options": {
+      "A": "$m=2$",
+      "B": "$m=-\\dfrac{1}{2}$",
+      "C": "$m=1$",
+      "D": "$m=\\dfrac{1}{2}$"
+     }
+    },
+    {
+     "n": 5,
+     "source": "new practice",
+     "level": 2,
+     "answer": "A",
+     "graph": {
+      "type": "line_through_points",
+      "points": [
+       [
+        -3,
+        2
+       ],
+       [
+        1,
+        -2
+       ]
+      ],
+      "grid": "-5..5"
+     },
+     "stem": "(see graph)",
+     "options": {
+      "A": "$m=-1$",
+      "B": "$m=1$",
+      "C": "$m=-4$",
+      "D": "$m=0$"
+     }
+    },
+    {
+     "n": 6,
+     "source": "new practice",
+     "level": 2,
+     "answer": "B",
+     "graph": {
+      "type": "line_through_points",
+      "points": [
+       [
+        -3,
+        3
+       ],
+       [
+        2,
+        3
+       ]
+      ],
+      "grid": "-5..5"
+     },
+     "stem": "(see graph)",
+     "options": {
+      "A": "$\\text{\\small undefined}$",
+      "B": "$m=0$",
+      "C": "$m=1$",
+      "D": "$m=3$"
+     }
+    },
+    {
+     "n": 7,
+     "source": "new practice",
+     "level": 2,
+     "answer": "C",
+     "graph": {
+      "type": "line_through_points",
+      "points": [
+       [
+        1,
+        -3
+       ],
+       [
+        2,
+        1
+       ]
+      ],
+      "grid": "-5..5"
+     },
+     "stem": "(see graph)",
+     "options": {
+      "A": "$m=\\dfrac{1}{4}$",
+      "B": "$m=-4$",
+      "C": "$m=4$",
+      "D": "$m=-2$"
+     }
+    },
+    {
+     "n": 8,
+     "source": "new practice",
+     "level": 3,
+     "answer": "D",
+     "graph": {
+      "type": "line_through_points",
+      "points": [
+       [
+        -1,
+        4
+       ],
+       [
+        3,
+        -2
+       ]
+      ],
+      "grid": "-5..5"
+     },
+     "stem": "(see graph)",
+     "options": {
+      "A": "$m=-\\dfrac{2}{3}$",
+      "B": "$m=\\dfrac{3}{2}$",
+      "C": "$m=-6$",
+      "D": "$m=-\\dfrac{3}{2}$"
+     }
+    },
+    {
+     "n": 9,
+     "source": "new practice",
+     "level": 1,
+     "answer": "A",
+     "stem": "$(2,3), (5,9)$",
+     "options": {
+      "A": "$m=2$",
+      "B": "$m=\\dfrac{1}{2}$",
+      "C": "$m=-2$",
+      "D": "$m=6$"
+     }
+    },
+    {
+     "n": 10,
+     "source": "new practice",
+     "level": 1,
+     "answer": "B",
+     "stem": "$(-1,4), (3,-4)$",
+     "options": {
+      "A": "$m=2$",
+      "B": "$m=-2$",
+      "C": "$m=-\\dfrac{1}{2}$",
+      "D": "$m=0$"
+     }
+    },
+    {
+     "n": 11,
+     "source": "new practice",
+     "level": 2,
+     "answer": "C",
+     "stem": "$(0,-2), (6,1)$",
+     "options": {
+      "A": "$m=2$",
+      "B": "$m=-\\dfrac{1}{2}$",
+      "C": "$m=\\dfrac{1}{2}$",
+      "D": "$m=\\dfrac{1}{6}$"
+     }
+    },
+    {
+     "n": 12,
+     "source": "new practice",
+     "level": 2,
+     "answer": "D",
+     "stem": "$(-3,5), (2,5)$",
+     "options": {
+      "A": "$\\text{\\small undefined}$",
+      "B": "$m=1$",
+      "C": "$m=-2$",
+      "D": "$m=0$"
+     }
+    },
+    {
+     "n": 13,
+     "source": "new practice",
+     "level": 2,
+     "answer": "A",
+     "stem": "$(4,1), (4,7)$",
+     "options": {
+      "A": "$\\text{\\small undefined}$",
+      "B": "$m=0$",
+      "C": "$m=6$",
+      "D": "$m=\\dfrac{1}{6}$"
+     }
+    },
+    {
+     "n": 14,
+     "source": "new practice",
+     "level": 3,
+     "answer": "B",
+     "stem": "$(-6,1), (-2,-5)$",
+     "options": {
+      "A": "$m=\\dfrac{3}{2}$",
+      "B": "$m=-\\dfrac{3}{2}$",
+      "C": "$m=-\\dfrac{2}{3}$",
+      "D": "$m=-1$"
+     }
+    },
+    {
+     "n": 15,
+     "source": "new practice",
+     "level": 3,
+     "answer": "C",
+     "stem": "$(-5,-2), (5,2)$",
+     "options": {
+      "A": "$m=\\dfrac{5}{2}$",
+      "B": "$m=-\\dfrac{2}{5}$",
+      "C": "$m=\\dfrac{2}{5}$",
+      "D": "$m=0$"
+     }
+    },
+    {
+     "n": 16,
+     "source": "new practice",
+     "level": 3,
+     "answer": "D",
+     "stem": "$(2,-4), (6,8)$",
+     "options": {
+      "A": "$m=\\dfrac{1}{3}$",
+      "B": "$m=1$",
+      "C": "$m=-3$",
+      "D": "$m=3$"
+     }
+    }
+   ]
+  },
+  "Q7": {
+   "exam_question": "Q7",
+   "type": "MCQ",
+   "lesson": "4-3 Slope-Intercept Form",
+   "learning_outcome": "Rewrite linear equations in slope-intercept form",
+   "textbook": "page 235, Exercises 1–8",
+   "instruction": "Multiple choice · Choose the equation in slope-intercept form, $y=mx+b$.",
+   "questions": [
+    {
+     "n": 1,
+     "source": "Textbook · Ex. 1",
+     "level": 1,
+     "answer": "A",
+     "stem": "Slope $5$, $y$-intercept $-3$.",
+     "options": {
+      "A": "$y=5x-3$",
+      "B": "$y=-3x+5$",
+      "C": "$y=5x+3$",
+      "D": "$y=3x-5$"
+     }
+    },
+    {
+     "n": 2,
+     "source": "Textbook · Ex. 2",
+     "level": 1,
+     "answer": "B",
+     "stem": "Slope $-2$, $y$-intercept $7$.",
+     "options": {
+      "A": "$y=7x-2$",
+      "B": "$y=-2x+7$",
+      "C": "$y=2x+7$",
+      "D": "$y=-2x-7$"
+     }
+    },
+    {
+     "n": 3,
+     "source": "Textbook · Ex. 3",
+     "level": 1,
+     "answer": "C",
+     "stem": "Slope $-6$, $y$-intercept $-2$.",
+     "options": {
+      "A": "$y=-2x-6$",
+      "B": "$y=6x-2$",
+      "C": "$y=-6x-2$",
+      "D": "$y=-6x+2$"
+     }
+    },
+    {
+     "n": 4,
+     "source": "Textbook · Ex. 4",
+     "level": 1,
+     "answer": "D",
+     "stem": "Slope $7$, $y$-intercept $1$.",
+     "options": {
+      "A": "$y=x+7$",
+      "B": "$y=7x-1$",
+      "C": "$y=7x$",
+      "D": "$y=7x+1$"
+     }
+    },
+    {
+     "n": 5,
+     "source": "Textbook · Ex. 5",
+     "level": 1,
+     "answer": "A",
+     "stem": "Slope $3$, $y$-intercept $2$.",
+     "options": {
+      "A": "$y=3x+2$",
+      "B": "$y=2x+3$",
+      "C": "$y=3x-2$",
+      "D": "$y=5x$"
+     }
+    },
+    {
+     "n": 6,
+     "source": "Textbook · Ex. 6",
+     "level": 1,
+     "answer": "B",
+     "stem": "Slope $-4$, $y$-intercept $-9$.",
+     "options": {
+      "A": "$y=-9x-4$",
+      "B": "$y=-4x-9$",
+      "C": "$y=4x-9$",
+      "D": "$y=-4x+9$"
+     }
+    },
+    {
+     "n": 7,
+     "source": "Textbook · Ex. 7",
+     "level": 2,
+     "answer": "C",
+     "stem": "Slope $1$, $y$-intercept $-12$.",
+     "options": {
+      "A": "$y=-12x+1$",
+      "B": "$y=x+12$",
+      "C": "$y=x-12$",
+      "D": "$y=-12x$"
+     }
+    },
+    {
+     "n": 8,
+     "source": "Textbook · Ex. 8",
+     "level": 2,
+     "answer": "D",
+     "stem": "Slope $0$, $y$-intercept $8$.",
+     "options": {
+      "A": "$y=8x$",
+      "B": "$x=8$",
+      "C": "$y=0$",
+      "D": "$y=8$"
+     }
+    },
+    {
+     "n": 9,
+     "source": "new practice",
+     "level": 1,
+     "answer": "A",
+     "stem": "Rewrite $3x+y=7$ .",
+     "options": {
+      "A": "$y=-3x+7$",
+      "B": "$y=3x+7$",
+      "C": "$y=7x-3$",
+      "D": "$y=-3x-7$"
+     }
+    },
+    {
+     "n": 10,
+     "source": "new practice",
+     "level": 2,
+     "answer": "B",
+     "stem": "Rewrite $6x+2y=10$ .",
+     "options": {
+      "A": "$y=-6x+10$",
+      "B": "$y=-3x+5$",
+      "C": "$y=3x+5$",
+      "D": "$y=-3x+10$"
+     }
+    },
+    {
+     "n": 11,
+     "source": "new practice",
+     "level": 2,
+     "answer": "C",
+     "stem": "Rewrite $4x-2y=8$ .",
+     "options": {
+      "A": "$y=-2x+4$",
+      "B": "$y=2x+4$",
+      "C": "$y=2x-4$",
+      "D": "$y=4x-8$"
+     }
+    },
+    {
+     "n": 12,
+     "source": "new practice",
+     "level": 3,
+     "answer": "B",
+     "stem": "Rewrite $x+3y=9$ .",
+     "options": {
+      "A": "$y=-3x+9$",
+      "B": "$y=-\\tfrac{1}{3}x+3$",
+      "C": "$y=\\tfrac{1}{3}x+3$",
+      "D": "$y=-x+3$"
+     }
+    },
+    {
+     "n": 13,
+     "source": "new practice",
+     "level": 3,
+     "answer": "C",
+     "stem": "Rewrite $-8x+4y=-12$ .",
+     "options": {
+      "A": "$y=-2x-3$",
+      "B": "$y=2x+3$",
+      "C": "$y=2x-3$",
+      "D": "$y=-8x-12$"
+     }
+    },
+    {
+     "n": 14,
+     "source": "new practice",
+     "level": 3,
+     "answer": "D",
+     "stem": "Rewrite $3y-2x=12$ .",
+     "options": {
+      "A": "$y=2x+12$",
+      "B": "$y=-\\tfrac{2}{3}x+4$",
+      "C": "$y=\\tfrac{3}{2}x+4$",
+      "D": "$y=\\tfrac{2}{3}x+4$"
+     }
+    }
+   ]
+  },
+  "Q8": {
+   "exam_question": "Q8",
+   "type": "MCQ",
+   "lesson": "4-4 Transformations of Linear Functions",
+   "learning_outcome": "Apply dilations to linear functions",
+   "textbook": "page 248, Exercises 10–15",
+   "instruction": "Multiple choice · Describe the dilation of $g(x)$ compared with the parent function $f(x)=x$.",
+   "questions": [
+    {
+     "n": 1,
+     "source": "Textbook · Ex. 10",
+     "level": 1,
+     "answer": "A",
+     "stem": "$g(x)=5(x)$",
+     "options": {
+      "A": "vertical stretch, factor $5$ (steeper)",
+      "B": "vertical compression, factor $\\tfrac{1}{5}$ (less steep)",
+      "C": "vertical compression, factor $5$ (less steep)",
+      "D": "horizontal stretch, factor $5$ (less steep)"
+     }
+    },
+    {
+     "n": 2,
+     "source": "Textbook · Ex. 11",
+     "level": 1,
+     "answer": "B",
+     "stem": "$g(x)=\\tfrac13(x)$",
+     "options": {
+      "A": "vertical stretch, factor $3$ (steeper)",
+      "B": "vertical compression, factor $\\tfrac{1}{3}$ (less steep)",
+      "C": "vertical compression, factor $3$ (less steep)",
+      "D": "horizontal compression, factor $\\tfrac{1}{3}$ (steeper)"
+     }
+    },
+    {
+     "n": 3,
+     "source": "Textbook · Ex. 12",
+     "level": 1,
+     "answer": "C",
+     "stem": "$g(x)=1.5(x)$",
+     "options": {
+      "A": "vertical compression, factor $1.5$ (less steep)",
+      "B": "vertical stretch, factor $\\tfrac{2}{3}$ (steeper)",
+      "C": "vertical stretch, factor $1.5$ (steeper)",
+      "D": "horizontal stretch, factor $1.5$ (less steep)"
+     }
+    },
+    {
+     "n": 4,
+     "source": "Textbook · Ex. 13",
+     "level": 2,
+     "answer": "D",
+     "stem": "$g(x)=(3x)$",
+     "options": {
+      "A": "vertical compression, factor $\\tfrac{1}{3}$ (less steep)",
+      "B": "horizontal compression, factor $3$ (steeper)",
+      "C": "horizontal stretch, factor $3$ (less steep)",
+      "D": "horizontal compression, factor $\\tfrac{1}{3}$ (steeper)"
+     }
+    },
+    {
+     "n": 5,
+     "source": "Textbook · Ex. 14",
+     "level": 2,
+     "answer": "A",
+     "stem": "$g(x)=\\left(\\tfrac34x\\right)$",
+     "options": {
+      "A": "horizontal stretch, factor $\\tfrac{4}{3}$ (less steep)",
+      "B": "horizontal stretch, factor $\\tfrac{3}{4}$ (less steep)",
+      "C": "vertical stretch, factor $\\tfrac{4}{3}$ (steeper)",
+      "D": "horizontal compression, factor $\\tfrac{4}{3}$ (steeper)"
+     }
+    },
+    {
+     "n": 6,
+     "source": "Textbook · Ex. 15",
+     "level": 2,
+     "answer": "B",
+     "stem": "$g(x)=(0.4x)$",
+     "options": {
+      "A": "horizontal compression, factor $0.4$ (steeper)",
+      "B": "horizontal stretch, factor $2.5$ (less steep)",
+      "C": "vertical stretch, factor $2.5$ (steeper)",
+      "D": "horizontal stretch, factor $0.4$ (less steep)"
+     }
+    },
+    {
+     "n": 7,
+     "source": "new practice",
+     "level": 1,
+     "answer": "C",
+     "stem": "$g(x)=4(x)$",
+     "options": {
+      "A": "horizontal stretch, factor $4$ (less steep)",
+      "B": "vertical compression, factor $\\tfrac{1}{4}$ (less steep)",
+      "C": "vertical stretch, factor $4$ (steeper)",
+      "D": "vertical compression, factor $4$ (less steep)"
+     }
+    },
+    {
+     "n": 8,
+     "source": "new practice",
+     "level": 1,
+     "answer": "D",
+     "stem": "$g(x)=\\tfrac12(x)$",
+     "options": {
+      "A": "vertical stretch, factor $2$ (steeper)",
+      "B": "vertical stretch, factor $\\tfrac{1}{2}$ (steeper)",
+      "C": "vertical compression, factor $2$ (less steep)",
+      "D": "vertical compression, factor $\\tfrac{1}{2}$ (less steep)"
+     }
+    },
+    {
+     "n": 9,
+     "source": "new practice",
+     "level": 2,
+     "answer": "A",
+     "stem": "$g(x)=(5x)$",
+     "options": {
+      "A": "horizontal compression, factor $\\tfrac{1}{5}$ (steeper)",
+      "B": "horizontal compression, factor $5$ (steeper)",
+      "C": "vertical compression, factor $\\tfrac{1}{5}$ (less steep)",
+      "D": "horizontal stretch, factor $5$ (less steep)"
+     }
+    },
+    {
+     "n": 10,
+     "source": "new practice",
+     "level": 2,
+     "answer": "B",
+     "stem": "$g(x)=\\left(\\tfrac15x\\right)$",
+     "options": {
+      "A": "horizontal compression, factor $\\tfrac{1}{5}$ (steeper)",
+      "B": "horizontal stretch, factor $5$ (less steep)",
+      "C": "vertical stretch, factor $5$ (steeper)",
+      "D": "horizontal stretch, factor $\\tfrac{1}{5}$ (less steep)"
+     }
+    }
+   ]
+  },
+  "Q24": {
+   "exam_question": "Q24",
+   "type": "FRQ",
+   "lesson": "4-5 Arithmetic Sequences",
+   "learning_outcome": "Apply the arithmetic sequence formula",
+   "textbook": "page 256, Exercises 23–26",
+   "instruction": "Written answer · Write the function, graph it, then answer part c. Show your steps.",
+   "questions": [
+    {
+     "n": 1,
+     "source": "Textbook · Ex. 23",
+     "level": 2,
+     "final_answer": "$a_n=128-4n$; 72 oz",
+     "prompt": "**Water.** Each cup holds 4 oz. Wanda starts with a 128-oz cooler. **a.** Write a function. **b.** Graph it. **c.** How much water is left after the 14th cup?"
+    },
+    {
+     "n": 2,
+     "source": "Textbook · Ex. 24",
+     "level": 1,
+     "final_answer": "$a_n=2n+18$; 68 seats",
+     "prompt": "**Theater.** 20 seats in row 1, 22 in row 2, 24 in row 3, and so on for 25 rows. **a.** Write a function. **b.** Graph it. **c.** How many seats are in the last row?"
+    },
+    {
+     "n": 3,
+     "source": "Textbook · Ex. 25",
+     "level": 3,
+     "final_answer": "$a_n=0.17n+0.71$; 8 oz",
+     "prompt": "**Postage.** \\$0.88 for the first ounce, \\$0.17 for each extra ounce: \\$0.88, \\$1.05, \\$1.22, \\dots **a.** Write a function. **b.** Graph it. **c.** How much did an envelope weigh that cost \\$2.07?"
+    },
+    {
+     "n": 4,
+     "source": "Textbook · Ex. 26",
+     "level": 1,
+     "final_answer": "$a_n=1.99n$; \\$17.91",
+     "prompt": "**Downloads.** 1 episode costs \\$1.99, 2 cost \\$3.98, 3 cost \\$5.97. **a.** Write a function. **b.** Graph it. **c.** What is the cost of 9 episodes?"
+    },
+    {
+     "n": 5,
+     "source": "new practice",
+     "level": 2,
+     "final_answer": "$a_n=15n+35$; \\$185",
+     "prompt": "**Savings.** Omar has \\$50 in week 1 and adds \\$15 every week: \\$50, \\$65, \\$80, \\dots **a.** Write a function. **b.** Graph it. **c.** How much does he have in week 10?"
+    },
+    {
+     "n": 6,
+     "source": "new practice",
+     "level": 3,
+     "final_answer": "$a_n=3n+9$; day 17",
+     "prompt": "**Training.** Sara runs 12 min on day 1, then 3 min more each day: 12, 15, 18, \\dots **a.** Write a function. **b.** Graph it. **c.** On which day does she run 60 min?"
+    }
+   ]
+  },
+  "Q9": {
+   "exam_question": "Q9",
+   "type": "MCQ",
+   "lesson": "4-6 Piecewise and Step Functions",
+   "learning_outcome": "Identify and graph step functions",
+   "textbook": "page 261, Example 2",
+   "instruction": "Multiple choice · Use the greatest integer function $\\llbracket x\\rrbracket$ (round down).",
+   "questions": [
+    {
+     "n": 1,
+     "source": "Textbook · Ex. 2",
+     "level": 2,
+     "answer": "B",
+     "stem": "Which graph shows $f(x)=\\llbracket x+1\\rrbracket$?",
+     "options": {
+      "A": {
+       "graph": {
+        "type": "greatest_integer_steps",
+        "function": "y=⟦x⟧",
+        "dots_reversed": false
+       }
+      },
+      "B": {
+       "graph": {
+        "type": "greatest_integer_steps",
+        "function": "y=⟦x+1⟧",
+        "dots_reversed": false
+       }
+      },
+      "C": {
+       "graph": {
+        "type": "greatest_integer_steps",
+        "function": "y=⟦x−1⟧",
+        "dots_reversed": false
+       }
+      },
+      "D": {
+       "graph": {
+        "type": "greatest_integer_steps",
+        "function": "y=⟦x+1⟧",
+        "dots_reversed": true
+       }
+      }
+     }
+    },
+    {
+     "n": 2,
+     "source": "new practice",
+     "level": 2,
+     "answer": "C",
+     "stem": "Which graph shows $f(x)=\\llbracket x-2\\rrbracket$?",
+     "options": {
+      "A": {
+       "graph": {
+        "type": "greatest_integer_steps",
+        "function": "y=⟦x+2⟧",
+        "dots_reversed": false
+       }
+      },
+      "B": {
+       "graph": {
+        "type": "greatest_integer_steps",
+        "function": "y=⟦x−2⟧",
+        "dots_reversed": true
+       }
+      },
+      "C": {
+       "graph": {
+        "type": "greatest_integer_steps",
+        "function": "y=⟦x−2⟧",
+        "dots_reversed": false
+       }
+      },
+      "D": {
+       "graph": {
+        "type": "greatest_integer_steps",
+        "function": "y=⟦x⟧",
+        "dots_reversed": false
+       }
+      }
+     }
+    },
+    {
+     "n": 3,
+     "source": "Textbook · Ex. 2",
+     "level": 1,
+     "answer": "A",
+     "stem": "$\\llbracket x+1\\rrbracket\\text{ at }x=-1.75$",
+     "options": {
+      "A": "$-1$",
+      "B": "$0$",
+      "C": "$-2$",
+      "D": "$-0.75$"
+     }
+    },
+    {
+     "n": 4,
+     "source": "new practice",
+     "level": 1,
+     "answer": "D",
+     "stem": "$\\llbracket x-2\\rrbracket\\text{ at }x=0.25$",
+     "options": {
+      "A": "$-1.75$",
+      "B": "$-1$",
+      "C": "$0$",
+      "D": "$-2$"
+     }
+    },
+    {
+     "n": 5,
+     "source": "Textbook · Ex. 2",
+     "level": 2,
+     "answer": "C",
+     "stem": "What is the **domain** of $f(x)=\\llbracket x+1\\rrbracket$?",
+     "options": {
+      "A": "all integers",
+      "B": "$x\\ge -1$",
+      "C": "all real numbers",
+      "D": "whole numbers"
+     }
+    },
+    {
+     "n": 6,
+     "source": "Textbook · Ex. 2",
+     "level": 2,
+     "answer": "B",
+     "stem": "What is the **range** of $f(x)=\\llbracket x+1\\rrbracket$?",
+     "options": {
+      "A": "all real numbers",
+      "B": "all integers",
+      "C": "$y\\ge 1$",
+      "D": "$y\\ge 0$"
+     }
+    },
+    {
+     "n": 7,
+     "source": "new practice",
+     "level": 2,
+     "answer": "A",
+     "stem": "How does the graph of $\\llbracket x+3\\rrbracket$ compare with the graph of $\\llbracket x\\rrbracket$?",
+     "options": {
+      "A": "3 units left",
+      "B": "3 units right",
+      "C": "3 units down",
+      "D": "3 times as steep"
+     }
+    },
+    {
+     "n": 8,
+     "source": "new practice",
+     "level": 3,
+     "answer": "D",
+     "stem": "For $f(x)=\\llbracket x\\rrbracket$, which point is **not** on the graph?",
+     "options": {
+      "A": "$(0.5, 0)$",
+      "B": "$(-0.5, -1)$",
+      "C": "$(2, 2)$",
+      "D": "$(1, 0)$"
+     }
+    }
+   ]
+  },
+  "Q10": {
+   "exam_question": "Q10",
+   "type": "MCQ",
+   "lesson": "4-6 Piecewise and Step Functions",
+   "learning_outcome": "Identify and graph step functions",
+   "textbook": "page 265, Exercises 18a–d",
+   "instruction": "Multiple choice · Evaluate each step function. Inside first, round down, then multiply.",
+   "questions": [
+    {
+     "n": 1,
+     "source": "Textbook · Ex. 18a",
+     "level": 1,
+     "answer": "A",
+     "stem": "$f(x)=2\\llbracket x-1\\rrbracket$. Find $f(1.5)$.",
+     "options": {
+      "A": "$0$",
+      "B": "$1$",
+      "C": "$2$",
+      "D": "$-1$"
+     }
+    },
+    {
+     "n": 2,
+     "source": "Textbook · Ex. 18b",
+     "level": 1,
+     "answer": "B",
+     "stem": "$f(x)=2\\llbracket x-1\\rrbracket$. Find $f(2.2)$.",
+     "options": {
+      "A": "$2.4$",
+      "B": "$2$",
+      "C": "$4$",
+      "D": "$1$"
+     }
+    },
+    {
+     "n": 3,
+     "source": "Textbook · Ex. 18c",
+     "level": 2,
+     "answer": "C",
+     "stem": "$f(x)=2\\llbracket x-1\\rrbracket$. Find $f(9.7)$.",
+     "options": {
+      "A": "$18$",
+      "B": "$17.4$",
+      "C": "$16$",
+      "D": "$8$"
+     }
+    },
+    {
+     "n": 4,
+     "source": "Textbook · Ex. 18d",
+     "level": 3,
+     "answer": "D",
+     "stem": "$f(x)=2\\llbracket x-1\\rrbracket$. Find $f(-1.25)$.",
+     "options": {
+      "A": "$-4$",
+      "B": "$-4.5$",
+      "C": "$-2$",
+      "D": "$-6$"
+     }
+    },
+    {
+     "n": 5,
+     "source": "new practice",
+     "level": 1,
+     "answer": "A",
+     "stem": "$g(x)=3\\llbracket x+2\\rrbracket$. Find $g(0.5)$.",
+     "options": {
+      "A": "$6$",
+      "B": "$7.5$",
+      "C": "$9$",
+      "D": "$2$"
+     }
+    },
+    {
+     "n": 6,
+     "source": "new practice",
+     "level": 2,
+     "answer": "B",
+     "stem": "$g(x)=3\\llbracket x+2\\rrbracket$. Find $g(-0.5)$.",
+     "options": {
+      "A": "$6$",
+      "B": "$3$",
+      "C": "$4.5$",
+      "D": "$0$"
+     }
+    },
+    {
+     "n": 7,
+     "source": "new practice",
+     "level": 3,
+     "answer": "C",
+     "stem": "$g(x)=3\\llbracket x+2\\rrbracket$. Find $g(-2.5)$.",
+     "options": {
+      "A": "$0$",
+      "B": "$-1.5$",
+      "C": "$-3$",
+      "D": "$-6$"
+     }
+    },
+    {
+     "n": 8,
+     "source": "new practice",
+     "level": 2,
+     "answer": "D",
+     "stem": "$h(x)=\\llbracket x\\rrbracket+4$. Find $h(-1.2)$.",
+     "options": {
+      "A": "$3$",
+      "B": "$2.8$",
+      "C": "$-5$",
+      "D": "$2$"
+     }
+    },
+    {
+     "n": 9,
+     "source": "new practice",
+     "level": 2,
+     "answer": "A",
+     "stem": "$k(x)=-2\\llbracket x\\rrbracket$. Find $k(3.6)$.",
+     "options": {
+      "A": "$-6$",
+      "B": "$-8$",
+      "C": "$6$",
+      "D": "$-7.2$"
+     }
+    },
+    {
+     "n": 10,
+     "source": "new practice",
+     "level": 2,
+     "answer": "B",
+     "stem": "$m(x)=\\llbracket 2x\\rrbracket$. Find $m(1.7)$.",
+     "options": {
+      "A": "$2$",
+      "B": "$3$",
+      "C": "$4$",
+      "D": "$3.4$"
+     }
+    },
+    {
+     "n": 11,
+     "source": "new practice",
+     "level": 3,
+     "answer": "C",
+     "stem": "$q(x)=4\\llbracket x-0.5\\rrbracket$. Find $q(3)$.",
+     "options": {
+      "A": "$10$",
+      "B": "$12$",
+      "C": "$8$",
+      "D": "$2$"
+     }
+    },
+    {
+     "n": 12,
+     "source": "new practice",
+     "level": 3,
+     "answer": "D",
+     "stem": "$r(x)=\\llbracket \\tfrac{x}{2}\\rrbracket$. Find $r(-3)$.",
+     "options": {
+      "A": "$-1.5$",
+      "B": "$-1$",
+      "C": "$1$",
+      "D": "$-2$"
+     }
+    }
+   ]
+  },
+  "Q11": {
+   "exam_question": "Q11",
+   "type": "MCQ",
+   "lesson": "4-7 Absolute Value Functions",
+   "learning_outcome": "Apply translations to absolute value functions",
+   "textbook": "page 267, Example 1",
+   "instruction": "Multiple choice · Describe the translation of $g(x)$ compared with $f(x)=|x|$.",
+   "questions": [
+    {
+     "n": 1,
+     "source": "Textbook · Ex. 1",
+     "level": 1,
+     "answer": "A",
+     "stem": "$g(x)=|x|-3$",
+     "options": {
+      "A": "3 units down",
+      "B": "3 units up",
+      "C": "3 units left",
+      "D": "3 units right"
+     }
+    },
+    {
+     "n": 2,
+     "source": "new practice",
+     "level": 1,
+     "answer": "B",
+     "stem": "$g(x)=|x|+4$",
+     "options": {
+      "A": "4 units down",
+      "B": "4 units up",
+      "C": "4 units right",
+      "D": "4 units left"
+     }
+    },
+    {
+     "n": 3,
+     "source": "new practice",
+     "level": 1,
+     "answer": "C",
+     "stem": "$g(x)=|x-3|$",
+     "options": {
+      "A": "3 units left",
+      "B": "3 units down",
+      "C": "3 units right",
+      "D": "3 units up"
+     }
+    },
+    {
+     "n": 4,
+     "source": "new practice",
+     "level": 1,
+     "answer": "D",
+     "stem": "$g(x)=|x+6|$",
+     "options": {
+      "A": "6 units right",
+      "B": "6 units up",
+      "C": "6 units down",
+      "D": "6 units left"
+     }
+    },
+    {
+     "n": 5,
+     "source": "new practice",
+     "level": 2,
+     "answer": "A",
+     "stem": "$g(x)=|x|-7$",
+     "options": {
+      "A": "7 units down",
+      "B": "7 units left",
+      "C": "7 units up",
+      "D": "7 units right"
+     }
+    },
+    {
+     "n": 6,
+     "source": "new practice",
+     "level": 2,
+     "answer": "B",
+     "stem": "$g(x)=|x+1|$",
+     "options": {
+      "A": "1 unit right",
+      "B": "1 unit left",
+      "C": "1 unit up",
+      "D": "1 unit down"
+     }
+    },
+    {
+     "n": 7,
+     "source": "new practice",
+     "level": 2,
+     "answer": "C",
+     "stem": "Describe $g(x)=|x-2|+5$ compared with $f(x)=|x|$.",
+     "options": {
+      "A": "2 left, 5 up",
+      "B": "2 right, 5 down",
+      "C": "2 right, 5 up",
+      "D": "5 right, 2 up"
+     }
+    },
+    {
+     "n": 8,
+     "source": "new practice",
+     "level": 3,
+     "answer": "D",
+     "stem": "Describe $g(x)=|x+4|-1$ compared with $f(x)=|x|$.",
+     "options": {
+      "A": "4 right, 1 down",
+      "B": "4 left, 1 up",
+      "C": "1 left, 4 down",
+      "D": "4 left, 1 down"
+     }
+    },
+    {
+     "n": 9,
+     "source": "new practice",
+     "level": 3,
+     "answer": "A",
+     "stem": "Which function is $f(x)=|x|$ translated **5 units right and 2 units down**?",
+     "options": {
+      "A": "$g(x)=|x-5|-2$",
+      "B": "$g(x)=|x+5|-2$",
+      "C": "$g(x)=|x-2|+5$",
+      "D": "$g(x)=|x-5|+2$"
+     }
+    },
+    {
+     "n": 10,
+     "source": "new practice",
+     "level": 3,
+     "answer": "B",
+     "stem": "What is the vertex of $g(x)=|x+3|+6$?",
+     "options": {
+      "A": "$(3, 6)$",
+      "B": "$(-3, 6)$",
+      "C": "$(6, -3)$",
+      "D": "$(-3, -6)$"
+     }
+    }
+   ]
+  },
+  "Q12": {
+   "exam_question": "Q12",
+   "type": "MCQ",
+   "lesson": "4-7 Absolute Value Functions",
+   "learning_outcome": "Graph absolute value functions",
+   "textbook": "page 277, Exercises 7–12",
+   "instruction": "Multiple choice · Use the graph to choose the equation of the function.",
+   "questions": [
+    {
+     "n": 1,
+     "source": "Textbook · Ex. 7",
+     "level": 1,
+     "answer": "A",
+     "graph": {
+      "type": "absolute_value_V",
+      "function": "y=|x+2|",
+      "vertex": [
+       -2,
+       0
+      ],
+      "grid": "-6..6"
+     },
+     "stem": "(see graph)",
+     "options": {
+      "A": "$|x+2|$",
+      "B": "$|x-2|$",
+      "C": "$|x|+2$",
+      "D": "$|x|-2$"
+     }
+    },
+    {
+     "n": 2,
+     "source": "Textbook · Ex. 8",
+     "level": 2,
+     "answer": "B",
+     "graph": {
+      "type": "absolute_value_V",
+      "function": "y=|x+1|−2",
+      "vertex": [
+       -1,
+       -2
+      ],
+      "grid": "-6..6"
+     },
+     "stem": "(see graph)",
+     "options": {
+      "A": "$|x-1|-2$",
+      "B": "$|x+1|-2$",
+      "C": "$|x+2|-1$",
+      "D": "$|x+1|+2$"
+     }
+    },
+    {
+     "n": 3,
+     "source": "Textbook · Ex. 9",
+     "level": 1,
+     "answer": "C",
+     "graph": {
+      "type": "absolute_value_V",
+      "function": "y=|x|−3",
+      "vertex": [
+       0,
+       -3
+      ],
+      "grid": "-6..6"
+     },
+     "stem": "(see graph)",
+     "options": {
+      "A": "$|x-3|$",
+      "B": "$|x|+3$",
+      "C": "$|x|-3$",
+      "D": "$|x+3|$"
+     }
+    },
+    {
+     "n": 4,
+     "source": "Textbook · Ex. 10",
+     "level": 2,
+     "answer": "D",
+     "graph": {
+      "type": "absolute_value_V",
+      "function": "y=|x+5|",
+      "vertex": [
+       -5,
+       0
+      ],
+      "grid": "-6..6"
+     },
+     "stem": "(see graph)",
+     "options": {
+      "A": "$|x-5|$",
+      "B": "$|x|-5$",
+      "C": "$|x|+5$",
+      "D": "$|x+5|$"
+     }
+    },
+    {
+     "n": 5,
+     "source": "Textbook · Ex. 11",
+     "level": 1,
+     "answer": "A",
+     "graph": {
+      "type": "absolute_value_V",
+      "function": "y=|x|+1",
+      "vertex": [
+       0,
+       1
+      ],
+      "grid": "-6..6"
+     },
+     "stem": "(see graph)",
+     "options": {
+      "A": "$|x|+1$",
+      "B": "$|x|-1$",
+      "C": "$|x+1|$",
+      "D": "$|x-1|$"
+     }
+    },
+    {
+     "n": 6,
+     "source": "Textbook · Ex. 12",
+     "level": 3,
+     "answer": "B",
+     "graph": {
+      "type": "absolute_value_V",
+      "function": "y=|x−4|−2",
+      "vertex": [
+       4,
+       -2
+      ],
+      "grid": "-6..6"
+     },
+     "stem": "(see graph)",
+     "options": {
+      "A": "$|x+4|-2$",
+      "B": "$|x-4|-2$",
+      "C": "$|x-2|-4$",
+      "D": "$|x-4|+2$"
+     }
+    },
+    {
+     "n": 7,
+     "source": "new practice",
+     "level": 2,
+     "answer": "C",
+     "graph": {
+      "type": "absolute_value_V",
+      "function": "y=|x−3|+1",
+      "vertex": [
+       3,
+       1
+      ],
+      "grid": "-6..6"
+     },
+     "stem": "(see graph)",
+     "options": {
+      "A": "$|x+3|+1$",
+      "B": "$|x-1|+3$",
+      "C": "$|x-3|+1$",
+      "D": "$|x-3|-1$"
+     }
+    },
+    {
+     "n": 8,
+     "source": "new practice",
+     "level": 2,
+     "answer": "D",
+     "graph": {
+      "type": "absolute_value_V",
+      "function": "y=|x+2|+3",
+      "vertex": [
+       -2,
+       3
+      ],
+      "grid": "-6..6"
+     },
+     "stem": "(see graph)",
+     "options": {
+      "A": "$|x-2|+3$",
+      "B": "$|x+3|-2$",
+      "C": "$|x+2|-3$",
+      "D": "$|x+2|+3$"
+     }
+    },
+    {
+     "n": 9,
+     "source": "new practice",
+     "level": 2,
+     "answer": "A",
+     "graph": {
+      "type": "absolute_value_V",
+      "function": "y=|x−2|",
+      "vertex": [
+       2,
+       0
+      ],
+      "grid": "-6..6"
+     },
+     "stem": "(see graph)",
+     "options": {
+      "A": "$|x-2|$",
+      "B": "$|x+2|$",
+      "C": "$|x|-2$",
+      "D": "$|x|+2$"
+     }
+    },
+    {
+     "n": 10,
+     "source": "new practice",
+     "level": 3,
+     "answer": "B",
+     "graph": {
+      "type": "absolute_value_V",
+      "function": "y=|x+3|−4",
+      "vertex": [
+       -3,
+       -4
+      ],
+      "grid": "-6..6"
+     },
+     "stem": "(see graph)",
+     "options": {
+      "A": "$|x-3|-4$",
+      "B": "$|x+3|-4$",
+      "C": "$|x+4|-3$",
+      "D": "$|x+3|+4$"
+     }
+    },
+    {
+     "n": 11,
+     "source": "new practice",
+     "level": 2,
+     "answer": "C",
+     "graph": {
+      "type": "absolute_value_V",
+      "function": "y=|x|+4",
+      "vertex": [
+       0,
+       4
+      ],
+      "grid": "-6..6"
+     },
+     "stem": "(see graph)",
+     "options": {
+      "A": "$|x+4|$",
+      "B": "$|x|-4$",
+      "C": "$|x|+4$",
+      "D": "$|x-4|$"
+     }
+    },
+    {
+     "n": 12,
+     "source": "new practice",
+     "level": 3,
+     "answer": "D",
+     "graph": {
+      "type": "absolute_value_V",
+      "function": "y=|x−1|−5",
+      "vertex": [
+       1,
+       -5
+      ],
+      "grid": "-6..6"
+     },
+     "stem": "(see graph)",
+     "options": {
+      "A": "$|x+1|-5$",
+      "B": "$|x-5|+1$",
+      "C": "$|x-1|+5$",
+      "D": "$|x-1|-5$"
+     }
+    }
+   ]
+  },
+  "Q13": {
+   "exam_question": "Q13",
+   "type": "MCQ",
+   "lesson": "5-1 Writing Equations in Slope-Intercept Form",
+   "learning_outcome": "Write an equation of a line in slope-intercept form given the slope and one point",
+   "textbook": "page 293, Exercises 33–42",
+   "instruction": "Multiple choice · Choose the correct answer.",
+   "questions": [
+    {
+     "n": 1,
+     "source": "Textbook · Ex. 33",
+     "level": 1,
+     "answer": "B",
+     "stem": "Is $(3,-1)$ on $y=\\tfrac13x+5$?",
+     "options": {
+      "A": "Yes: $y=-1$",
+      "B": "No: $y=6$",
+      "C": "No: $y=4$",
+      "D": "Yes: $y=6$"
+     }
+    },
+    {
+     "n": 2,
+     "source": "Textbook · Ex. 34",
+     "level": 1,
+     "answer": "A",
+     "stem": "Is $(6,-2)$ on $y=\\tfrac12x-5$?",
+     "options": {
+      "A": "Yes: $y=-2$",
+      "B": "No: $y=-8$",
+      "C": "No: $y=2$",
+      "D": "Yes: $y=8$"
+     }
+    },
+    {
+     "n": 3,
+     "source": "Textbook · Ex. 35",
+     "level": 2,
+     "answer": "C",
+     "stem": "Is $(15,-13)$ on $y=-\\tfrac15x-10$?",
+     "options": {
+      "A": "No: $y=-7$",
+      "B": "No: $y=-25$",
+      "C": "Yes: $y=-13$",
+      "D": "No: $y=13$"
+     }
+    },
+    {
+     "n": 4,
+     "source": "Textbook · Ex. 36",
+     "level": 2,
+     "answer": "D",
+     "stem": "Is $(3,3)$ on $y=-\\tfrac23x+1$?",
+     "options": {
+      "A": "Yes: $y=3$",
+      "B": "No: $y=3$",
+      "C": "Yes: $y=-1$",
+      "D": "No: $y=-1$"
+     }
+    },
+    {
+     "n": 5,
+     "source": "Textbook · Ex. 37",
+     "level": 1,
+     "answer": "A",
+     "stem": "Another point on the line through $(2,-4)$, $(4,-2)$?",
+     "options": {
+      "A": "$(6, 0)$",
+      "B": "$(6, -6)$",
+      "C": "$(0, -4)$",
+      "D": "$(3, -4)$"
+     }
+    },
+    {
+     "n": 6,
+     "source": "Textbook · Ex. 38",
+     "level": 1,
+     "answer": "B",
+     "stem": "Another point on the line through $(0,5)$, $(4,1)$?",
+     "options": {
+      "A": "$(8, 5)$",
+      "B": "$(2, 3)$",
+      "C": "$(1, 1)$",
+      "D": "$(5, 4)$"
+     }
+    },
+    {
+     "n": 7,
+     "source": "Textbook · Ex. 39",
+     "level": 2,
+     "answer": "C",
+     "stem": "Another point on the line through $(-3,1)$, $(-1,-3)$?",
+     "options": {
+      "A": "$(1, -1)$",
+      "B": "$(0, -4)$",
+      "C": "$(1, -7)$",
+      "D": "$(-5, -3)$"
+     }
+    },
+    {
+     "n": 8,
+     "source": "Textbook · Ex. 40",
+     "level": 2,
+     "answer": "D",
+     "stem": "Another point on the line through $(0,4)$, $(2,5)$?",
+     "options": {
+      "A": "$(4, 8)$",
+      "B": "$(1, 6)$",
+      "C": "$(-2, 5)$",
+      "D": "$(4, 6)$"
+     }
+    },
+    {
+     "n": 9,
+     "source": "Textbook · Ex. 41",
+     "level": 3,
+     "answer": "A",
+     "stem": "Another point on the line through $(-2,9)$, $(2,-1)$?",
+     "options": {
+      "A": "$(6, -11)$",
+      "B": "$(6, 9)$",
+      "C": "$(4, -3)$",
+      "D": "$(0, 5)$"
+     }
+    },
+    {
+     "n": 10,
+     "source": "Textbook · Ex. 42",
+     "level": 3,
+     "answer": "B",
+     "stem": "Another point on the line through $(3,0)$, $(12,3)$?",
+     "options": {
+      "A": "$(6, 3)$",
+      "B": "$(6, 1)$",
+      "C": "$(9, 1)$",
+      "D": "$(0, 3)$"
+     }
+    },
+    {
+     "n": 11,
+     "source": "new practice",
+     "level": 1,
+     "answer": "C",
+     "stem": "Slope $3$, through $(1,5)$.",
+     "options": {
+      "A": "$y=3x+5$",
+      "B": "$y=3x-2$",
+      "C": "$y=3x+2$",
+      "D": "$y=5x+3$"
+     }
+    },
+    {
+     "n": 12,
+     "source": "new practice",
+     "level": 1,
+     "answer": "D",
+     "stem": "Slope $-2$, through $(2,1)$.",
+     "options": {
+      "A": "$y=-2x+1$",
+      "B": "$y=-2x-3$",
+      "C": "$y=2x-3$",
+      "D": "$y=-2x+5$"
+     }
+    }
+   ]
+  },
+  "Q14": {
+   "exam_question": "Q14",
+   "type": "MCQ",
+   "lesson": "5-2 Writing Equations in Standard and Point-Slope Forms",
+   "learning_outcome": "Write equations of lines in point-slope form given two points",
+   "textbook": "page 297, 303, Example 2 · Exercises 4–7",
+   "instruction": "Multiple choice · Choose an equation in point-slope form for the line through the two points.",
+   "questions": [
+    {
+     "n": 1,
+     "source": "Textbook · Ex. 2",
+     "level": 1,
+     "answer": "A",
+     "stem": "$(2,-7)$ and $(6,-3)$",
+     "options": {
+      "A": "$y+7=x-2$",
+      "B": "$y-7=x+2$",
+      "C": "$y+7=2(x-2)$",
+      "D": "$y+7=-(x-2)$"
+     }
+    },
+    {
+     "n": 2,
+     "source": "Textbook · Ex. 4",
+     "level": 2,
+     "answer": "B",
+     "stem": "$(-4,6)$ and $(-2,22)$",
+     "options": {
+      "A": "$y-6=8(x-4)$",
+      "B": "$y-6=8(x+4)$",
+      "C": "$y+6=8(x+4)$",
+      "D": "$y-6=\\tfrac18(x+4)$"
+     }
+    },
+    {
+     "n": 3,
+     "source": "Textbook · Ex. 5",
+     "level": 2,
+     "answer": "C",
+     "stem": "$(1,-3)$ and $(4,-15)$",
+     "options": {
+      "A": "$y-3=-4(x-1)$",
+      "B": "$y+3=4(x-1)$",
+      "C": "$y+3=-4(x-1)$",
+      "D": "$y+3=-4(x+1)$"
+     }
+    },
+    {
+     "n": 4,
+     "source": "Textbook · Ex. 6",
+     "level": 1,
+     "answer": "D",
+     "stem": "$(4,-6)$ and $(6,-4)$",
+     "options": {
+      "A": "$y-6=x-4$",
+      "B": "$y+6=-(x-4)$",
+      "C": "$y+6=x+4$",
+      "D": "$y+6=x-4$"
+     }
+    },
+    {
+     "n": 5,
+     "source": "Textbook · Ex. 7",
+     "level": 2,
+     "answer": "A",
+     "stem": "$(3,3)$ and $(6,7)$",
+     "options": {
+      "A": "$y-3=\\tfrac43(x-3)$",
+      "B": "$y-3=\\tfrac34(x-3)$",
+      "C": "$y+3=\\tfrac43(x+3)$",
+      "D": "$y-3=4(x-3)$"
+     }
+    },
+    {
+     "n": 6,
+     "source": "new practice",
+     "level": 1,
+     "answer": "B",
+     "stem": "$(1,2)$ and $(3,8)$",
+     "options": {
+      "A": "$y-2=2(x-1)$",
+      "B": "$y-2=3(x-1)$",
+      "C": "$y+2=3(x+1)$",
+      "D": "$y-1=3(x-2)$"
+     }
+    },
+    {
+     "n": 7,
+     "source": "new practice",
+     "level": 2,
+     "answer": "C",
+     "stem": "$(-2,5)$ and $(2,-3)$",
+     "options": {
+      "A": "$y-5=2(x+2)$",
+      "B": "$y+5=-2(x-2)$",
+      "C": "$y-5=-2(x+2)$",
+      "D": "$y-5=-\\tfrac12(x+2)$"
+     }
+    },
+    {
+     "n": 8,
+     "source": "new practice",
+     "level": 2,
+     "answer": "D",
+     "stem": "$(0,-1)$ and $(5,9)$",
+     "options": {
+      "A": "$y-1=2x$",
+      "B": "$y+1=\\tfrac12x$",
+      "C": "$y+1=2(x+5)$",
+      "D": "$y+1=2x$"
+     }
+    },
+    {
+     "n": 9,
+     "source": "new practice",
+     "level": 3,
+     "answer": "A",
+     "stem": "$(-6,4)$ and $(3,-2)$",
+     "options": {
+      "A": "$y-4=-\\tfrac23(x+6)$",
+      "B": "$y-4=-\\tfrac32(x+6)$",
+      "C": "$y+4=-\\tfrac23(x-6)$",
+      "D": "$y-4=\\tfrac23(x+6)$"
+     }
+    },
+    {
+     "n": 10,
+     "source": "new practice",
+     "level": 3,
+     "answer": "B",
+     "stem": "$(-5,-1)$ and $(-1,7)$",
+     "options": {
+      "A": "$y-1=2(x-5)$",
+      "B": "$y+1=2(x+5)$",
+      "C": "$y+1=\\tfrac12(x+5)$",
+      "D": "$y+1=-2(x+5)$"
+     }
+    }
+   ]
+  },
+  "Q15": {
+   "exam_question": "Q15",
+   "type": "MCQ",
+   "lesson": "5-2 Writing Equations in Standard and Point-Slope Forms",
+   "learning_outcome": "Write an equation of the line that passes through a given point, parallel to a given line",
+   "textbook": "page 304, Exercises 25–29",
+   "instruction": "Multiple choice · Choose the line in slope-intercept form through the point, parallel to the given line.",
+   "questions": [
+    {
+     "n": 1,
+     "source": "Textbook · Ex. 25",
+     "level": 1,
+     "answer": "A",
+     "stem": "$(3,-2)$; parallel to $y=x+4$",
+     "options": {
+      "A": "$y=x-5$",
+      "B": "$y=x+4$",
+      "C": "$y=-x+1$",
+      "D": "$y=x+1$"
+     }
+    },
+    {
+     "n": 2,
+     "source": "Textbook · Ex. 26",
+     "level": 1,
+     "answer": "B",
+     "stem": "$(4,-3)$; parallel to $y=3x-5$",
+     "options": {
+      "A": "$y=3x-5$",
+      "B": "$y=3x-15$",
+      "C": "$y=-\\tfrac13x-\\tfrac53$",
+      "D": "$y=3x+9$"
+     }
+    },
+    {
+     "n": 3,
+     "source": "Textbook · Ex. 27",
+     "level": 1,
+     "answer": "C",
+     "stem": "$(0,2)$; parallel to $y=-5x+8$",
+     "options": {
+      "A": "$y=\\tfrac15x+2$",
+      "B": "$y=-5x+8$",
+      "C": "$y=-5x+2$",
+      "D": "$y=2x-5$"
+     }
+    },
+    {
+     "n": 4,
+     "source": "Textbook · Ex. 28",
+     "level": 2,
+     "answer": "D",
+     "stem": "$(-4,2)$; parallel to $y=-\\tfrac12x+6$",
+     "options": {
+      "A": "$y=2x+10$",
+      "B": "$y=-\\tfrac12x+4$",
+      "C": "$y=-\\tfrac12x+6$",
+      "D": "$y=-\\tfrac12x$"
+     }
+    },
+    {
+     "n": 5,
+     "source": "Textbook · Ex. 29",
+     "level": 3,
+     "answer": "A",
+     "stem": "$(-2,3)$; parallel to $y=-\\tfrac34x+4$",
+     "options": {
+      "A": "$y=-\\tfrac34x+\\tfrac32$",
+      "B": "$y=-\\tfrac34x+\\tfrac92$",
+      "C": "$y=\\tfrac43x+\\tfrac{17}{3}$",
+      "D": "$y=-\\tfrac34x+4$"
+     }
+    },
+    {
+     "n": 6,
+     "source": "new practice",
+     "level": 1,
+     "answer": "B",
+     "stem": "$(1,6)$; parallel to $y=2x-7$",
+     "options": {
+      "A": "$y=2x-7$",
+      "B": "$y=2x+4$",
+      "C": "$y=-\\tfrac12x+\\tfrac{13}{2}$",
+      "D": "$y=2x+6$"
+     }
+    },
+    {
+     "n": 7,
+     "source": "new practice",
+     "level": 2,
+     "answer": "C",
+     "stem": "$(-3,-1)$; parallel to $y=-4x+2$",
+     "options": {
+      "A": "$y=-4x-1$",
+      "B": "$y=4x+11$",
+      "C": "$y=-4x-13$",
+      "D": "$y=\\tfrac14x-\\tfrac14$"
+     }
+    },
+    {
+     "n": 8,
+     "source": "new practice",
+     "level": 2,
+     "answer": "D",
+     "stem": "$(6,0)$; parallel to $y=\\tfrac13x+5$",
+     "options": {
+      "A": "$y=\\tfrac13x+5$",
+      "B": "$y=-3x+18$",
+      "C": "$y=\\tfrac13x+2$",
+      "D": "$y=\\tfrac13x-2$"
+     }
+    },
+    {
+     "n": 9,
+     "source": "new practice",
+     "level": 3,
+     "answer": "A",
+     "stem": "$(2,-5)$; parallel to $2x+y=7$",
+     "options": {
+      "A": "$y=-2x-1$",
+      "B": "$y=2x-9$",
+      "C": "$y=-2x+7$",
+      "D": "$y=\\tfrac12x-6$"
+     }
+    },
+    {
+     "n": 10,
+     "source": "new practice",
+     "level": 3,
+     "answer": "B",
+     "stem": "$(-4,1)$; parallel to $x-2y=6$",
+     "options": {
+      "A": "$y=-2x-7$",
+      "B": "$y=\\tfrac12x+3$",
+      "C": "$y=\\tfrac12x-3$",
+      "D": "$y=-\\tfrac12x-1$"
+     }
+    }
+   ]
+  },
+  "Q16": {
+   "exam_question": "Q16",
+   "type": "MCQ",
+   "lesson": "5-2 Writing Equations in Standard and Point-Slope Forms",
+   "learning_outcome": "Create and identify equations of parallel or perpendicular lines",
+   "textbook": "page 304, 305, Exercises 31–43",
+   "instruction": "Multiple choice · Decide how the lines are related, or rewrite the equation.",
+   "questions": [
+    {
+     "n": 1,
+     "source": "Textbook · Ex. 31",
+     "level": 1,
+     "answer": "C",
+     "stem": "$y=4x+3$ and $4x+y=3$",
+     "options": {
+      "A": "parallel",
+      "B": "perpendicular",
+      "C": "neither",
+      "D": "same line"
+     }
+    },
+    {
+     "n": 2,
+     "source": "Textbook · Ex. 32",
+     "level": 1,
+     "answer": "A",
+     "stem": "$y=-2x$ and $2x+y=3$",
+     "options": {
+      "A": "parallel",
+      "B": "perpendicular",
+      "C": "neither",
+      "D": "same line"
+     }
+    },
+    {
+     "n": 3,
+     "source": "Textbook · Ex. 33",
+     "level": 2,
+     "answer": "B",
+     "stem": "$3x+5y=10$ and $5x-3y=-6$",
+     "options": {
+      "A": "parallel",
+      "B": "perpendicular",
+      "C": "neither",
+      "D": "same line"
+     }
+    },
+    {
+     "n": 4,
+     "source": "Textbook · Ex. 34",
+     "level": 2,
+     "answer": "C",
+     "stem": "$-3x+4y=8$ and $-4x+3y=-6$",
+     "options": {
+      "A": "parallel",
+      "B": "perpendicular",
+      "C": "neither",
+      "D": "same line"
+     }
+    },
+    {
+     "n": 5,
+     "source": "Textbook · Ex. 35",
+     "level": 2,
+     "answer": "C",
+     "stem": "$2x+5y=15$ and $3x+5y=15$",
+     "options": {
+      "A": "parallel",
+      "B": "perpendicular",
+      "C": "neither",
+      "D": "same line"
+     }
+    },
+    {
+     "n": 6,
+     "source": "Textbook · Ex. 36",
+     "level": 2,
+     "answer": "A",
+     "stem": "$2x+7y=-35$ and $4x+14y=-42$",
+     "options": {
+      "A": "parallel",
+      "B": "perpendicular",
+      "C": "neither",
+      "D": "same line"
+     }
+    },
+    {
+     "n": 7,
+     "source": "Textbook · Ex. 37",
+     "level": 3,
+     "answer": "D",
+     "stem": "Standard form: $x$-int. $4$, $y$-int. $5$",
+     "options": {
+      "A": "$4x+5y=20$",
+      "B": "$5x-4y=20$",
+      "C": "$x+y=9$",
+      "D": "$5x+4y=20$"
+     }
+    },
+    {
+     "n": 8,
+     "source": "Textbook · Ex. 38",
+     "level": 2,
+     "answer": "B",
+     "stem": "$y=mx+b$ for $y+3=-\\tfrac13(2x+6)$:",
+     "options": {
+      "A": "$y=-\\tfrac23x-1$",
+      "B": "$y=-\\tfrac23x-5$",
+      "C": "$y=-\\tfrac23x+5$",
+      "D": "$y=-2x-9$"
+     }
+    },
+    {
+     "n": 9,
+     "source": "Textbook · Ex. 39",
+     "level": 1,
+     "answer": "A",
+     "stem": "$y=mx+b$ for $y+4=3(3x+3)$:",
+     "options": {
+      "A": "$y=9x+5$",
+      "B": "$y=9x+13$",
+      "C": "$y=3x+5$",
+      "D": "$y=9x-1$"
+     }
+    },
+    {
+     "n": 10,
+     "source": "Textbook · Ex. 40",
+     "level": 1,
+     "answer": "C",
+     "stem": "$y=mx+b$ for $y-6=-3(x+2)$:",
+     "options": {
+      "A": "$y=-3x+12$",
+      "B": "$y=-3x+4$",
+      "C": "$y=-3x$",
+      "D": "$y=3x$"
+     }
+    },
+    {
+     "n": 11,
+     "source": "Textbook · Ex. 41",
+     "level": 2,
+     "answer": "D",
+     "stem": "$y=mx+b$ for $y-9=-6(x+9)$:",
+     "options": {
+      "A": "$y=-6x+63$",
+      "B": "$y=-6x-63$",
+      "C": "$y=-6x+45$",
+      "D": "$y=-6x-45$"
+     }
+    },
+    {
+     "n": 12,
+     "source": "Textbook · Ex. 42",
+     "level": 3,
+     "answer": "B",
+     "stem": "$y=mx+b$ for $y+4=\\tfrac23(x+7)$:",
+     "options": {
+      "A": "$y=\\tfrac23x+3$",
+      "B": "$y=\\tfrac23x+\\tfrac23$",
+      "C": "$y=\\tfrac23x-\\tfrac{26}{3}$",
+      "D": "$y=\\tfrac32x+\\tfrac{13}{2}$"
+     }
+    },
+    {
+     "n": 13,
+     "source": "Textbook · Ex. 43",
+     "level": 3,
+     "answer": "C",
+     "stem": "$Ax+By=C$ for $y+7=\\tfrac{9}{10}(x+3)$:",
+     "options": {
+      "A": "$9x-10y=-43$",
+      "B": "$9x+10y=43$",
+      "C": "$9x-10y=43$",
+      "D": "$10x-9y=43$"
+     }
+    }
+   ]
+  },
+  "Q25": {
+   "exam_question": "Q25",
+   "type": "FRQ",
+   "lesson": "5-2 Writing Equations in Standard and Point-Slope Forms",
+   "learning_outcome": "Create and identify equations of parallel or perpendicular lines",
+   "textbook": "page 301, 302, Examples 8–9",
+   "instruction": "Written answer · Show every step. Write the final equation in slope-intercept form.",
+   "questions": [
+    {
+     "n": 1,
+     "source": "Textbook · Ex. 8",
+     "level": 2,
+     "final_answer": "$y=\\frac23x-\\frac83$",
+     "prompt": "Write an equation of the line through $(1,-2)$ that is **perpendicular** to $3x+2y=12$."
+    },
+    {
+     "n": 2,
+     "source": "Textbook · p. 302",
+     "level": 2,
+     "final_answer": "$y=-6x+30$",
+     "prompt": "Write an equation of the line through $(5,0)$ that is **perpendicular** to $x-6y=1$."
+    },
+    {
+     "n": 3,
+     "source": "Textbook · p. 301",
+     "level": 1,
+     "final_answer": "$y=\\frac34x-4$",
+     "prompt": "Write an equation of the line through $(8,2)$ that is **parallel** to $y=\\tfrac34x+2$."
+    },
+    {
+     "n": 4,
+     "source": "Textbook · Ex. 9",
+     "level": 2,
+     "final_answer": "neither ($\\frac34$ and $\\frac43$)",
+     "prompt": "Are $\\overleftrightarrow{AB}$ and $\\overleftrightarrow{EF}$ parallel, perpendicular, or neither? $A(6,8)$, $B(2,5)$, $E(-6,-3)$, $F(0,5)$."
+    },
+    {
+     "n": 5,
+     "source": "Textbook · p. 302",
+     "level": 2,
+     "final_answer": "parallel (both $-\\frac25$)",
+     "prompt": "Are $\\overleftrightarrow{CD}$ and $\\overleftrightarrow{KL}$ parallel, perpendicular, or neither? $C(4,10)$, $D(-1,12)$, $K(6,-5)$, $L(1,-3)$."
+    },
+    {
+     "n": 6,
+     "source": "new practice",
+     "level": 3,
+     "final_answer": "$y=-\\frac13x$",
+     "prompt": "Write an equation of the line through $(-3,1)$ that is **perpendicular** to $y=3x-2$."
+    }
+   ]
+  },
+  "Q17": {
+   "exam_question": "Q17",
+   "type": "MCQ",
+   "lesson": "5-6 Inverses of Linear Functions",
+   "learning_outcome": "Construct the inverses of relations",
+   "textbook": "page 331, Exercises 4–9",
+   "instruction": "Multiple choice · Find the inverse of each relation.",
+   "questions": [
+    {
+     "n": 1,
+     "source": "Textbook · Ex. 4",
+     "level": 1,
+     "answer": "A",
+     "stem": "$\\{(-3,2), (-1,8), (1,14), (3,20)\\}$",
+     "options": {
+      "A": "$\\{(2,-3),(8,-1),(14,1),(20,3)\\}$",
+      "B": "$\\{(3,-2),(1,-8),(-1,-14),(-3,-20)\\}$",
+      "C": "$\\{(-2,3),(-8,1),(-14,-1),(-20,-3)\\}$",
+      "D": "$\\{(2,3),(8,1),(14,-1),(20,-3)\\}$"
+     }
+    },
+    {
+     "n": 2,
+     "source": "Textbook · Ex. 5",
+     "level": 1,
+     "answer": "B",
+     "stem": "$\\{(5,-3), (2,-9), (-1,-15), (-4,-21)\\}$",
+     "options": {
+      "A": "$\\{(-5,3),(-2,9),(1,15),(4,21)\\}$",
+      "B": "$\\{(-3,5),(-9,2),(-15,-1),(-21,-4)\\}$",
+      "C": "$\\{(3,-5),(9,-2),(15,1),(21,4)\\}$",
+      "D": "$\\{(-3,-5),(-9,-2),(-15,1),(-21,4)\\}$"
+     }
+    },
+    {
+     "n": 3,
+     "source": "Textbook · Ex. 6",
+     "level": 1,
+     "answer": "C",
+     "stem": "$\\{(4,6), (3,1), (2,-4), (1,-9)\\}$",
+     "options": {
+      "A": "$\\{(-4,-6),(-3,-1),(-2,4),(-1,9)\\}$",
+      "B": "$\\{(6,-4),(1,-3),(-4,-2),(-9,-1)\\}$",
+      "C": "$\\{(6,4),(1,3),(-4,2),(-9,1)\\}$",
+      "D": "$\\{(4,6),(3,1),(2,-4),(1,-9)\\}$"
+     }
+    },
+    {
+     "n": 4,
+     "source": "Textbook · Ex. 7",
+     "level": 2,
+     "answer": "D",
+     "stem": "$\\{(-1,16), (-2,12), (-3,8), (-4,4)\\}$",
+     "options": {
+      "A": "$\\{(1,-16),(2,-12),(3,-8),(4,-4)\\}$",
+      "B": "$\\{(16,1),(12,2),(8,3),(4,4)\\}$",
+      "C": "$\\{(-16,1),(-12,2),(-8,3),(-4,4)\\}$",
+      "D": "$\\{(16,-1),(12,-2),(8,-3),(4,-4)\\}$"
+     }
+    },
+    {
+     "n": 5,
+     "source": "Textbook · Ex. 8",
+     "level": 2,
+     "answer": "A",
+     "stem": "$\\{(-5,13), (6,10.8), (3,11.4), (-10,14)\\}$",
+     "options": {
+      "A": "$\\{(13,-5),(10.8,6),(11.4,3),(14,-10)\\}$",
+      "B": "$\\{(5,-13),(-6,-10.8),(-3,-11.4),(10,-14)\\}$",
+      "C": "$\\{(13,5),(10.8,-6),(11.4,-3),(14,10)\\}$",
+      "D": "$\\{(-13,5),(-10.8,-6),(-11.4,-3),(-14,10)\\}$"
+     }
+    },
+    {
+     "n": 6,
+     "source": "Textbook · Ex. 9",
+     "level": 2,
+     "answer": "B",
+     "stem": "$\\{(-4,-49), (8,35), (-1,-28), (4,7)\\}$",
+     "options": {
+      "A": "$\\{(4,49),(-8,-35),(1,28),(-4,-7)\\}$",
+      "B": "$\\{(-49,-4),(35,8),(-28,-1),(7,4)\\}$",
+      "C": "$\\{(49,4),(-35,-8),(28,1),(-7,-4)\\}$",
+      "D": "$\\{(-49,4),(35,-8),(-28,1),(7,-4)\\}$"
+     }
+    },
+    {
+     "n": 7,
+     "source": "new practice",
+     "level": 1,
+     "answer": "C",
+     "stem": "The inverse of the point $(7,-2)$ is",
+     "options": {
+      "A": "$(-7,2)$",
+      "B": "$(2,-7)$",
+      "C": "$(-2,7)$",
+      "D": "$(7,2)$"
+     }
+    },
+    {
+     "n": 8,
+     "source": "new practice",
+     "level": 2,
+     "answer": "D",
+     "stem": "A relation has range $\\{0,2,4\\}$. What is the **domain** of its inverse?",
+     "options": {
+      "A": "$\\{0,-2,-4\\}$",
+      "B": "all real numbers",
+      "C": "$\\{1,2,3\\}$",
+      "D": "$\\{0,2,4\\}$"
+     }
+    }
+   ]
+  },
+  "Q18": {
+   "exam_question": "Q18",
+   "type": "MCQ",
+   "lesson": "6-1 Solving One-Step Inequalities",
+   "learning_outcome": "Solve linear inequalities by using subtraction",
+   "textbook": "page 347, Exercises 7–12",
+   "instruction": "Multiple choice · Write the inequality shown by the graph, or solve the inequality.",
+   "questions": [
+    {
+     "n": 1,
+     "source": "Textbook · Ex. 7",
+     "level": 1,
+     "answer": "A",
+     "graph": {
+      "type": "number_line_ray",
+      "range": [
+       -4,
+       4
+      ],
+      "point": -1,
+      "dot": "open",
+      "direction": "left"
+     },
+     "stem": "(see graph)",
+     "options": {
+      "A": "$x<-1$",
+      "B": "$x\\le-1$",
+      "C": "$x>-1$",
+      "D": "$x\\ge-1$"
+     }
+    },
+    {
+     "n": 2,
+     "source": "Textbook · Ex. 8",
+     "level": 1,
+     "answer": "B",
+     "graph": {
+      "type": "number_line_ray",
+      "range": [
+       -8,
+       0
+      ],
+      "point": -6,
+      "dot": "open",
+      "direction": "right"
+     },
+     "stem": "(see graph)",
+     "options": {
+      "A": "$x<-6$",
+      "B": "$x>-6$",
+      "C": "$x\\ge-6$",
+      "D": "$x\\le-6$"
+     }
+    },
+    {
+     "n": 3,
+     "source": "Textbook · Ex. 9",
+     "level": 1,
+     "answer": "C",
+     "graph": {
+      "type": "number_line_ray",
+      "range": [
+       0,
+       8
+      ],
+      "point": 5,
+      "dot": "open",
+      "direction": "left"
+     },
+     "stem": "(see graph)",
+     "options": {
+      "A": "$x>5$",
+      "B": "$x\\le5$",
+      "C": "$x<5$",
+      "D": "$x\\ge5$"
+     }
+    },
+    {
+     "n": 4,
+     "source": "Textbook · Ex. 10",
+     "level": 1,
+     "answer": "D",
+     "graph": {
+      "type": "number_line_ray",
+      "range": [
+       -4,
+       4
+      ],
+      "point": 1,
+      "dot": "closed",
+      "direction": "left"
+     },
+     "stem": "(see graph)",
+     "options": {
+      "A": "$x<1$",
+      "B": "$x\\ge1$",
+      "C": "$x>1$",
+      "D": "$x\\le1$"
+     }
+    },
+    {
+     "n": 5,
+     "source": "Textbook · Ex. 11",
+     "level": 2,
+     "answer": "A",
+     "graph": {
+      "type": "number_line_ray",
+      "range": [
+       -8,
+       0
+      ],
+      "point": -5,
+      "dot": "closed",
+      "direction": "right"
+     },
+     "stem": "(see graph)",
+     "options": {
+      "A": "$x\\ge-5$",
+      "B": "$x>-5$",
+      "C": "$x\\le-5$",
+      "D": "$x<-5$"
+     }
+    },
+    {
+     "n": 6,
+     "source": "Textbook · Ex. 12",
+     "level": 2,
+     "answer": "B",
+     "graph": {
+      "type": "number_line_ray",
+      "range": [
+       -8,
+       0
+      ],
+      "point": -6,
+      "dot": "closed",
+      "direction": "left"
+     },
+     "stem": "(see graph)",
+     "options": {
+      "A": "$x<-6$",
+      "B": "$x\\le-6$",
+      "C": "$x\\ge-6$",
+      "D": "$x>-6$"
+     }
+    },
+    {
+     "n": 7,
+     "source": "new practice",
+     "level": 1,
+     "answer": "C",
+     "stem": "$m+4<9$",
+     "options": {
+      "A": "$m<13$",
+      "B": "$m>5$",
+      "C": "$m<5$",
+      "D": "$m\\le5$"
+     }
+    },
+    {
+     "n": 8,
+     "source": "new practice",
+     "level": 1,
+     "answer": "D",
+     "stem": "$x+7\\ge3$",
+     "options": {
+      "A": "$x\\ge10$",
+      "B": "$x\\le-4$",
+      "C": "$x\\ge4$",
+      "D": "$x\\ge-4$"
+     }
+    },
+    {
+     "n": 9,
+     "source": "new practice",
+     "level": 2,
+     "answer": "A",
+     "stem": "$13>18+r$",
+     "options": {
+      "A": "$r<-5$",
+      "B": "$r>-5$",
+      "C": "$r<5$",
+      "D": "$r<31$"
+     }
+    },
+    {
+     "n": 10,
+     "source": "new practice",
+     "level": 2,
+     "answer": "B",
+     "stem": "$5+c\\le1$",
+     "options": {
+      "A": "$c\\le6$",
+      "B": "$c\\le-4$",
+      "C": "$c\\ge-4$",
+      "D": "$c\\le4$"
+     }
+    },
+    {
+     "n": 11,
+     "source": "new practice",
+     "level": 2,
+     "answer": "C",
+     "stem": "$11+m\\ge15$",
+     "options": {
+      "A": "$m\\ge26$",
+      "B": "$m\\le4$",
+      "C": "$m\\ge4$",
+      "D": "$m>4$"
+     }
+    },
+    {
+     "n": 12,
+     "source": "new practice",
+     "level": 3,
+     "answer": "D",
+     "stem": "$-7>20+c$",
+     "options": {
+      "A": "$c>-27$",
+      "B": "$c<13$",
+      "C": "$c<27$",
+      "D": "$c<-27$"
+     }
+    },
+    {
+     "n": 13,
+     "source": "new practice",
+     "level": 3,
+     "answer": "A",
+     "stem": "$2a\\le-4+a$",
+     "options": {
+      "A": "$a\\le-4$",
+      "B": "$a\\ge-4$",
+      "C": "$a\\le4$",
+      "D": "$a\\le-\\tfrac43$"
+     }
+    },
+    {
+     "n": 14,
+     "source": "new practice",
+     "level": 3,
+     "answer": "B",
+     "stem": "$3y\\le2y-6$",
+     "options": {
+      "A": "$y\\ge-6$",
+      "B": "$y\\le-6$",
+      "C": "$y\\le6$",
+      "D": "$y\\le-\\tfrac65$"
+     }
+    }
+   ]
+  },
+  "Q19": {
+   "exam_question": "Q19",
+   "type": "MCQ",
+   "lesson": "6-2 Solving Multi-Step Inequalities",
+   "learning_outcome": "Solve linear inequalities involving more than one operation",
+   "textbook": "page 354, Examples 2–3",
+   "instruction": "Multiple choice · Write the inequality if needed, then solve it.",
+   "questions": [
+    {
+     "n": 1,
+     "source": "Textbook · Ex. 6",
+     "level": 1,
+     "answer": "A",
+     "stem": "Five times a number minus one is greater than or equal to negative eleven.",
+     "options": {
+      "A": "$n\\ge-2$",
+      "B": "$n\\le-2$",
+      "C": "$n\\ge-\\tfrac{12}{5}$",
+      "D": "$n\\ge2$"
+     }
+    },
+    {
+     "n": 2,
+     "source": "Textbook · Ex. 7",
+     "level": 1,
+     "answer": "B",
+     "stem": "Twenty-one is greater than the sum of fifteen and two times a number.",
+     "options": {
+      "A": "$n>3$",
+      "B": "$n<3$",
+      "C": "$n<18$",
+      "D": "$n<\\tfrac{3}{2}$"
+     }
+    },
+    {
+     "n": 3,
+     "source": "Textbook · Ex. 9",
+     "level": 2,
+     "answer": "C",
+     "stem": "A number divided by eight minus thirteen is greater than negative six.",
+     "options": {
+      "A": "$n>-56$",
+      "B": "$n>\\tfrac78$",
+      "C": "$n>56$",
+      "D": "$n<56$"
+     }
+    },
+    {
+     "n": 4,
+     "source": "Textbook · Ex. 10",
+     "level": 2,
+     "answer": "D",
+     "stem": "The sum of the opposite of a number and six is less than or equal to five.",
+     "options": {
+      "A": "$n\\le1$",
+      "B": "$n\\le-1$",
+      "C": "$n\\ge11$",
+      "D": "$n\\ge1$"
+     }
+    },
+    {
+     "n": 5,
+     "source": "Textbook · Ex. 11",
+     "level": 3,
+     "answer": "A",
+     "stem": "Thirty-seven is less than the difference of seven and ten times a number.",
+     "options": {
+      "A": "$n<-3$",
+      "B": "$n>-3$",
+      "C": "$n<3$",
+      "D": "$n>3$"
+     }
+    },
+    {
+     "n": 6,
+     "source": "Textbook · Ex. 12",
+     "level": 3,
+     "answer": "B",
+     "stem": "Eight minus a number divided by three is greater than or equal to eleven.",
+     "options": {
+      "A": "$n\\ge-9$",
+      "B": "$n\\le-9$",
+      "C": "$n\\le9$",
+      "D": "$n\\ge-1$"
+     }
+    },
+    {
+     "n": 7,
+     "source": "Textbook · Ex. 14",
+     "level": 3,
+     "answer": "C",
+     "stem": "The difference of three times a number and six is greater than or equal to the sum of fifteen and twenty-four times a number.",
+     "options": {
+      "A": "$n\\ge-1$",
+      "B": "$n\\le1$",
+      "C": "$n\\le-1$",
+      "D": "$n\\ge1$"
+     }
+    },
+    {
+     "n": 8,
+     "source": "Textbook · Ex. 15",
+     "level": 3,
+     "answer": "D",
+     "stem": "The sum of fifteen times a number and thirty is less than the difference of ten times a number and forty-five.",
+     "options": {
+      "A": "$n>-15$",
+      "B": "$n<-3$",
+      "C": "$n<15$",
+      "D": "$n<-15$"
+     }
+    },
+    {
+     "n": 9,
+     "source": "Textbook · Ex. 16",
+     "level": 2,
+     "answer": "A",
+     "stem": "$-3(7n+3)<6n$",
+     "options": {
+      "A": "$n>-\\tfrac13$",
+      "B": "$n<-\\tfrac13$",
+      "C": "$n>\\tfrac13$",
+      "D": "$n>-3$"
+     }
+    },
+    {
+     "n": 10,
+     "source": "Textbook · Ex. 17",
+     "level": 2,
+     "answer": "B",
+     "stem": "$21\\ge3(a-7)+9$",
+     "options": {
+      "A": "$a\\ge11$",
+      "B": "$a\\le11$",
+      "C": "$a\\le7$",
+      "D": "$a\\le\\tfrac{11}{3}$"
+     }
+    },
+    {
+     "n": 11,
+     "source": "Textbook · Ex. 18",
+     "level": 3,
+     "answer": "C",
+     "stem": "$2y+4>2(3+y)$",
+     "options": {
+      "A": "$y>1$",
+      "B": "all reals",
+      "C": "$\\varnothing$",
+      "D": "$y>0$"
+     }
+    },
+    {
+     "n": 12,
+     "source": "Textbook · Ex. 19",
+     "level": 3,
+     "answer": "D",
+     "stem": "$3(2-b)<10-3(b-6)$",
+     "options": {
+      "A": "$\\varnothing$",
+      "B": "$b<4$",
+      "C": "$b>-4$",
+      "D": "all reals"
+     }
+    },
+    {
+     "n": 13,
+     "source": "Textbook · Ex. 20",
+     "level": 2,
+     "answer": "A",
+     "stem": "$7+t\\le2(t+3)+2$",
+     "options": {
+      "A": "$t\\ge-1$",
+      "B": "$t\\le-1$",
+      "C": "$t\\ge1$",
+      "D": "$t\\ge-3$"
+     }
+    },
+    {
+     "n": 14,
+     "source": "Textbook · Ex. 21",
+     "level": 3,
+     "answer": "B",
+     "stem": "$8a+2(1-5a)\\le20$",
+     "options": {
+      "A": "$a\\le-9$",
+      "B": "$a\\ge-9$",
+      "C": "$a\\ge-11$",
+      "D": "$a\\le9$"
+     }
+    }
+   ]
+  },
+  "Q21 (part 2)": {
+   "exam_question": "Q21",
+   "type": "FRQ",
+   "lesson": "6-3 Solving Compound Inequalities",
+   "learning_outcome": "Solve and graph linear inequalities containing the word and",
+   "textbook": "page 363, Exercises 1, 2, 5, 6, 7, 10, 11, 12",
+   "instruction": "Written answer · Solve each compound inequality, then graph the solution set on the number line.",
+   "questions": [
+    {
+     "n": 1,
+     "source": "Textbook · Ex. 1",
+     "level": 1,
+     "final_answer": "$6\\le f<11$",
+     "prompt": "Solve $f-6<5$ and $f-4\\ge2$. [number line to graph the solution]"
+    },
+    {
+     "n": 2,
+     "source": "Textbook · Ex. 2",
+     "level": 1,
+     "final_answer": "$-12\\le n\\le-7$",
+     "prompt": "Solve $n+2\\le-5$ and $n+6\\ge-6$. [number line to graph the solution]"
+    },
+    {
+     "n": 3,
+     "source": "Textbook · Ex. 5",
+     "level": 2,
+     "final_answer": "$-4<p\\le5$",
+     "prompt": "Solve $-5<3p+7\\le22$. [number line to graph the solution]"
+    },
+    {
+     "n": 4,
+     "source": "Textbook · Ex. 6",
+     "level": 2,
+     "final_answer": "$-1\\le c<2$",
+     "prompt": "Solve $-3\\le7c+4<18$. [number line to graph the solution]"
+    },
+    {
+     "n": 5,
+     "source": "Textbook · Ex. 7",
+     "level": 2,
+     "final_answer": "$2\\le h<3$",
+     "prompt": "Solve $5h-4\\ge6$ and $7h+11<32$. [number line to graph the solution]"
+    },
+    {
+     "n": 6,
+     "source": "Textbook · Ex. 10",
+     "level": 3,
+     "final_answer": "$\\varnothing$",
+     "prompt": "Solve $-4a+13\\ge29$ and $10<6a-14$. [number line to graph the solution]"
+    },
+    {
+     "n": 7,
+     "source": "Textbook · Ex. 11",
+     "level": 3,
+     "final_answer": "$4<b\\le5$",
+     "prompt": "Solve $3b+2<5b-6\\le2b+9$. [number line to graph the solution]"
+    },
+    {
+     "n": 8,
+     "source": "Textbook · Ex. 12",
+     "level": 3,
+     "final_answer": "$-3<a\\le\\frac12$",
+     "prompt": "Solve $-2a+3\\ge6a-1>3a-10$. [number line to graph the solution]"
+    }
+   ]
+  },
+  "Q20": {
+   "exam_question": "Q20",
+   "type": "MCQ",
+   "lesson": "6-4 Solving Absolute Value Inequalities",
+   "learning_outcome": "Solve and graph absolute value inequalities (<)",
+   "textbook": "page 371, Exercises 1–10",
+   "instruction": "Multiple choice · Solve each inequality and choose the solution set.",
+   "questions": [
+    {
+     "n": 1,
+     "source": "Textbook · Ex. 1",
+     "level": 1,
+     "answer": "A",
+     "stem": "$|x+8|<16$",
+     "options": {
+      "A": "$-24<x<8$",
+      "B": "$-8<x<24$",
+      "C": "$x<-24\\text{ or }x>8$",
+      "D": "$x<8$"
+     }
+    },
+    {
+     "n": 2,
+     "source": "Textbook · Ex. 2",
+     "level": 1,
+     "answer": "B",
+     "stem": "$|r+1|\\le2$",
+     "options": {
+      "A": "$-1\\le r\\le3$",
+      "B": "$-3\\le r\\le1$",
+      "C": "$r\\le-3\\text{ or }r\\ge1$",
+      "D": "$r\\le1$"
+     }
+    },
+    {
+     "n": 3,
+     "source": "Textbook · Ex. 3",
+     "level": 2,
+     "answer": "C",
+     "stem": "$|2c-1|\\le7$",
+     "options": {
+      "A": "$-4\\le c\\le3$",
+      "B": "$-6\\le c\\le8$",
+      "C": "$-3\\le c\\le4$",
+      "D": "$c\\le-3\\text{ or }c\\ge4$"
+     }
+    },
+    {
+     "n": 4,
+     "source": "Textbook · Ex. 4",
+     "level": 2,
+     "answer": "D",
+     "stem": "$|3h-3|<12$",
+     "options": {
+      "A": "$-5<h<3$",
+      "B": "$-4<h<4$",
+      "C": "$h<-3\\text{ or }h>5$",
+      "D": "$-3<h<5$"
+     }
+    },
+    {
+     "n": 5,
+     "source": "Textbook · Ex. 5",
+     "level": 2,
+     "answer": "A",
+     "stem": "$|m+4|<-2$",
+     "options": {
+      "A": "$\\varnothing$",
+      "B": "$-6<m<-2$",
+      "C": "all reals",
+      "D": "$m<-6$"
+     }
+    },
+    {
+     "n": 6,
+     "source": "Textbook · Ex. 6",
+     "level": 2,
+     "answer": "B",
+     "stem": "$|w+5|<-8$",
+     "options": {
+      "A": "$-13<w<3$",
+      "B": "$\\varnothing$",
+      "C": "all reals",
+      "D": "$w<3$"
+     }
+    },
+    {
+     "n": 7,
+     "source": "Textbook · Ex. 7",
+     "level": 2,
+     "answer": "C",
+     "stem": "$|r+2|>6$",
+     "options": {
+      "A": "$-8<r<4$",
+      "B": "$r<-4\\text{ or }r>8$",
+      "C": "$r<-8\\text{ or }r>4$",
+      "D": "$r>4$"
+     }
+    },
+    {
+     "n": 8,
+     "source": "Textbook · Ex. 8",
+     "level": 2,
+     "answer": "D",
+     "stem": "$|k-4|>3$",
+     "options": {
+      "A": "$1<k<7$",
+      "B": "$k<-7\\text{ or }k>-1$",
+      "C": "$k>7$",
+      "D": "$k<1\\text{ or }k>7$"
+     }
+    },
+    {
+     "n": 9,
+     "source": "Textbook · Ex. 9",
+     "level": 3,
+     "answer": "A",
+     "stem": "$|2h-3|\\ge9$",
+     "options": {
+      "A": "$h\\le-3\\text{ or }h\\ge6$",
+      "B": "$-3\\le h\\le6$",
+      "C": "$h\\le-6\\text{ or }h\\ge3$",
+      "D": "$h\\ge6$"
+     }
+    },
+    {
+     "n": 10,
+     "source": "Textbook · Ex. 10",
+     "level": 3,
+     "answer": "B",
+     "stem": "$|4p+2|\\ge10$",
+     "options": {
+      "A": "$-3\\le p\\le2$",
+      "B": "$p\\le-3\\text{ or }p\\ge2$",
+      "C": "$p\\le-2\\text{ or }p\\ge3$",
+      "D": "$p\\ge2$"
+     }
+    },
+    {
+     "n": 11,
+     "source": "new practice",
+     "level": 1,
+     "answer": "C",
+     "stem": "$|x-3|<5$",
+     "options": {
+      "A": "$-8<x<2$",
+      "B": "$x<-2\\text{ or }x>8$",
+      "C": "$-2<x<8$",
+      "D": "$x<8$"
+     }
+    },
+    {
+     "n": 12,
+     "source": "new practice",
+     "level": 2,
+     "answer": "A",
+     "stem": "$|2x+4|<6$",
+     "options": {
+      "A": "$-5<x<1$",
+      "B": "$-1<x<5$",
+      "C": "$-10<x<2$",
+      "D": "$x<-5\\text{ or }x>1$"
+     }
+    },
+    {
+     "n": 13,
+     "source": "new practice",
+     "level": 3,
+     "answer": "C",
+     "stem": "$|x-5|\\ge-1$",
+     "options": {
+      "A": "$\\varnothing$",
+      "B": "$4\\le x\\le6$",
+      "C": "all reals",
+      "D": "$x\\ge6$"
+     }
+    },
+    {
+     "n": 14,
+     "source": "new practice",
+     "level": 3,
+     "answer": "D",
+     "stem": "$|x|>2$",
+     "options": {
+      "A": "$-2<x<2$",
+      "B": "$x>2$",
+      "C": "$x>-2$",
+      "D": "$x<-2\\text{ or }x>2$"
+     }
+    }
+   ]
+  }
+ }
+}

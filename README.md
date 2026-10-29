@@ -13,7 +13,7 @@ A minimalistic, high-performance, responsive web application built for Grade 9 A
    - **5 FRQ Tiles (Q21–Q25)**: Each tile contains **5 multi-part parameterized questions** (25 questions total).
    - **Lesson-by-Lesson Progression**: Questions are ordered strictly from Chapter 2 to Chapter 6 (Lesson 2-1 through Lesson 6-4).
    - **Dynamic Regeneration**: Clicking *"Retry with new numbers"* generates fresh random parameters following the exact textbook patterns.
-   - **UAE & Universal Context**: Metric units exclusively ($\text{cm}, \text{m}, \text{km}, \text{g}, \text{kg}, \text{L}, ^\circ\text{C}$), AED currency, and everyday contexts.
+   - **Booklet contexts**: Word problems keep the contexts and units of the approved Question Booklet (e.g. °F, lb/oz, \$) with new numbers.
 2. **Instant Feedback, Self-Grading & Hints**:
    - Instant visual grading upon selection for MCQ.
    - **FRQ Self-Assessment**: The answer and full model solution start hidden behind an *"👁️ Show Answer & Model Solution"* button. Once revealed, students compare their solution and select either the **Green button** (*"✓ I solved it correctly"*, +1.0 pt) or the **Red button** (*"✗ I got it wrong"*, 0.0 pts) to record their score out of 5 and unlock navigation.
@@ -65,11 +65,17 @@ A minimalistic, high-performance, responsive web application built for Grade 9 A
 ### Free Response Questions (FRQ 21–25)
 | Tile | Pages | Lesson | Topic & Learning Outcome |
 | :---: | :---: | :---: | :--- |
-| **Q21** | 120, 126 | L 2-7 | Solve literal equations for specific variables |
-| **Q22** | 216 | L 4-1 | Graph linear functions using $x$- and $y$-intercepts on coordinate grid |
-| **Q23** | 256 | L 4-5 | Apply the arithmetic sequence formula ($a_n = a_1 + (n - 1)d$) |
-| **Q24** | 301, 302 | L 5-2 | Create equations of parallel or perpendicular lines through given points |
-| **Q25** | 363, 97 | L 6-3, 2-4 | **Part (a):** Solve & graph compound "and" inequalities<br>**Part (b):** Multi-step Distributive Property equation |
+| **Q21** | 97, 363 | L 2-4, 6-3 | 3 Distributive Property equations + 2 compound "and" inequalities (with number line) |
+| **Q22** | 120, 126 | L 2-7 | Solve equations for specific variables (budget formulas, parts a/b/c) |
+| **Q23** | 216 | L 4-1 | Graph linear functions using $x$- and $y$-intercepts on coordinate grid |
+| **Q24** | 256 | L 4-5 | Apply the arithmetic sequence formula ($a_n = a_1 + (n - 1)d$), parts a/b/c |
+| **Q25** | 301, 302 | L 5-2 | Create and identify equations of parallel or perpendicular lines |
+
+### Where the questions come from
+The questions follow the teacher's approved Question Booklet (`question_bank.json`). Each booklet question is a
+*pattern*: the site keeps its structure and kinds of distractors but always uses **different numbers**
+(`js/bookletSignatures.js` lists the booklet's numbers so they are never repeated). Every generated question is
+re-checked by an independent answer checker (`js/verify.js`) before it is shown, so exactly one option is correct.
 
 ---
 
@@ -83,6 +89,9 @@ Project Final EOT WEB/
 │   └── style.css            # Responsive styling, color variables, certificate layout
 ├── js/
 │   ├── config.js            # School, teacher, and blueprint configuration
+│   ├── graphs.js            # SVG drawings: lines, V graphs, step graphs, number lines
+│   ├── verify.js            # Independent answer checker (recomputes every answer)
+│   ├── bookletSignatures.js # Numbers used in the booklet (generated; never reused)
 │   ├── questionBank.js      # Complete bank of 265 parameterized questions (Q1–Q25)
 │   ├── calculator.js        # Built-in scientific calculator module
 │   ├── certificate.js       # Certificate generation, PNG/PDF export & confetti

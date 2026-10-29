@@ -44,34 +44,34 @@ const TILE_BLUEPRINT = [
   { tile: 18, type: "mcq", pages: "347",      lessons: "6-1", outcome: "Solve inequalities by subtraction" },
   { tile: 19, type: "mcq", pages: "354",      lessons: "6-2", outcome: "Solve multi-step inequalities" },
   { tile: 20, type: "mcq", pages: "371",      lessons: "6-4", outcome: "Solve absolute value inequalities (<)" },
-  // FRQ tiles Q21–Q25 (Ordered: L 2-7 -> L 4-1 -> L 4-5 -> L 5-2 -> L 6-3, 2-4)
-  { tile: 21, type: "frq", pages: "120, 126", lessons: "2-7", outcome: "Solve literal equations for specific variables" },
-  { tile: 22, type: "frq", pages: "216",      lessons: "4-1", outcome: "Graph using intercepts" },
-  { tile: 23, type: "frq", pages: "256",      lessons: "4-5", outcome: "Arithmetic sequence formula" },
-  { tile: 24, type: "frq", pages: "301, 302", lessons: "5-2", outcome: "Parallel and perpendicular lines" },
-  { tile: 25, type: "frq", pages: "363, 97",  lessons: "6-3, 2-4", outcome: "Compound inequalities & Distributive Property" },
+  // FRQ tiles Q21–Q25 (numbered as in the teacher's Question Booklet)
+  { tile: 21, type: "frq", pages: "97, 363",  lessons: "2-4, 6-3", outcome: "Distributive Property & compound inequalities" },
+  { tile: 22, type: "frq", pages: "120, 126", lessons: "2-7", outcome: "Solve equations for specific variables" },
+  { tile: 23, type: "frq", pages: "216",      lessons: "4-1", outcome: "Graph using intercepts" },
+  { tile: 24, type: "frq", pages: "256",      lessons: "4-5", outcome: "Arithmetic sequence formula" },
+  { tile: 25, type: "frq", pages: "301, 302", lessons: "5-2", outcome: "Parallel and perpendicular lines" },
 ];
 
 // ── Lesson Groups (for mastery) ────────────────────────────
 const LESSON_GROUPS = {
   "2-1": [1],
   "2-3": [2],
-  "2-4": [3, 25],   // Q25 part (b)
+  "2-4": [3, 21],   // Q21 Distributive Property questions
   "2-5": [4],
   "2-6": [5],
-  "2-7": [21],
-  "4-1": [22],
+  "2-7": [22],
+  "4-1": [23],
   "4-2": [6],
   "4-3": [7],
   "4-4": [8],
-  "4-5": [23],
+  "4-5": [24],
   "4-6": [9, 10],
   "4-7": [11, 12],
   "5-1": [13],
-  "5-2": [14, 15, 16, 24],
+  "5-2": [14, 15, 16, 25],
   "5-6": [17],
   "6-1": [18],
   "6-2": [19],
-  "6-3": [25],       // Q25 part (a)
+  "6-3": [21],       // Q21 compound inequality questions
   "6-4": [20],
 };
