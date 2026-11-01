@@ -72,4 +72,4 @@ Every question on the site was replaced. The old generators covered some off-out
 - `README.md`: blueprint table and file list.
 - `.claude/launch.json`: local preview configuration used for testing. It can be deleted.
 
-Backups of the original files are in the session scratchpad.
+Correction (1 November 2026): the backups of the original files were kept in a temporary folder that has since been cleared, so they no longer exist.

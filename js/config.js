@@ -6,6 +6,7 @@ const CONFIG = {
   SHOW_OUTCOME_NAMES: false,
   MCQ_SET_SIZE: 12,
   FRQ_SET_SIZE: 5,
+  MIN_QUESTIONS_TO_SUBMIT: 2,   // answered questions needed before "Submit early" unlocks
 };
 
 // ── Firebase Cloud Sync Configuration ────────────────────────

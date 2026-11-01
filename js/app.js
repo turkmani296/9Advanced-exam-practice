@@ -776,6 +776,14 @@
     render();
   }
 
+  function isAnswered(ans) {
+    return ans != null;
+  }
+
+  function countAnswered(progress) {
+    return (progress.answers || []).filter(isAnswered).length;
+  }
+
   // ── PRACTICE SET ───────────────────────────────────
   function renderPractice() {
     const tileNum = state.currentTile;
@@ -792,6 +800,8 @@
 
     const pct = ((qi + 1) / total * 100).toFixed(0);
     const outcomeLabel = CONFIG.SHOW_OUTCOME_NAMES ? ` · ${info.outcome}` : '';
+    const answeredCount = countAnswered(progress);
+    const minToSubmit = CONFIG.MIN_QUESTIONS_TO_SUBMIT;
 
     let questionBody = '';
     if (info.type === 'mcq') {
@@ -825,10 +835,16 @@
       </div>
       <div class="question-nav">
         <button class="nav-btn nav-btn-prev" id="prev-q" ${qi === 0 ? 'disabled' : ''}>← Previous</button>
-        ${qi < total - 1
-          ? `<button class="nav-btn nav-btn-next" id="next-q" ${answered == null ? 'disabled' : ''}>Next →</button>`
-          : `<button class="nav-btn nav-btn-next btn-accent" id="finish-set" ${answered == null ? 'disabled' : ''}>Finish</button>`
-        }
+        <div class="question-nav-right">
+          ${answeredCount < total
+            ? `<button class="nav-btn nav-btn-submit" id="submit-early" ${answeredCount < minToSubmit ? `disabled title="Answer at least ${minToSubmit} questions to submit early"` : ''}>Submit early</button>`
+            : ''
+          }
+          ${qi < total - 1
+            ? `<button class="nav-btn nav-btn-next" id="next-q" ${answered == null ? 'disabled' : ''}>Next →</button>`
+            : `<button class="nav-btn nav-btn-next btn-accent" id="finish-set" ${answered == null ? 'disabled' : ''}>Finish</button>`
+          }
+        </div>
       </div>
     </div>`;
   }
@@ -1231,6 +1247,7 @@
       render();
     });
     if (finishBtn) finishBtn.addEventListener('click', () => finishSet());
+    document.getElementById('submit-early')?.addEventListener('click', () => finishSet());
   }
 
   function handleMCQAnswer(qi, oi) {
@@ -1247,9 +1264,11 @@
     const questions = generateQuestions(tileNum, state.currentSeed);
     const progress = state.tileProgress[tileNum];
 
-    // Calculate score: 1 point per question
+    // Calculate score: 1 point per answered question (a set submitted early
+    // is marked out of the questions the student actually answered)
     let totalScore = 0;
-    const totalPossible = questions.length; // 12 for MCQ, 5 for FRQ
+    const totalPossible = countAnswered(progress);
+    progress.setSize = questions.length; // 12 for MCQ, 5 for FRQ
 
     questions.forEach((q, i) => {
       const ans = progress.answers[i];
@@ -1327,6 +1346,7 @@
 
     let reviewHTML = questions.map((q, i) => {
       const ans = progress.answers[i];
+      if (!isAnswered(ans)) return ''; // not reached before submitting early
       let mark = 'wrong';
       let markText = '✗ 0/1';
       
@@ -1380,6 +1400,7 @@
         </div>
         <div class="results-pct">${pct}%</div>
         <div class="results-msg">${msg}</div>
+        ${total < questions.length ? `<p class="results-early-note">Submitted early: ${total} of ${questions.length} questions answered.</p>` : ''}
         <div class="results-actions">
           <button class="btn btn-accent" id="retry-btn">🔄 Retry with new numbers</button>
           <button class="btn btn-secondary" id="print-btn">🖨 Print / Save as PDF</button>
