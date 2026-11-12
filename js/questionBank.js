@@ -4,9 +4,9 @@
 // seeded RNG that returns one question with new numbers. The runner:
 //   • rejects any instance whose numbers repeat a booklet question,
 //   • rejects any instance that fails the independent answer check (verify.js),
-//   • places the correct letters so each 12-question set uses A–D three times each,
+//   • spreads the correct letters evenly over A–D across each 30-question bank,
 //   • builds hint 3 as a fully worked example with different numbers.
-// 20 MCQ sets × 12 + 5 FRQ sets × 5 = 265 questions.
+// 20 MCQ sets × 30-question bank (5 drawn at random per visit) + 5 FRQ sets × 5.
 
 // ── Seeded RNG ─────────────────────────────────────────────
 function seededRandom(seed) {
@@ -111,7 +111,7 @@ function safeMath(s) {
   }
   return out;
 }
-const INSTR = t => `<span style="display:block;font-size:.85rem;color:#6e685e;margin-bottom:6px">${t}</span>`;
+const INSTR = t => `<span style="display:block;font-size:.85rem;color:#5b6f74;margin-bottom:6px">${t}</span>`;
 
 // Balanced correct-letter positions for a set (each letter used n/4 times)
 function slotFor(tile, setSeed, i, n) {
@@ -121,13 +121,17 @@ function slotFor(tile, setSeed, i, n) {
   return r.shuffle(arr)[i];
 }
 
+// bookletSignatures.js was generated with the earlier tile numbers. Map each
+// current tile to the tile its booklet numbers are stored under (0 = none).
+const SIG_TILE = { 7: 0, 9: 0, 10: 0, 11: 9, 12: 11, 13: 12, 14: 13, 15: 14, 16: 15 };
+
 function mcqInstance(tile, pat, base, avoidSig, avoidText) {
   for (let t = 0; t < 120; t++) {
     let q;
     try { q = pat(seededRandom(mod(base + t * 7919))); } catch (e) { continue; }
     if (!q) continue;
     const sig = sigOf(q);
-    if ((BOOK_SIGS[tile] || []).includes(sig) || sig === avoidSig || (avoidText && (q.text || q.stem) === avoidText)) continue;
+    if ((BOOK_SIGS[SIG_TILE[tile] ?? tile] || []).includes(sig) || sig === avoidSig || (avoidText && (q.text || q.stem) === avoidText)) continue;
     const chosen = [], seen = new Set([q.correct]);
     for (const w of q.wrongs) {
       if (chosen.length === 3) break;
@@ -151,7 +155,7 @@ function makeMCQ(tile, pat, i, n, seed, set) {
   const exBase = seed * 17 + i * 331 + 12345;
   const ex = mcqInstance(tile, pat, exBase, main.sig) || mcqInstance(tile, pat, exBase, null, main.q.text || main.q.stem);
   const q = main.q;
-  const slot = slotFor(tile, seed - i * 7, i, n);
+  const slot = slotFor(tile, 0, i, n);
   const wr = seededRandom(mod(seed + 77 + i)).shuffle(main.wrongs);
   const options = [];
   for (let p = 0, w = 0; p < 4; p++) {
@@ -167,7 +171,8 @@ function makeMCQ(tile, pat, i, n, seed, set) {
     text: safeMath(INSTR(q.instr || set.instr) + (q.text || q.stem)),
     options, hints,
     explanation: safeMath(q.steps.join('<br>')),
-    verify: q.verify, level: q.level, sig: main.sig
+    verify: q.verify, level: q.level, sig: main.sig,
+    key: (q.text || q.stem) + '|' + q.correct
   };
 }
 
@@ -183,14 +188,48 @@ function memo(fn) {
   };
 }
 
+// Each MCQ set owns a fixed bank of BANK_SIZE questions. The bank is built the
+// first time the set is opened: the set's patterns are used in turn (easy →
+// hard), each time with different numbers, and no question appears twice.
+// Every visit then draws a random handful from the bank (see pick()).
+const BANK_SIZE = (typeof CONFIG !== 'undefined' && CONFIG.MCQ_BANK_SIZE) || 30;
+const BANK_SEED = 20261112;
+function mixSeed(seed) {
+  let h = (seed ^ Math.floor(seed / 4294967296)) | 0;
+  h = Math.imul(h ^ (h >>> 16), 0x45d9f3b);
+  h = Math.imul(h ^ (h >>> 16), 0x45d9f3b);
+  return (h ^ (h >>> 16)) & 0x7fffffff;
+}
 function buildMCQ(tile, set) {
-  QUESTION_BANK[tile] = {
-    tile, type: 'mcq',
-    questions: set.patterns.map((pat, i) => ({
-      id: `q${tile}_${i + 1}`,
-      generate: memo(seed => makeMCQ(tile, pat, i, set.patterns.length, seed, set))
-    }))
-  };
+  const N = set.patterns.length;
+  let cache = null;
+  function all() {
+    if (cache) return cache;
+    const used = new Set(), out = [];
+    for (let i = 0; i < BANK_SIZE; i++) {
+      let q = null;
+      for (let t = 0; t < 16 && !q; t++) {
+        const pi = (i + (t >= 8 ? t - 7 : 0)) % N;      // after 8 tries, borrow the next pattern
+        const cand = makeMCQ(tile, set.patterns[pi], i, BANK_SIZE, BANK_SEED + tile * 100003 + i * 613 + t * 7907, set);
+        if (cand && !used.has(cand.key)) q = { ...cand, pattern: pi, bankIndex: i, id: `q${tile}_${i + 1}` };
+      }
+      if (q) { used.add(q.key); out.push(q); }
+    }
+    return (cache = out);
+  }
+  // k questions for one visit: random, from k different patterns, easy → hard
+  function pick(seed, k) {
+    const bank = all(), r = seededRandom(mixSeed(seed));
+    const order = r.shuffle(bank.map((_, i) => i)), chosen = [], pats = new Set();
+    for (const i of order) {
+      if (chosen.length === k) break;
+      if (pats.has(bank[i].pattern)) continue;
+      pats.add(bank[i].pattern); chosen.push(i);
+    }
+    for (const i of order) { if (chosen.length >= k) break; if (!chosen.includes(i)) chosen.push(i); }
+    return chosen.map(i => bank[i]).sort((a, b) => (a.level - b.level) || (a.bankIndex - b.bankIndex));
+  }
+  QUESTION_BANK[tile] = { tile, type: 'mcq', bankSize: BANK_SIZE, patternCount: N, all, pick };
 }
 
 function frqInstance(tile, pat, base, avoidSig) {
@@ -434,7 +473,31 @@ const EQ = (eq, why) => [`$${eq}$`, why, eq];
         W(v, rI(d + a * c), `Sign error: $-${v}=${a * c - d}$ gives $${v}=${d - a * c}$.`),
         W(v, rI(-x), `Forgot that the variable is negative ($-${v}$).`),
         W(v, rI(d - c), `Forgot to multiply by ${a}.`)
-      ], [`Multiply both sides by ${a}: $${d}-${v}=${a * c}$.`, `Subtract ${d}: $-${v}=${a * c - d}$, then divide by $-1$.`]); }
+      ], [`Multiply both sides by ${a}: $${d}-${v}=${a * c}$.`, `Subtract ${d}: $-${v}=${a * c - d}$, then divide by $-1$.`]); },
+    // L2 · b - a v = c
+    r => { const v = r.pick(VARS), a = r.nextInt(2, 6), x = r.nz(-8, 8), b = r.nextInt(1, 12), c = b - a * x;
+      return Q(2, v, `${b}-${a}${v}=${c}`, rI(x), [
+        W(v, rI(-x), `Dividing by $-${a}$ changes the sign: $-${a}${v}=${c - b}$.`),
+        W(v, rat(c + b, a), `Added ${b} instead of subtracting it, and lost the negative sign.`),
+        W(v, rat(c + b, -a), `Added ${b} instead of subtracting it.`),
+        W(v, rI(c - b), `Forgot to divide by $-${a}$.`)
+      ], [`Subtract ${b} on both sides: $-${a}${v}=${c - b}$.`, `Divide both sides by $-${a}$.`]); },
+    // L2 · b - v/a = c
+    r => { const v = r.pick(VARS), a = r.nextInt(2, 6), b = r.nextInt(1, 9), c = r.nz(-6, 14), x = a * (b - c); if (x === 0) return null;
+      return Q(2, v, `${b}-\\dfrac{${v}}{${a}}=${c}`, rI(x), [
+        W(v, rI(-x), 'Lost the negative sign in front of the fraction.'),
+        W(v, rI(a * (b + c)), `Added ${b} instead of subtracting it.`),
+        W(v, rat(b - c, a), `Divided by ${a} instead of multiplying.`)
+      ], [`Subtract ${b} on both sides: $-\\dfrac{${v}}{${a}}=${c - b}$.`, `Multiply both sides by $-${a}$.`]); },
+    // L3 · (a v - b)/k = c
+    r => { const v = r.pick(VARS), a = r.nextInt(2, 4), k = r.nextInt(2, 7), x = r.nz(-7, 9), b = r.nextInt(1, 9);
+      if ((a * x - b) % k) return null; const c = (a * x - b) / k; if (c === 0) return null;
+      return Q(3, v, `\\dfrac{${a}${v}-${b}}{${k}}=${c}`, rI(x), [
+        W(v, rat(k * c - b, a), `Subtracted ${b} instead of adding it.`),
+        W(v, rat(c + b, a), `Forgot to multiply by ${k} first.`),
+        W(v, rI(k * c + b), `Forgot to divide by ${a}.`),
+        W(v, rI(-x), 'Sign error in the last step.')
+      ], [`Multiply both sides by ${k}: $${a}${v}-${b}=${k * c}$.`, `Add ${b}: $${a}${v}=${k * c + b}$, then divide by ${a}.`]); }
   ];
   buildMCQ(2, {
     instr: 'Solve the equation, then choose the correct solution.',
@@ -545,6 +608,16 @@ const EQ = (eq, why) => [`$${eq}$`, why, eq];
           opt(T - 2 * t, T + 2 * t, '^\\circ\\text{F}', 'Used double the tolerance.'),
           opt(T - t, T, '^\\circ\\text{F}', 'The set temperature is the middle, not the maximum.')
         ], steps: [`$|t-${T}|=${t}$`, `$t-${T}=${t}$ gives $t=${T + t}$; $t-${T}=-${t}$ gives $t=${T - t}$.`],
+        verify: { k: 'range', c: T, r: t } }; },
+    // L2 · "give or take" a measured amount
+    r => { const c = r.pick([{ w: 'A bottle holds', u: 'mL', lo: 25, hi: 80, k: 10 }, { w: 'A bag of rice weighs', u: 'g', lo: 40, hi: 99, k: 10 }, { w: 'A wooden plank is cut to', u: 'cm', lo: 60, hi: 240, k: 1 }, { w: 'A can of juice holds', u: 'mL', lo: 30, hi: 50, k: 10 }]);
+      const T = r.nextInt(c.lo, c.hi) * c.k, t = r.nextInt(2, 9) * (c.k === 10 ? r.pick([1, 2]) : 1), U = `\\text{ ${c.u}}`;
+      return { level: 2, stem: `${c.w} ${T} ${c.u}, give or take ${t} ${c.u}. Find the minimum and maximum amounts.`,
+        correct: RNG(T - t, T + t, U), cv: [T - t, T + t], wrongs: [
+          opt(T, T + t, U, 'The stated amount is the middle, not the minimum.'),
+          opt(T - t, T, U, 'The stated amount is the middle, not the maximum.'),
+          opt(T - 2 * t, T + 2 * t, U, '"Give or take" means that distance on each side, not double.')
+        ], steps: [`$|x-${T}|=${t}$`, `$x=${T}+${t}=${T + t}$ or $x=${T}-${t}=${T - t}$.`],
         verify: { k: 'range', c: T, r: t } }; },
     // L1 · poll margin of error
     r => { const p = r.nextInt(25, 62), m = r.nextInt(2, 6);
@@ -795,68 +868,6 @@ const EQ = (eq, why) => [`$${eq}$`, why, eq];
 })();
 
 // ═══════════════════════════════════════════════════════════
-// Q7 · L 4-3 · Rewrite in slope-intercept form (p.235, Ex. 1–8)
-// ═══════════════════════════════════════════════════════════
-(function() {
-  const Y = (m, b) => lineY(m, b);
-  const L = (m, b, why) => EQ(Y(m, b), why);
-  function given(r, level, mSign, bSign, mLo, mHi) {
-    const m = mSign * r.nextInt(mLo || 2, mHi || 9), b = bSign * r.nextInt(1, 12);
-    if (Math.abs(m) === Math.abs(b)) return null;
-    const M = rI(m), B = rI(b);
-    return { level, stem: `Slope $${m}$, $y$-intercept $${b}$.`, correct: `$${Y(M, B)}$`, cv: Y(M, B),
-      wrongs: [L(B, M, 'Swapped the slope and the $y$-intercept.'), L(M, rI(-b), 'Sign error on the $y$-intercept.'), L(rI(-m), B, 'Sign error on the slope.'), L(M, rI(0), 'Left out the $y$-intercept.')],
-      steps: [`In $y=mx+b$, $m$ is the slope and $b$ is the $y$-intercept.`, `$m=${m}$, $b=${b}$: $${Y(M, B)}$`],
-      verify: { k: 'line', slope: m, through: [[0, b]] } };
-  }
-  const P = [
-    r => given(r, 1, 1, -1), r => given(r, 1, -1, 1, 2, 5), r => given(r, 1, -1, -1, 2, 5),
-    r => given(r, 1, 1, 1, 2, 5), r => given(r, 1, r.sign(), 1, 6, 9), r => given(r, 1, -1, -1, 6, 9),
-    // L1 · rewrite a x + y = c
-    r => { const a = r.nz(-9, 9), c = r.nz(-12, 12); if (Math.abs(a) === 1 || Math.abs(a) === Math.abs(c)) return null;
-      const eq = `${lin(a, 'x', 0)}+y=${c}`;
-      return { level: 1, instr: 'Rewrite the equation in slope-intercept form, $y=mx+b$.', stem: `$${eq}$`, correct: `$${Y(rI(-a), rI(c))}$`, cv: Y(rI(-a), rI(c)),
-        wrongs: [L(rI(a), rI(c), `Sign error: subtract $${lin(a, 'x', 0)}$ from both sides.`), L(rI(c), rI(-a), 'Swapped the slope and the $y$-intercept.'), L(rI(-a), rI(-c), 'Changed the sign of the constant by mistake.')],
-        steps: [`Subtract $${lin(a, 'x', 0)}$ from both sides: $${Y(rI(-a), rI(c))}$`],
-        verify: { k: 'line', same: eq } }; },
-    // L2 · slope ±1
-    r => { const m = r.pick([1, -1]), b = r.nz(-15, 15); if (Math.abs(b) === 1) return null;
-      return { level: 2, stem: `Slope $${m}$, $y$-intercept $${b}$.`, correct: `$${Y(rI(m), rI(b))}$`, cv: Y(rI(m), rI(b)),
-        wrongs: [L(rI(b), rI(m), 'Swapped the slope and the $y$-intercept.'), L(rI(m), rI(-b), 'Sign error on the $y$-intercept.'), L(rI(b), rI(0), 'Used the $y$-intercept as the slope.')],
-        steps: [`$m=${m}$, $b=${b}$: $${Y(rI(m), rI(b))}$`], verify: { k: 'line', slope: m, through: [[0, b]] } }; },
-    // L2 · slope 0
-    r => { const b = r.nz(-12, 12);
-      return { level: 2, stem: `Slope $0$, $y$-intercept $${b}$.`, correct: `$y=${b}$`, cv: `y=${b}`,
-        wrongs: [EQ(`y=${b}x`, `Slope 0 means there is no $x$-term.`), EQ(`x=${b}`, '$x=b$ is a vertical line, which has undefined slope.'), EQ('y=0', 'That is the $x$-axis; the $y$-intercept is not 0.')],
-        steps: [`$y=0x+${b < 0 ? `(${b})` : b}=${b}$ — a horizontal line.`], verify: { k: 'line', slope: 0, through: [[0, b]] } }; },
-    // L2 · a x + b y = c with b | a and b | c
-    r => { const b = r.nextInt(2, 5), a = b * r.nz(-4, 4), c = b * r.nz(-6, 6); if (Math.abs(a) === b) return null;
-      const eq = `${lin(a, 'x', 0)}+${b}y=${c}`, M = rat(-a, b), B = rat(c, b);
-      return { level: 2, instr: 'Rewrite the equation in slope-intercept form, $y=mx+b$.', stem: `$${eq}$`, correct: `$${Y(M, B)}$`, cv: Y(M, B),
-        wrongs: [L(rI(-a), rI(c), `Forgot to divide every term by ${b}.`), L(rat(a, b), B, 'Sign error on the slope.'), L(M, rI(c), `Divided only the $x$-term by ${b}.`)],
-        steps: [`Subtract $${lin(a, 'x', 0)}$: $${b}y=${lin(-a, 'x', c)}$`, `Divide every term by ${b}: $${Y(M, B)}$`], verify: { k: 'line', same: eq } }; },
-    // L3 · x + b y = c → fraction slope
-    r => { const b = r.nextInt(2, 6), c = b * r.nz(-5, 5), s = r.sign();
-      const eq = `${s > 0 ? 'x' : '-x'}+${b}y=${c}`, M = rat(-s, b), B = rat(c, b);
-      return { level: 3, instr: 'Rewrite the equation in slope-intercept form, $y=mx+b$.', stem: `$${eq}$`, correct: `$${Y(M, B)}$`, cv: Y(M, B),
-        wrongs: [L(rI(-s * b), rI(c), `Multiplied by ${b} instead of dividing.`), L(rat(s, b), B, 'Sign error on the slope.'), L(rI(-s), B, `Forgot to divide the $x$-term by ${b}.`)],
-        steps: [`Subtract $${s > 0 ? 'x' : '-x'}$: $${b}y=${lin(-s, 'x', c)}$`, `Divide every term by ${b}: $${Y(M, B)}$`], verify: { k: 'line', same: eq } }; },
-    // L3 · b y - a x = c
-    r => { const b = r.nextInt(2, 6), a = r.nextInt(1, 9), c = b * r.nz(-5, 5); if (a % b === 0 || a === 1) return null;
-      const eq = `${b}y-${a}x=${c}`, M = rat(a, b), B = rat(c, b);
-      return { level: 3, instr: 'Rewrite the equation in slope-intercept form, $y=mx+b$.', stem: `$${eq}$`, correct: `$${Y(M, B)}$`, cv: Y(M, B),
-        wrongs: [L(rI(a), rI(c), `Forgot to divide by ${b}.`), L(rat(-a, b), B, `Sign error: add $${a}x$ to both sides.`), L(rat(b, a), B, 'Used the reciprocal of the slope.')],
-        steps: [`Add $${a}x$: $${b}y=${a}x${pm(c)}$`, `Divide every term by ${b}: $${Y(M, B)}$`], verify: { k: 'line', same: eq } }; }
-  ];
-  buildMCQ(7, {
-    instr: 'Write an equation in slope-intercept form, $y=mx+b$.',
-    tips: ['In $y=mx+b$, $m$ is the slope and $b$ is the $y$-intercept.',
-      'To rewrite, get $y$ alone: move the $x$-term to the other side, then divide every term by the coefficient of $y$.'],
-    patterns: P
-  });
-})();
-
-// ═══════════════════════════════════════════════════════════
 // Q8 · L 4-4 · Dilations of linear functions (p.248, Ex. 10–15)
 // ═══════════════════════════════════════════════════════════
 (function() {
@@ -925,7 +936,7 @@ const EQ = (eq, why) => [`$${eq}$`, why, eq];
 })();
 
 // ═══════════════════════════════════════════════════════════
-// Q9 · L 4-6 · Graph step functions (p.261, Example 2)
+// Q11 · L 4-6 · Identify and graph step functions (p.261, Example 2)
 // ═══════════════════════════════════════════════════════════
 const fl = h => `\\llbracket ${lin(1, 'x', h)}\\rrbracket`;         // ⟦x + h⟧
 (function() {
@@ -1001,7 +1012,7 @@ const fl = h => `\\llbracket ${lin(1, 'x', h)}\\rrbracket`;         // ⟦x + h�
     r => graphQ(r, 2, [-4, 4]), r => evalQ(r, 2, -4, 4),
     r => notOnQ(r, 3, false), r => notOnQ(r, 3, true)
   ];
-  buildMCQ(9, {
+  buildMCQ(11, {
     instr: 'Use the greatest integer function $\\llbracket x\\rrbracket$ (round down).',
     tips: ['$\\llbracket x\\rrbracket$ is the greatest integer less than or equal to $x$: always round <b>down</b> (for $-1.5$ that is $-2$).',
       'Each step has a closed dot on its left end and an open dot on its right end. $\\llbracket x+h\\rrbracket$ shifts the steps $h$ units left.'],
@@ -1010,70 +1021,7 @@ const fl = h => `\\llbracket ${lin(1, 'x', h)}\\rrbracket`;         // ⟦x + h�
 })();
 
 // ═══════════════════════════════════════════════════════════
-// Q10 · L 4-6 · Evaluate step functions (p.265, Ex. 18a–d)
-// ═══════════════════════════════════════════════════════════
-(function() {
-  const N = n => `$${num(n)}$`;
-  const nOpt = (n, why) => [N(n), why, n];
-  const dec = (r, lo, hi) => { let c; do { c = r.nextInt(lo * 20, hi * 20) / 20; } while (Number.isInteger(c)); return c; };
-  // f(x) = a⟦x + h⟧ at x = c, with u = c + h inside the given range
-  function scaled(r, level, name, hSign, uLo, uHi) {
-    const a = r.nextInt(2, 4), h = hSign * r.nextInt(1, 3);
-    const u = dec(r, uLo, uHi), c = Math.round((u - h) * 100) / 100;
-    const f = `${a}${fl(h)}`, y = a * Math.floor(c + h);
-    return { level, stem: `$${name}(x)=${f}$. Find $${name}(${num(c)})$.`, correct: N(y), cv: y,
-      wrongs: [nOpt(a * Math.trunc(c + h), 'Rounded toward zero. The greatest integer function always rounds down.'),
-        nOpt(a * (c + h), 'Did not round down before multiplying.'), nOpt(Math.floor(c + h), `Forgot to multiply by ${a}.`),
-        nOpt(a * Math.floor(c), 'Ignored the shift inside the brackets.'), nOpt(a * Math.ceil(c + h), 'Rounded up instead of down.')],
-      steps: [`Inside first: $${num(c)}${pm(h)}=${num(c + h)}$.`, `Round down: $\\llbracket ${num(c + h)}\\rrbracket=${Math.floor(c + h)}$.`, `Multiply: $${a}\\times${Math.floor(c + h) < 0 ? `(${Math.floor(c + h)})` : Math.floor(c + h)}=${y}$.`],
-      verify: { k: 'fn', f, at: c } };
-  }
-  const P = [
-    r => scaled(r, 1, 'f', -1, 0, 1),
-    r => scaled(r, 1, 'f', -1, 1, 3),
-    r => scaled(r, 1, 'g', 1, 1, 3),
-    r => scaled(r, 2, 'f', -1, 5, 10),
-    r => scaled(r, 2, 'g', 1, 0, 1),
-    // L2 · ⟦x⟧ + k at a negative decimal
-    r => { const k = r.nz(-6, 6), c = -dec(r, 0, 4), y = Math.floor(c) + k, f = `\\llbracket x\\rrbracket${pm(k)}`;
-      return { level: 2, stem: `$h(x)=${f}$. Find $h(${num(c)})$.`, correct: N(y), cv: y,
-        wrongs: [nOpt(Math.trunc(c) + k, 'Rounded toward zero. For negatives, rounding down moves further from zero.'), nOpt(c + k, 'Did not round down.'), nOpt(Math.floor(c) - k, `Sign error on the ${Math.abs(k)}.`), nOpt(Math.ceil(c) - k, 'Rounded up and made a sign error.')],
-        steps: [`$\\llbracket ${num(c)}\\rrbracket=${Math.floor(c)}$ (round down).`, `$${Math.floor(c)}${pm(k)}=${y}$`], verify: { k: 'fn', f, at: c } }; },
-    // L2 · -a⟦x⟧ at a positive decimal
-    r => { const a = r.nextInt(2, 5), c = dec(r, 1, 6), y = -a * Math.floor(c), f = `-${a}\\llbracket x\\rrbracket`;
-      return { level: 2, stem: `$k(x)=${f}$. Find $k(${num(c)})$.`, correct: N(y), cv: y,
-        wrongs: [nOpt(-a * Math.ceil(c), 'Rounded up instead of down.'), nOpt(a * Math.floor(c), 'Lost the negative sign.'), nOpt(-a * c, 'Did not round down before multiplying.')],
-        steps: [`$\\llbracket ${num(c)}\\rrbracket=${Math.floor(c)}$`, `$-${a}\\times${Math.floor(c)}=${y}$`], verify: { k: 'fn', f, at: c } }; },
-    // L2 · ⟦a x⟧
-    r => { const a = r.nextInt(2, 4), c = dec(r, 1, 3), y = Math.floor(a * c), f = `\\llbracket ${a}x\\rrbracket`;
-      if (Number.isInteger(a * c)) return null;
-      return { level: 2, stem: `$m(x)=${f}$. Find $m(${num(c)})$.`, correct: N(y), cv: y,
-        wrongs: [nOpt(a * Math.floor(c), 'Rounded before multiplying — multiply inside first.'), nOpt(Math.ceil(a * c), 'Rounded up instead of down.'), nOpt(a * c, 'Did not round down.')],
-        steps: [`Inside first: $${a}(${num(c)})=${num(a * c)}$.`, `Round down: $${y}$.`], verify: { k: 'fn', f, at: c } }; },
-    r => scaled(r, 3, 'f', -1, -3, 0),
-    r => scaled(r, 3, 'g', 1, -3, 0),
-    // L3 · a⟦x - 0.5⟧ at an integer
-    r => { const a = r.nextInt(2, 5), c = r.nextInt(2, 6), y = a * Math.floor(c - 0.5), f = `${a}\\llbracket x-0.5\\rrbracket`;
-      return { level: 3, stem: `$q(x)=${f}$. Find $q(${c})$.`, correct: N(y), cv: y,
-        wrongs: [nOpt(a * (c - 0.5), 'Did not round down before multiplying.'), nOpt(a * c, 'Ignored the $-0.5$ inside the brackets.'), nOpt(Math.floor(c - 0.5), `Forgot to multiply by ${a}.`)],
-        steps: [`Inside first: $${c}-0.5=${num(c - 0.5)}$.`, `Round down: $${Math.floor(c - 0.5)}$.`, `Multiply: $${a}\\times${Math.floor(c - 0.5)}=${y}$.`], verify: { k: 'fn', f, at: c } }; },
-    // L3 · ⟦x / a⟧ at a negative integer
-    r => { const a = r.nextInt(2, 4), c = -r.nextInt(1, 11); if (c % a === 0) return null;
-      const y = Math.floor(c / a), f = `\\llbracket \\tfrac{x}{${a}}\\rrbracket`;
-      return { level: 3, stem: `$r(x)=${f}$. Find $r(${c})$.`, correct: N(y), cv: y,
-        wrongs: [[`$${rs(rat(c, a))}$`, 'Did not round down.', c / a], nOpt(Math.trunc(c / a), 'Rounded toward zero. For negatives, rounding down moves further from zero.'), nOpt(-Math.floor(c / a), 'Sign error.')],
-        steps: [`Inside first: $\\dfrac{${c}}{${a}}=${num(c / a)}$.`, `Round down: $${y}$.`], verify: { k: 'fn', f, at: c } }; }
-  ];
-  buildMCQ(10, {
-    instr: 'Evaluate the step function. Work inside first, round down, then multiply.',
-    tips: ['Order: calculate inside the brackets, then round <b>down</b>, then do what is outside.',
-      'For negative numbers, rounding down moves away from zero: $\\llbracket -2.25\\rrbracket=-3$.'],
-    patterns: P
-  });
-})();
-
-// ═══════════════════════════════════════════════════════════
-// Q11 · L 4-7 · Translations of absolute value functions (p.267)
+// Q12 · L 4-7 · Translations of absolute value functions (p.267, Example 1)
 // ═══════════════════════════════════════════════════════════
 const absF = (h, k) => `|${h === 0 ? 'x' : lin(1, 'x', -h)}|${k ? pm(k) : ''}`;   // |x - h| + k
 (function() {
@@ -1130,7 +1078,7 @@ const absF = (h, k) => `|${h === 0 ? 'x' : lin(1, 'x', -h)}|${k ? pm(k) : ''}`; 
     r => vShift(r, 2, -1, 6, 9), r => hShift(r, 2, -1, 6, 9), r => both(r, 2, 1, 1),
     r => both(r, 3, -1, -1), r => fromWords(r, 3, 1, -1), r => vertex(r, 3), r => fromWords(r, 3, -1, 1), r => vertex(r, 3)
   ];
-  buildMCQ(11, {
+  buildMCQ(12, {
     instr: 'Describe the translation of $g(x)$ compared with $f(x)=|x|$.',
     tips: ['A number added <b>outside</b> $|x|$ moves the graph up (+) or down (−).',
       'A number <b>inside</b> $|x-h|$ moves the graph horizontally, opposite to its sign: $|x-3|$ moves right 3, $|x+3|$ moves left 3.'],
@@ -1139,7 +1087,7 @@ const absF = (h, k) => `|${h === 0 ? 'x' : lin(1, 'x', -h)}|${k ? pm(k) : ''}`; 
 })();
 
 // ═══════════════════════════════════════════════════════════
-// Q12 · L 4-7 · Graph absolute value functions (p.277, Ex. 7–12)
+// Q13 · L 4-7 · Graph absolute value functions (pp.269, 277 · Ex. 7–12)
 // ═══════════════════════════════════════════════════════════
 (function() {
   function graphQ(r, level, hR, kR) {
@@ -1164,7 +1112,7 @@ const absF = (h, k) => `|${h === 0 ? 'x' : lin(1, 'x', -h)}|${k ? pm(k) : ''}`; 
     r => graphQ(r, 2, neg(1, 4), pos(1, 3)), r => graphQ(r, 2, pos(1, 3), z), r => graphQ(r, 2, z, pick([5, -5])),
     r => graphQ(r, 3, pos(2, 5), neg(1, 4)), r => graphQ(r, 3, neg(4, 5), neg(2, 5)), r => graphQ(r, 3, pos(1, 3), neg(4, 5))
   ];
-  buildMCQ(12, {
+  buildMCQ(13, {
     instr: 'Use the graph to choose the equation of the function.',
     tips: ['Find the vertex $(h,k)$ of the V, then use $y=|x-h|+k$.',
       'A vertex to the right means $|x-h|$; to the left means $|x+h|$. Above the $x$-axis means $+k$; below means $-k$.'],
@@ -1173,7 +1121,7 @@ const absF = (h, k) => `|${h === 0 ? 'x' : lin(1, 'x', -h)}|${k ? pm(k) : ''}`; 
 })();
 
 // ═══════════════════════════════════════════════════════════
-// Q13 · L 5-1 · Slope-intercept form from slope and a point (p.293, Ex. 33–42)
+// Q14 · L 5-1 · Slope-intercept form from slope and a point (p.293, Ex. 33–42)
 // ═══════════════════════════════════════════════════════════
 (function() {
   function onLine(r, level, yes) {
@@ -1216,7 +1164,7 @@ const absF = (h, k) => `|${h === 0 ? 'x' : lin(1, 'x', -h)}|${k ? pm(k) : ''}`; 
     r => onLine(r, 2, true), r => onLine(r, 2, false), r => another(r, 2, big), r => another(r, 2, big),
     r => another(r, 3, frac), r => another(r, 3, frac)
   ];
-  buildMCQ(13, {
+  buildMCQ(14, {
     instr: 'Choose the correct answer.',
     tips: ['To test a point, substitute its $x$-value into the equation and compare the $y$-value you get.',
       'Points on the same line keep the same slope: from a known point, move the same run and rise.'],
@@ -1225,7 +1173,7 @@ const absF = (h, k) => `|${h === 0 ? 'x' : lin(1, 'x', -h)}|${k ? pm(k) : ''}`; 
 })();
 
 // ═══════════════════════════════════════════════════════════
-// Q14 · L 5-2 · Point-slope form from two points (pp.297, 303)
+// Q15 · L 5-2 · Point-slope form from two points (pp.297, 303 · Ex. 4–7)
 // ═══════════════════════════════════════════════════════════
 // y - y1 = m(x - x1), m rational
 function pointSlope(m, x1, y1) {
@@ -1260,7 +1208,7 @@ function pointSlope(m, x1, y1) {
     r => twoPoints(r, 2, [rI(-2), rI(-3)]), r => twoPoints(r, 2, [rI(2), rI(3)], 'x'), r => twoPoints(r, 2, [R(2, 3), R(3, 4), R(5, 2)]),
     r => twoPoints(r, 3, [R(-2, 3), R(-3, 4), R(-4, 3)]), r => twoPoints(r, 3, [rI(2), rI(-2), R(3, 2)]), r => twoPoints(r, 3, [R(-3, 2), R(-5, 3), R(-2, 5)])
   ];
-  buildMCQ(14, {
+  buildMCQ(15, {
     instr: 'Choose an equation in point-slope form for the line through the two points.',
     tips: ['First find the slope $m=\\dfrac{y_2-y_1}{x_2-x_1}$.',
       'Then use one point in $y-y_1=m(x-x_1)$. Watch the signs: the point $(2,-7)$ gives $y+7=m(x-2)$.'],
@@ -1269,10 +1217,12 @@ function pointSlope(m, x1, y1) {
 })();
 
 // ═══════════════════════════════════════════════════════════
-// Q15 · L 5-2 · Line through a point parallel to a given line (p.304, Ex. 25–29)
+// Q16 · L 5-2 · Parallel or perpendicular line through a point (pp.300–302, 304 · Ex. 25–30)
 // ═══════════════════════════════════════════════════════════
 // A x + B y = C written neatly
 function stdForm(A, B, C) { return `${lin(A, 'x', 0)}${next(B, 'y')}=${C}`; }
+// Booklet Q16 questions as [x1, y1, slope of the given line]: never repeated
+const BOOKLET_Q16 = [[-4, 2, 3], [1, -2, -1.5], [3, -2, 1], [4, -3, 3], [0, 2, -5], [-4, 2, -0.5], [-2, 3, -0.75], [9, 12, 13]];
 (function() {
   function parallel(r, level, slopes, std) {
     const m = r.pick(slopes), x1 = m.d * r.nz(-3, 3) * (r.next() < 0.2 ? 0 : 1), y1 = r.nz(-8, 8);
@@ -1285,7 +1235,8 @@ function stdForm(A, B, C) { return `${lin(A, 'x', 0)}${next(B, 'y')}=${C}`; }
     if (b0.v === b.v) return null;
     const perp = rat(-m.d, m.n);
     const L = (mm, bb, why) => EQ(lineY(mm, bb), why);
-    return { level, stem: `$(${x1},${y1})$; parallel to $${given}$`, text: `Write the line through $(${x1},${y1})$ that is parallel to $${given}$.`,
+    if (BOOKLET_Q16.some(([bx, by, bm]) => bx === x1 && by === y1 && Math.abs(bm - m.v) < 1e-9)) return null;
+    return { level, stem: `$(${x1},${y1})$; <b>parallel</b> to $${given}$`,
       correct: `$${lineY(m, b)}$`, cv: lineY(m, b),
       wrongs: [L(m, b0, 'This is the given line itself — it does not pass through the point.'),
         L(perp, rSub(rI(y1), rMul(perp, rI(x1))), 'Used the perpendicular slope. Parallel lines have the same slope.'),
@@ -1296,94 +1247,44 @@ function stdForm(A, B, C) { return `${lin(A, 'x', 0)}${next(B, 'y')}=${C}`; }
         `Substitute $(${x1},${y1})$: $${y1}=${rs(m)}(${x1})+b$, so $b=${rs(b)}$.`, `$${lineY(m, b)}$`],
       verify: { k: 'line', through: [[x1, y1]], parallelTo: given } };
   }
+  // Line through (x1, y1) perpendicular to a given line with slope m
+  function perpendicular(r, level, slopes, std, whole) {
+    const m = r.pick(slopes), p = rat(-m.d, m.n);
+    const x1 = (whole ? Math.abs(m.n) : 1) * r.nz(-4, 4) * (r.next() < 0.15 ? 0 : 1), y1 = r.nz(-8, 8);
+    const b = rSub(rI(y1), rMul(p, rI(x1)));
+    let given;
+    if (std) { const A = -m.n, B = m.d, C = r.nz(-12, 12) * B; given = stdForm(A, B, C); }
+    else given = lineY(m, rI(r.nz(-9, 9)));
+    if (BOOKLET_Q16.some(([bx, by, bm]) => bx === x1 && by === y1 && Math.abs(bm - m.v) < 1e-9)) return null;
+    const at = mm => rSub(rI(y1), rMul(mm, rI(x1)));
+    const L = (mm, bb, why) => EQ(lineY(mm, bb), why);
+    const recip = rat(m.d, m.n), opp = rat(-m.n, m.d);
+    return { level, stem: `$(${x1},${y1})$; <b>perpendicular</b> to $${given}$`,
+      correct: `$${lineY(p, b)}$`, cv: lineY(p, b),
+      wrongs: [L(m, at(m), 'Used the same slope. That gives the parallel line, not the perpendicular one.'),
+        L(recip, at(recip), 'Used the reciprocal but did not change its sign. Perpendicular slopes are <b>opposite</b> reciprocals.'),
+        L(opp, at(opp), 'Changed the sign but did not take the reciprocal.'),
+        L(p, rAdd(rI(y1), rMul(p, rI(x1))), 'Sign error when solving for $b$.'),
+        L(p, rI(y1), 'Used the point\'s $y$-value as the $y$-intercept.')],
+      steps: [std ? `Rewrite $${given}$ as $y=mx+b$: the slope is $${rs(m)}$.` : `The given line has slope $${rs(m)}$.`,
+        `Perpendicular slope = opposite reciprocal: $m=${rs(p)}$.`,
+        `Substitute $(${x1},${y1})$: $${y1}=${rs(p)}(${x1})+b$, so $b=${rs(b)}$.`, `$${lineY(p, b)}$`],
+      verify: { k: 'line', through: [[x1, y1]], perpTo: given } };
+  }
   const R = rat;
   const P = [
-    r => parallel(r, 1, [rI(1)]), r => parallel(r, 1, [rI(2), rI(3)]), r => parallel(r, 1, [rI(-4), rI(-5), rI(-6)]), r => parallel(r, 1, [rI(2), rI(4)]),
-    r => parallel(r, 2, [R(-1, 2), R(-1, 3), R(-1, 4)]), r => parallel(r, 2, [rI(-2), rI(-3), rI(-4)]), r => parallel(r, 2, [R(1, 3), R(1, 2), R(1, 4)]), r => parallel(r, 2, [R(2, 3), R(3, 2)]),
-    r => parallel(r, 3, [R(-3, 4), R(-2, 3), R(-4, 3)]), r => parallel(r, 3, [rI(-2), rI(-3), rI(3)], true), r => parallel(r, 3, [R(1, 2), R(-1, 2), R(1, 3)], true), r => parallel(r, 3, [R(-2, 5), R(3, 4), R(-5, 2)])
-  ];
-  buildMCQ(15, {
-    instr: 'Choose the line in slope-intercept form through the point, parallel to the given line.',
-    tips: ['Parallel lines have the <b>same</b> slope. Write the given line in $y=mx+b$ form to read its slope.',
-      'Substitute the point into $y=mx+b$ with that slope and solve for $b$.'],
-    patterns: P
-  });
-})();
-
-// ═══════════════════════════════════════════════════════════
-// Q16 · L 5-2 · Parallel or perpendicular lines (pp.304–305, Ex. 31–43)
-// ═══════════════════════════════════════════════════════════
-(function() {
-  const RELS = ['parallel', 'perpendicular', 'neither', 'same line'];
-  const relWhy = {
-    parallel: 'Parallel lines have equal slopes (and different $y$-intercepts).',
-    perpendicular: 'Perpendicular slopes multiply to $-1$.',
-    neither: 'The slopes are not equal and their product is not $-1$.',
-    'same line': 'The equations are not multiples of each other, so they are different lines.'
-  };
-  function relQ(level, e1, e2, rel, steps) {
-    if (QCHECK.relation(e1, e2) !== rel) return null;
-    return { level, instr: 'Are the lines parallel, perpendicular, or neither?', stem: `$${e1}$ and $${e2}$`, correct: rel, cv: rel,
-      wrongs: RELS.filter(x => x !== rel).map(x => [x, relWhy[rel], x]), steps,
-      verify: { k: 'rel', e1, e2 } };
-  }
-  const sl = (A, B) => rs(rat(-A, B));
-  // rewrite y + k = c(a x + d) in slope-intercept form
-  function rewrite(r, level, c, a, d, k) {
-    const eq = `y${pm(k)}=${c.d === 1 ? (c.n === -1 ? '-' : c.n) : ts(c)}(${lin(a, 'x', d)})`;
-    const m = rMul(c, rI(a)), b = rSub(rMul(c, rI(d)), rI(k));
-    if (b.v === 0) return null;
-    const L = (mm, bb, why) => EQ(lineY(mm, bb), why);
-    return { level, instr: 'Write the equation in slope-intercept form, $y=mx+b$.', stem: `$${eq}$`, correct: `$${lineY(m, b)}$`, cv: lineY(m, b),
-      wrongs: [L(m, rAdd(rMul(c, rI(d)), rI(k)), `Sign error when moving $${pm(k)}$ to the right side.`), L(m, rSub(rI(d), rI(k)), `Forgot to multiply the constant ${d} by $${rs(c)}$.`),
-        L(c, b, `Forgot to multiply the $x$-term by $${rs(c)}$.`), L(rat(-m.n, m.d), b, 'Sign error on the slope.')],
-      steps: [`Distribute: $y${pm(k)}=${rLead(m, 'x')}${rNext(rMul(c, rI(d)))}$`, `${k > 0 ? 'Subtract' : 'Add'} ${Math.abs(k)}: $${lineY(m, b)}$`],
-      verify: { k: 'line', same: eq } };
-  }
-  const P = [
-    // L1 · y = m x + b and m x + y = c → neither
-    r => { const m = r.nextInt(2, 6) * r.sign(), b = r.nz(-9, 9), c = r.nz(-9, 9);
-      return relQ(1, `y=${lin(m, 'x', b)}`, `${lead(m, 'x')}+y=${c}`, 'neither', [`Slopes: $${m}$ and $${-m}$.`, `They are not equal, and $(${m})(${-m})=${-m * m}\\ne-1$: neither.`]); },
-    // L1 · y = -m x and m x + y = c → parallel
-    r => { const m = r.nextInt(2, 7) * r.sign(), b = r.nz(-6, 6) * (r.next() < 0.5 ? 0 : 1), c = r.nz(-9, 9); if (c === b) return null;
-      return relQ(1, `y=${lin(-m, 'x', b)}`, `${lead(m, 'x')}+y=${c}`, 'parallel', [`Slopes: $${-m}$ and $${-m}$ (rewrite: $y=${lin(-m, 'x', c)}$).`, 'Equal slopes, different intercepts: parallel.']); },
-    r => rewrite(r, 1, rI(r.nextInt(2, 4)), r.nextInt(2, 4), r.nz(-5, 5), r.nz(-9, 9)),
-    r => rewrite(r, 1, rI(-r.nextInt(2, 5)), 1, r.nz(-6, 6), r.nz(-9, 9)),
-    // L2 · a x + b y = c and b x - a y = d → perpendicular
-    r => { const a = r.nextInt(1, 7), b = r.nextInt(2, 7), c = r.nz(-15, 15), d = r.nz(-15, 15); if (a === b) return null;
-      return relQ(2, stdForm(a, b, c), stdForm(b, -a, d), 'perpendicular', [`Slopes: $${sl(a, b)}$ and $${sl(b, -a)}$.`, 'Their product is $-1$: perpendicular.']); },
-    // L2 · -a x + b y = c and -b x + a y = d → neither (reciprocal slopes)
-    r => { const a = r.nextInt(1, 7), b = r.nextInt(2, 7), c = r.nz(-12, 12), d = r.nz(-12, 12); if (a === b) return null;
-      return relQ(2, stdForm(-a, b, c), stdForm(-b, a, d), 'neither', [`Slopes: $${sl(-a, b)}$ and $${sl(-b, a)}$.`, 'They are reciprocals, not negative reciprocals, and not equal: neither.']); },
-    // L2 · a x + b y = c and k a x + k b y = d → parallel
-    r => { const a = r.nextInt(1, 6), b = r.nextInt(2, 9), k = r.nextInt(2, 3), c = r.nz(-40, 40), d = r.nz(-50, 50); if (d === k * c || gcd(a, b) !== 1) return null;
-      return relQ(2, stdForm(a, b, c), stdForm(k * a, k * b, d), 'parallel', [`Slopes: $${sl(a, b)}$ and $${sl(k * a, k * b)}=${sl(a, b)}$.`, `Equal slopes, and $${d}\\ne${k}(${c})$, so the lines are different: parallel.`]); },
-    r => { const q = r.nextInt(2, 4), s = r.sign(); return rewrite(r, 2, rat(s, q), r.nextInt(1, 5), q * r.nz(-3, 3), r.nz(-6, 6)); },
-    r => rewrite(r, 2, rI(-r.nextInt(3, 8)), 1, r.nz(-9, 9), r.nz(-12, 12)),
-    // L3 · standard form from intercepts
-    r => { const p = r.nz(-8, 8), q = r.nz(-8, 8); if (Math.abs(p) === Math.abs(q)) return null;
-      let A = q, B = p, C = p * q; const g = gcd(gcd(A, B), C); A /= g; B /= g; C /= g; if (A < 0) { A = -A; B = -B; C = -C; }
-      const S = (a, b, c, why) => EQ(stdForm(a, b, c), why);
-      const eq = stdForm(A, B, C);
-      return { level: 3, instr: 'Write the equation in standard form, $Ax+By=C$.', stem: `$x$-intercept $${p}$, $y$-intercept $${q}$`, correct: `$${eq}$`, cv: eq,
-        wrongs: [S(B, A, C, 'Swapped the coefficients — check by substituting the intercepts.'), S(A, -B, C, 'Sign error on the $y$-term.'), S(1, 1, p + q, 'Adding the intercepts does not give the line.'), S(A, B, -C, 'Sign error on the constant.')],
-        steps: [`The line passes through $(${p},0)$ and $(0,${q})$: $\\dfrac{x}{${p}}+\\dfrac{y}{${q}}=1$.`, `Multiply by $${p * q}$ and simplify: $${eq}$.`],
-        verify: { k: 'line', through: [[p, 0], [0, q]] } }; },
-    r => { const q = r.nextInt(2, 5), p = r.nz(-4, 4); if (gcd(p, q) !== 1) return null; return rewrite(r, 3, rat(p, q), 1, r.nz(-9, 9), r.nz(-9, 9)); },
-    // L3 · y + k = (p/q)(x + h) in standard form
-    r => { const q = r.nextInt(2, 9), p = r.nz(-9, 9), h = r.nz(-6, 6), k = r.nz(-9, 9); if (gcd(p, q) !== 1) return null;
-      const s = p < 0 ? -1 : 1, A = s * p, B = -s * q, C = s * (q * k - p * h);
-      const eq = `y${pm(k)}=${ts(rat(p, q))}(${lin(1, 'x', h)})`, ans = stdForm(A, B, C);
-      const S = (a, b, c, why) => EQ(stdForm(a, b, c), why);
-      return { level: 3, instr: 'Write the equation in standard form, $Ax+By=C$.', stem: `$${eq}$`, correct: `$${ans}$`, cv: ans,
-        wrongs: [S(A, -B, C, 'Sign error on the $y$-term when moving it to the left.'), S(A, B, -C, 'Sign error on the constant.'), S(-B, -A, C, 'Swapped the coefficients of $x$ and $y$.'), S(A, B, s * (q * k + p * h), 'Sign error when distributing.')],
-        steps: [`Multiply by ${q}: $${q}(y${pm(k)})=${p}(${lin(1, 'x', h)})$`, `$${lin(q, 'y', q * k)}=${lin(p, 'x', p * h)}$`, `Move the terms: $${ans}$`],
-        verify: { k: 'line', same: eq } }; }
+    r => parallel(r, 1, [rI(1), rI(2), rI(3)]), r => perpendicular(r, 1, [rI(1), rI(-1)]),
+    r => parallel(r, 1, [rI(-4), rI(-5), rI(-6)]), r => perpendicular(r, 2, [rI(2), rI(3), rI(4)], false, true),
+    r => parallel(r, 2, [R(-1, 2), R(-1, 3), R(-1, 4)]), r => perpendicular(r, 2, [R(-1, 2), R(-1, 3), R(1, 4)]),
+    r => parallel(r, 2, [rI(-2), rI(-3), rI(5)]), r => perpendicular(r, 2, [rI(-2), rI(-5), rI(-4)], false, true),
+    r => parallel(r, 3, [R(-3, 4), R(-2, 3), R(-4, 3)]), r => perpendicular(r, 3, [R(-3, 4), R(2, 3), R(-3, 2)], false, true),
+    r => parallel(r, 3, [rI(-2), rI(-3), R(1, 2)], true), r => perpendicular(r, 3, [R(-3, 2), R(-2, 3), R(3, 4)], true),
+    r => perpendicular(r, 3, [rI(3), rI(-3), rI(6)])
   ];
   buildMCQ(16, {
-    instr: 'Decide how the lines are related, or rewrite the equation.',
-    tips: ['Rewrite each equation as $y=mx+b$ to compare slopes. For $Ax+By=C$, the slope is $-\\dfrac{A}{B}$.',
-      'Equal slopes → parallel. Slopes with product $-1$ → perpendicular. Otherwise → neither.'],
+    instr: 'Choose the line in slope-intercept form through the point.',
+    tips: ['Parallel lines have the <b>same</b> slope. Perpendicular lines have <b>opposite reciprocal</b> slopes (their product is $-1$).',
+      'Find the slope you need, then substitute the point into $y=mx+b$ and solve for $b$.'],
     patterns: P
   });
 })();
@@ -1445,7 +1346,7 @@ function stdForm(A, B, C) { return `${lin(A, 'x', 0)}${next(B, 'y')}=${C}`; }
 })();
 
 // ═══════════════════════════════════════════════════════════
-// Q18 · L 6-1 · Solve inequalities by subtraction (p.347, Ex. 7–12)
+// Q18 · L 6-1 · Graph the solutions of an inequality (p.347, Ex. 7–12)
 // ═══════════════════════════════════════════════════════════
 const OPS = { '<': '<', '<=': '\\le', '>': '>', '>=': '\\ge' };
 const ineqTex = (v, op, b) => `${v}${OPS[op]}${typeof b === 'object' ? rs(b) : b}`;
@@ -1467,42 +1368,50 @@ const ineqTex = (v, op, b) => `${v}${OPS[op]}${typeof b === 'object' ? rs(b) : b
       verify: { k: 'ineq', v: 'x', js: `V.x ${op} ${p}` } };
   }
   const flip = { '<': '>', '>': '<', '<=': '>=', '>=': '<=' };
-  // v + b op c  (or c op v + b) → v op' (c - b)
-  function sub(r, level, form) {
-    const v = r.pick(VARS), b = r.nz(-15, 20), c = r.nz(-20, 20), op = r.pick(['<', '<=', '>', '>=']);
-    const ans = c - b;
-    let stem, rop;
-    if (form === 'left') { stem = `${lin(1, v, b)}${OPS[op]}${c}`; rop = op; }
-    else if (form === 'right') { stem = `${c}${OPS[op]}${b}+${v}`; rop = flip[op]; }
-    else { stem = `${c}${OPS[op]}${linC(b, 1, v)}`; rop = flip[op]; }
-    if (ans === 0 || b === c) return null;
-    return { level, stem: `$${stem}$`, correct: `$${ineqTex(v, rop, ans)}$`, cv: ineqTex(v, rop, ans),
-      wrongs: [I(v, rop, c + b, `Undo $${pm(b)}$ by ${b > 0 ? 'subtracting' : 'adding'} ${Math.abs(b)}, not ${b > 0 ? 'adding' : 'subtracting'}.`),
-        I(v, flip[rop], ans, 'Subtracting does not reverse the inequality sign.'),
-        I(v, rop, -ans, 'Sign error in the subtraction.'),
-        I(v, rop.includes('=') ? rop[0] : rop + '=', ans, 'Keep the same inequality symbol; only multiplying or dividing by a negative changes it.')],
-      steps: [`${b > 0 ? 'Subtract' : 'Add'} ${Math.abs(b)} on both sides.`, `$${ineqTex(v, rop, ans)}$`],
-      verify: { k: 'ineq', v, ineq: stem } };
+  const dotOf = op => op.includes('=') ? 'closed' : 'open', dirOf = op => op[0] === '<' ? 'left' : 'right';
+  const other = d => d === 'open' ? 'closed' : 'open', back = d => d === 'left' ? 'right' : 'left';
+  // one number-line option: [svg, whyWrong, value]
+  const NL = (p, dot, dir, why) => [GRAPH.numberLineRay([p - 4, p + 4], p, dot, dir), why, { p, closed: dot === 'closed', dir }];
+  // "Which graph shows x ≥ 3?"  (reversed: "−1 < x")
+  function whichGraph(r, level, reversed) {
+    const op = r.pick(['<', '<=', '>', '>=']), p = r.nz(-6, 6);
+    const shown = reversed ? `${p}${OPS[flip[op]]}x` : ineqTex('x', op, p);
+    const dot = dotOf(op), dir = dirOf(op);
+    const stem = `Which graph shows $${shown}$?`;
+    const c = NL(p, dot, dir);
+    return { level, stem, sig: stem, correct: c[0], cv: c[2],
+      wrongs: [NL(p, other(dot), dir, dot === 'closed' ? `$${OPS[op]}$ includes $${p}$, so the dot must be closed.` : `$${OPS[op]}$ does not include $${p}$, so the dot must be open.`),
+        NL(p, dot, back(dir), reversed ? `Read it from the variable: $${shown}$ means $${ineqTex('x', op, p)}$, so the ray points ${dir}.` : `The solutions are ${dir === 'left' ? 'less' : 'greater'} than $${p}$, so the ray points ${dir}.`),
+        NL(p, other(dot), back(dir), 'Both the dot and the direction are wrong.')],
+      steps: [reversed ? `Rewrite with the variable first: $${shown}$ is the same as $${ineqTex('x', op, p)}$.` : `$${shown}$`,
+        `${dot === 'closed' ? 'Closed' : 'Open'} dot at $${p}$ (${dot === 'closed' ? 'included' : 'not included'}), ray pointing ${dir}.`],
+      verify: { k: 'nlgraph', v: 'x', js: `V.x ${op} ${p}` } };
   }
-  // k v ≤ b + (k-1) v → v ≤ b
-  function both(r, level) {
-    const v = r.pick(VARS), k = r.nextInt(2, 5), b = r.nz(-9, 9), op = r.pick(['<=', '>=', '<', '>']);
-    const stem = r.next() < 0.5 ? `${k}${v}${OPS[op]}${linC(b, k - 1, v)}` : `${k}${v}${OPS[op]}${lin(k - 1, v, b)}`;
-    return { level, stem: `$${stem}$`, correct: `$${ineqTex(v, op, b)}$`, cv: ineqTex(v, op, b),
-      wrongs: [I(v, flip[op], b, 'Subtracting a variable term does not reverse the inequality sign.'), I(v, op, -b, 'Sign error on the constant.'),
-        I(v, op, rat(b, 2 * k - 1), `Added $${lead(k - 1, v)}$ instead of subtracting it.`)],
-      steps: [`Subtract $${lead(k - 1, v)}$ from both sides: $${ineqTex(v, op, b)}$.`], verify: { k: 'ineq', v, ineq: stem } };
+  // "Solve t + 5 ≤ 3, then choose the graph of the solution."
+  function solveGraph(r, level) {
+    const v = r.pick(VARS), b = r.nz(-6, 6), c = r.nz(-6, 6), op = r.pick(['<', '<=', '>', '>=']), ans = c - b;
+    if (Math.abs(ans) > 8) return null;
+    const tex = `${lin(1, v, b)}${OPS[op]}${c}`, dot = dotOf(op), dir = dirOf(op);
+    const stem = `Solve $${tex}$, then choose the graph of the solution.`;
+    const cor = NL(ans, dot, dir);
+    return { level, stem, sig: stem, correct: cor[0], cv: cor[2],
+      wrongs: [NL(ans, other(dot), dir, dot === 'closed' ? `$${OPS[op]}$ includes the endpoint, so the dot must be closed.` : `$${OPS[op]}$ does not include the endpoint, so the dot must be open.`),
+        NL(ans, dot, back(dir), `Adding or subtracting does not reverse the inequality: the ray points ${dir}.`),
+        NL(c + b, dot, dir, `Undo $${pm(b)}$ by ${b > 0 ? 'subtracting' : 'adding'} ${Math.abs(b)} on both sides.`)],
+      steps: [`${b > 0 ? 'Subtract' : 'Add'} ${Math.abs(b)} on both sides: $${ineqTex(v, op, ans)}$.`,
+        `${dot === 'closed' ? 'Closed' : 'Open'} dot at $${ans}$, ray pointing ${dir}.`],
+      verify: { k: 'nlgraph', v, ineq: tex } };
   }
   const P = [
     r => graphQ(r, 1, 'open', 'left', -1), r => graphQ(r, 1, 'open', 'right', r.sign()), r => graphQ(r, 1, 'open', 'left', 1), r => graphQ(r, 1, 'closed', 'left', 1),
-    r => sub(r, 1, 'left'), r => sub(r, 1, 'left'),
-    r => graphQ(r, 2, 'closed', 'right', r.sign()), r => graphQ(r, 2, 'closed', 'left', -1), r => sub(r, 2, 'right'), r => sub(r, 2, 'leftc'),
-    r => sub(r, 3, 'right'), r => both(r, 3)
+    r => whichGraph(r, 1, false), r => whichGraph(r, 1, false),
+    r => graphQ(r, 2, 'closed', 'right', r.sign()), r => graphQ(r, 2, 'closed', 'left', -1), r => whichGraph(r, 2, true), r => solveGraph(r, 2),
+    r => solveGraph(r, 3), r => solveGraph(r, 3)
   ];
   buildMCQ(18, {
-    instr: 'Write the inequality shown by the graph, or solve the inequality.',
-    tips: ['Open dot: $<$ or $>$. Closed dot: $\\le$ or $\\ge$. The ray shows which side the solutions are on.',
-      'Undo addition by subtracting the same number on both sides. Adding or subtracting never reverses the inequality sign.'],
+    instr: 'Write the inequality shown by the graph, or choose the graph of the inequality.',
+    tips: ['Open dot: $<$ or $>$ (the number is not included). Closed dot: $\\le$ or $\\ge$ (the number is included).',
+      'The ray shows which side the solutions are on. If the variable is on the right, as in $-1<x$, read it from the variable: $x>-1$.'],
     patterns: P
   });
 })();
@@ -1635,12 +1544,31 @@ const ineqTex = (v, op, b) => `${v}${OPS[op]}${typeof b === 'object' ? rs(b) : b
       steps: [`$|${lin(1, v, b)}|$ is always $\\ge 0$, so it can never be less than $-${c}$.`, 'No solution: $\\varnothing$'],
       verify: { k: 'ineq', v, ineq: stem } };
   }
+  // |v + b| ≥ −c is true for every number
+  function allReals(r, level) {
+    const v = r.pick(VARS), b = r.nz(-8, 8), c = r.nextInt(1, 9), closed = r.next() < 0.5, s = closed ? '\\ge' : '>', stem = `|${lin(1, v, b)}|${s}-${c}`;
+    return { level, stem: `$${stem}$`, correct: 'all real numbers', cv: 'all',
+      wrongs: [['$\\varnothing$', 'An absolute value is always $\\ge 0$, so it is always greater than a negative number.', 'none'],
+        O(andT(v, rI(-b - c), rI(-b + c), closed ? '\\le' : '<'), 'An absolute value is always greater than a negative number, so every number works.'),
+        O(`${v}${s}${-b + c}`, 'An absolute value is always greater than a negative number, so every number works.')],
+      steps: [`$|${lin(1, v, b)}|$ is always $\\ge 0$, so it is always greater than $-${c}$.`, 'Solution: all real numbers.'],
+      verify: { k: 'ineq', v, ineq: stem } };
+  }
+  // |v| > c
+  function plain(r, level) {
+    const v = r.pick(VARS), c = r.nextInt(2, 9), closed = r.next() < 0.4, s = closed ? '\\ge' : '>', stem = `|${v}|${s}${c}`;
+    return { level, stem: `$${stem}$`, correct: `$${orT(v, rI(-c), rI(c), closed)}$`, cv: orT(v, rI(-c), rI(c), closed),
+      wrongs: [O(andT(v, rI(-c), rI(c), closed ? '\\le' : '<'), '"Greater than" gives an <b>or</b> solution (outside), not between.'),
+        O(`${v}${s}${c}`, 'This is only one of the two cases.'), O(`${v}${s}${-c}`, `The second case is $${v}${closed ? '\\le' : '<'}-${c}$.`)],
+      steps: [`$${v}${closed ? '\\le' : '<'}-${c}$ or $${v}${s}${c}$`],
+      verify: { k: 'ineq', v, ineq: stem } };
+  }
   const one = () => 1, small = r => r.nextInt(2, 4);
   const P = [
     r => less(r, 1, one, false, 1), r => less(r, 1, one, true, 1), r => less(r, 1, one, false, -1),
-    r => less(r, 2, small, true, -1), r => less(r, 2, small, false, -1), r => empty(r, 2), r => empty(r, 2),
-    r => greater(r, 2, one, false), r => greater(r, 2, one, false), r => less(r, 2, small, false, 1),
-    r => greater(r, 3, small, true), r => greater(r, 3, small, true)
+    r => less(r, 2, small, true, -1), r => less(r, 2, small, false, -1), r => empty(r, 2), r => less(r, 2, small, false, 1),
+    r => greater(r, 2, one, false), r => plain(r, 2), r => less(r, 2, one, true, -1),
+    r => greater(r, 3, small, true), r => allReals(r, 3), r => less(r, 3, small, true, 1)
   ];
   buildMCQ(20, {
     instr: 'Solve the inequality and choose the solution set.',
@@ -1900,7 +1828,56 @@ const steps = list => list.join('<br>');
       explanation: 'Equal slopes → parallel. Product of slopes $=-1$ → perpendicular. Otherwise → neither.',
       verify: [{ k: 'rel', e1, e2, val: rel }] };
   }
-  const P = [
+  // Through one point: both the parallel and the perpendicular line (Ex. 29)
+  function bothQ(r) {
+    const q = r.nextInt(1, 4), p = r.nz(-4, 4); if (gcd(p, q) !== 1) return null;
+    const m = rat(p, q), pp = rat(-q, p), b0 = r.nz(-9, 9), x1 = r.nz(-4, 4), y1 = r.nz(-6, 6);
+    if (y1 === m.v * x1 + b0 || (x1 === -2 && y1 === 3)) return null;
+    const given = lineY(m, rI(b0)), bPar = rSub(rI(y1), rMul(m, rI(x1))), bPer = rSub(rI(y1), rMul(pp, rI(x1)));
+    const par = lineY(m, bPar), per = lineY(pp, bPer);
+    const stem = `Through $(${x1},${y1})$: write the line <b>parallel</b> and the line <b>perpendicular</b> to $${given}$.`;
+    return { level: 3, stem, text: stem, final: `$${par}$; $${per}$`,
+      fields: [field('Parallel line', `$${par}$`), field('Perpendicular line', `$${per}$`)],
+      solution: steps([`The given slope is $${rs(m)}$.`,
+        `<b>Parallel:</b> same slope $m=${rs(m)}$. Substitute $(${x1},${y1})$: $${y1}=${rs(m)}(${x1})+b$ → $b=${rs(bPar)}$. <b>$${par}$</b>`,
+        `<b>Perpendicular:</b> opposite reciprocal $m=${rs(pp)}$. Substitute $(${x1},${y1})$: $${y1}=${rs(pp)}(${x1})+b$ → $b=${rs(bPer)}$. <b>$${per}$</b>`]),
+      explanation: 'Parallel lines have the same slope. Perpendicular lines have opposite reciprocal slopes (their product is $-1$).',
+      verify: [{ k: 'line', through: [[x1, y1]], parallelTo: given, val: par }, { k: 'line', through: [[x1, y1]], perpTo: given, val: per }] };
+  }
+  // Two equations in standard form: parallel, perpendicular, or neither? (Ex. 33)
+  function stdPairQ(r) {
+    const a = r.nextInt(2, 7), b = r.nextInt(2, 7), c = r.nz(-15, 15), d = r.nz(-15, 15); if (a === b || gcd(a, b) !== 1) return null;
+    const rel = r.pick(['parallel', 'perpendicular', 'neither']), k = r.nextInt(2, 3);
+    if (rel === 'parallel' && d === k * c) return null;
+    const e1 = stdForm(a, b, c), e2 = rel === 'perpendicular' ? stdForm(b, -a, d) : rel === 'parallel' ? stdForm(k * a, k * b, d) : stdForm(a, -b, d);
+    const m1 = rat(-a, b), m2 = rel === 'perpendicular' ? rat(b, a) : rel === 'parallel' ? m1 : rat(a, b);
+    const stem = `Are the graphs of $${e1}$ and $${e2}$ parallel, perpendicular, or neither?`;
+    return { level: 2, instr: 'Find both slopes, then decide. Show your steps.', stem, text: stem, final: `${rel} ($${rs(m1)}$ and $${rs(m2)}$)`,
+      fields: [field('Slope of the first line', `$${rs(m1)}$`), field('Slope of the second line', `$${rs(m2)}$`), field('Relationship', rel)],
+      solution: steps([`Solve each equation for $y$. First: $${lineY(m1, rat(c, b))}$, slope $${rs(m1)}$.`,
+        `Second: slope $${rs(m2)}$.`,
+        rel === 'parallel' ? 'The slopes are equal and the lines are different: <b>parallel</b>.' : rel === 'perpendicular' ? `$${rs(m1)}\\times${rs(m2)}=-1$: <b>perpendicular</b>.` : `The slopes are not equal and $${rs(m1)}\\times${rs(m2)}=${rs(rMul(m1, m2))}\\ne-1$: <b>neither</b>.`]),
+      explanation: 'For $Ax+By=C$ the slope is $-\\dfrac{A}{B}$. Equal slopes → parallel. Product $-1$ → perpendicular. Otherwise → neither.',
+      verify: [{ k: 'rel', e1, e2, val: rel }] };
+  }
+  // "… claims the line through two points is perpendicular to Ax + By = C. Do you agree?" (Ex. 50)
+  function claimQ(r) {
+    const q = r.nextInt(1, 4), p = r.nz(-4, 4); if (gcd(p, q) !== 1 || Math.abs(p) === q) return null;
+    const m1 = rat(p, q), t = r.pick([1, 2]), A = [r.nextInt(-6, 4), r.nextInt(-6, 6)], B = [A[0] + q * t, A[1] + p * t];
+    const agree = r.next() < 0.5, C = r.nz(-12, 12), s = p < 0 ? -1 : 1;
+    const given = agree ? stdForm(q * s, p * s, C) : stdForm(p * s, -q * s, C);          // slope −q/p (perpendicular) or p/q (parallel)
+    const m2 = agree ? rat(-q, p) : m1, who = r.pick(['Levy', 'Mariam', 'Khalid', 'Noura', 'Yousef', 'Hessa']);
+    const stem = `${who} claims that the line through $(${A})$ and $(${B})$ is <b>perpendicular</b> to $${given}$. Do you agree? Justify your answer.`;
+    const verdict = agree ? 'Yes. The product of the slopes is $-1$, so the lines are perpendicular.' : 'No. The slopes are equal, so the lines are parallel, not perpendicular.';
+    return { level: 3, instr: 'Find both slopes, then decide. Show your steps.', stem, text: stem, final: `${agree ? 'Yes' : 'No'} ($${rs(m1)}$ and $${rs(m2)}$)`,
+      fields: [field('Slope through the two points', `$${rs(m1)}$`), field('Slope of the given line', `$${rs(m2)}$`), field('Decision', verdict)],
+      solution: steps([`$m_1=\\dfrac{${B[1]}-(${A[1]})}{${B[0]}-(${A[0]})}=${rs(m1)}$`,
+        `Solve $${given}$ for $y$: the slope is $m_2=${rs(m2)}$.`,
+        agree ? `$${rs(m1)}\\times${rs(m2)}=-1$. <b>Yes, the lines are perpendicular.</b>` : `$${rs(m1)}\\times${rs(m2)}=${rs(rMul(m1, m2))}\\ne-1$. <b>No: the slopes are equal, so the lines are parallel.</b>`]),
+      explanation: 'A claim about perpendicular lines is checked with slopes: the product must be exactly $-1$.',
+      verify: [{ k: 'rel', e1: pointSlope(m1, A[0], A[1]), e2: given, val: agree ? 'perpendicular' : 'parallel' }] };
+  }
+  const OLD = [
     // L1 · parallel to y = (p/q) x + b0
     r => { const q = r.nextInt(1, 4), p = r.nz(-5, 5); if (gcd(p, q) !== 1) return null; const m = rat(p, q), b0 = r.nz(-9, 9), x1 = q * r.nz(-3, 3), y1 = r.nz(-9, 9);
       if (y1 === m.v * x1 + b0) return null; const given = lineY(m, rI(b0));
@@ -1916,6 +1893,9 @@ const steps = list => list.join('<br>');
       const given = lineY(rI(m0), rI(b0)), m = rat(-1, m0);
       return throughQ(3, x1, y1, given, m, 'perpendicular', [`The given slope is $${m0}$, so the perpendicular slope is $m=${rs(m)}$.`]); }
   ];
+  // Booklet order: Ex. 8 (perpendicular to standard form), Ex. 9 (two lines from points),
+  // Ex. 29 (parallel and perpendicular), Ex. 33 (standard-form pair), Ex. 50 (check a claim)
+  const P = [OLD[1], r => classify(r, 2), bothQ, stdPairQ, claimQ];
   buildFRQ(25, {
     instr: 'Show every step. Write the final equation in slope-intercept form.',
     tips: ['Parallel lines: same slope. Perpendicular lines: opposite reciprocal slopes (product $-1$).',

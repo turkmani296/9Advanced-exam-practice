@@ -2,7 +2,7 @@
 // Used by questionBank.js to draw graphs inside question stems, MCQ options
 // and FRQ model solutions. Every function returns an SVG string.
 const GRAPH = (function() {
-  const C = { ink: '#1b2a4a', grid: '#e0dbd2', bg: '#faf9f7', line: '#5ba4a4', accent: '#e8854a', muted: '#6e685e' };
+  const C = { ink: '#12343b', grid: '#dbe5e7', bg: '#f8fafb', line: '#1f7a85', accent: '#d9783a', muted: '#5b6f74' };
 
   function open(w, h, maxW) {
     return `<svg class="q-graph" viewBox="0 0 ${w} ${h}" width="100%" style="max-width:${maxW}px;display:block;margin:8px auto;background:${C.bg};border:1px solid ${C.grid};border-radius:8px" xmlns="http://www.w3.org/2000/svg">`;
@@ -52,10 +52,10 @@ const GRAPH = (function() {
   }
 
   // A line through two points, both points labelled (grid -5..5)
-  function lineThroughPoints(points, min, max) {
+  function lineThroughPoints(points, min, max, small) {
     min = min ?? -5; max = max ?? 5;
-    const size = 260, g = grid(min, max, size);
-    let s = open(size, size, 280) + g.s;
+    const size = 260, g = grid(min, max, size, small ? 5 : 1);
+    let s = open(size, size, small ? 210 : 280) + g.s;
     const seg = clipLine(points[0], points[1], min, max);
     if (seg) s += `<line x1="${fmt(g.X(seg[0][0]))}" y1="${fmt(g.Y(seg[0][1]))}" x2="${fmt(g.X(seg[1][0]))}" y2="${fmt(g.Y(seg[1][1]))}" stroke="${C.line}" stroke-width="2.5"/>`;
     points.forEach(([x, y]) => {
@@ -93,6 +93,26 @@ const GRAPH = (function() {
       if (x0 >= min) s += dot(g.X, g.Y, x0, n, !reversed);
       if (x1 <= max) s += dot(g.X, g.Y, x1, n, !!reversed);
     }
+    return s + '</svg>';
+  }
+
+  // Piecewise function: y = m1·x + b1 on the left of x = c, y = m2·x + b2 on the right.
+  // leftClosed says which piece owns the boundary point (closed dot).
+  function piecewise(p, min, max) {
+    min = min ?? -6; max = max ?? 6;
+    const size = 190, g = grid(min, max, size, 2);
+    let s = open(size, size, 210) + g.s;
+    const ray = (m, v, dir) => {            // from (c, v) going left (dir -1) or right (dir +1)
+      let t = dir < 0 ? p.c - min : max - p.c;
+      const slope = m * dir;                // change in y per unit of t
+      if (slope > 0) t = Math.min(t, (max - v) / slope);
+      if (slope < 0) t = Math.min(t, (min - v) / slope);
+      if (t <= 0 || v > max || v < min) return '';
+      return `<line x1="${fmt(g.X(p.c))}" y1="${fmt(g.Y(v))}" x2="${fmt(g.X(p.c + dir * t))}" y2="${fmt(g.Y(v + slope * t))}" stroke="${C.line}" stroke-width="2.5"/>`;
+    };
+    const v1 = p.m1 * p.c + p.b1, v2 = p.m2 * p.c + p.b2;
+    s += ray(p.m1, v1, -1) + ray(p.m2, v2, 1);
+    s += dot(g.X, g.Y, p.c, v1, !!p.leftClosed) + dot(g.X, g.Y, p.c, v2, !p.leftClosed);
     return s + '</svg>';
   }
 
@@ -172,5 +192,5 @@ const GRAPH = (function() {
     return s + '</svg>';
   }
 
-  return { lineThroughPoints, absoluteValueV, greatestIntegerSteps, numberLineRay, numberLineSegment, interceptLine, sequencePoints };
+  return { piecewise, lineThroughPoints, absoluteValueV, greatestIntegerSteps, numberLineRay, numberLineSegment, interceptLine, sequencePoints };
 })();

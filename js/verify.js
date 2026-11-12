@@ -236,8 +236,48 @@ const QCHECK = (function() {
     rel(spec, val) { return relation(spec.e1, spec.e2) === val; },
     inv(spec, val) { return samePairs(val, spec.rel.map(([x, y]) => [y, x])); },
     set(spec, val) { return Array.isArray(val) && sameSet(val, spec.ans); },
-    translate(spec, val) { return val === spec.eq; }
+    translate(spec, val) { return val === spec.eq; },
+    // ── Graph of a line: both plotted points must lie on the line ──
+    graphline(spec, pts) { const l = lineCoeffs(spec.eq); return pts.every(p => onLine(l, p)); },
+    // ── Number-line graph { p, closed, dir } of an inequality ──
+    nlgraph(spec, g) {
+      const pred = spec.js ? new Function('V', 'return (' + spec.js + ');') : predicate(spec.ineq);
+      const at = x => { const V = {}; V[spec.v] = x; return !!pred(V); };
+      const right = g.dir === 'right';
+      return at(g.p) === g.closed && [0.01, 0.5, 3, 40].every(d => at(g.p + d) === right && at(g.p - d) === !right);
+    },
+    // ── Arithmetic sequences (terms are the first four terms) ──
+    arith(spec, v) {
+      const t = spec.terms, d = t[1] - t[0], constant = t.every((x, i) => i === 0 || near(x - t[i - 1], d, 1e-9));
+      return constant ? (v.yes === true && near(v.d, d, 1e-9)) : v.yes === false;
+    },
+    seqd(spec, v) { const t = spec.terms; return typeof v === 'number' && t.every((x, i) => i === 0 || near(x - t[i - 1], v, 1e-9)); },
+    seqnext(spec, v) {
+      const t = spec.terms, d = t[1] - t[0]; let last = t[t.length - 1];
+      return Array.isArray(v) && v.every(x => { last += d; return near(x, last, 1e-9); });
+    },
+    seqterm(spec, v) { let x = spec.terms[0]; const d = spec.terms[1] - spec.terms[0]; for (let i = 1; i < spec.n; i++) x += d; return typeof v === 'number' && near(v, x, 1e-9); },
+    seqeq(spec, v) { const f = expr(v); return spec.terms.every((x, i) => near(f({ n: i + 1 }), x, 1e-9)); },
+    // ── Piecewise functions { m1, b1, m2, b2, c, leftClosed } ──
+    pw(spec, v) { return typeof v === 'number' && near(pwValue(spec.f, spec.at), v, 1e-9); },
+    pwgraph(spec, g) {
+      for (let x = -8; x <= 8; x += 0.25) if (!near(pwValue(spec.f, x), pwValue(g, x), 1e-9)) return false;
+      return true;
+    },
+    pwrange(spec, v) {                      // v = { t: 'le' | 'ge' | 'all', v }
+      let hi = -Infinity, lo = Infinity;
+      for (let x = -400; x <= 400; x += 0.25) { const y = pwValue(spec.f, x); hi = Math.max(hi, y); lo = Math.min(lo, y); }
+      const bounded = (a, b) => Math.abs(a) < 100 && Math.abs(b) > 100;     // one end stops, the other keeps going
+      const closedAt = y => { const f = spec.f, own = f.leftClosed ? f.m1 * f.c + f.b1 : f.m2 * f.c + f.b2; return near(own, y, 1e-9); };
+      if (v.t === 'le') return bounded(hi, lo) && near(v.v, hi, 1e-9) && closedAt(hi);
+      if (v.t === 'ge') return bounded(lo, hi) && near(v.v, lo, 1e-9) && closedAt(lo);
+      return false;
+    }
   };
+  function pwValue(f, x) {
+    const left = x < f.c - 1e-12 || (Math.abs(x - f.c) <= 1e-12 && f.leftClosed);
+    return left ? f.m1 * x + f.b1 : f.m2 * x + f.b2;
+  }
   // For translations we cannot recompute the meaning, but no distractor may
   // be an equivalent equation (same solution set as the correct one).
   function equivalentEq(a, b, v) {

@@ -9,7 +9,7 @@ const CertificateGen = (() => {
     <div class="certificate-page" id="cert-${data.lessonNumber}">
       <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none" viewBox="0 0 1123 794" preserveAspectRatio="none">
         <!-- Outer border -->
-        <rect x="16" y="16" width="1091" height="762" rx="8" fill="none" stroke="#1b2a4a" stroke-width="2.5"/>
+        <rect x="16" y="16" width="1091" height="762" rx="8" fill="none" stroke="#12343b" stroke-width="2.5"/>
         <!-- Inner border -->
         <rect x="24" y="24" width="1075" height="746" rx="6" fill="none" stroke="#d4a843" stroke-width="1.5"/>
         <!-- Second gold line -->
@@ -29,30 +29,30 @@ const CertificateGen = (() => {
         </div>
         
         <!-- Title -->
-        <h1 style="font-family:Georgia,'Times New Roman',serif;font-size:32px;color:#1b2a4a;letter-spacing:3px;margin:12px 0 4px;text-transform:uppercase;">
+        <h1 style="font-family:Georgia,'Times New Roman',serif;font-size:32px;color:#12343b;letter-spacing:3px;margin:12px 0 4px;text-transform:uppercase;">
           Certificate of Mastery
         </h1>
         <div style="width:180px;height:2px;background:linear-gradient(90deg,transparent,#d4a843,transparent);margin-bottom:20px;"></div>
         
         <!-- Presented to -->
-        <p style="font-family:Georgia,serif;font-size:15px;color:#6e685e;margin-bottom:8px;">This certificate is proudly presented to</p>
+        <p style="font-family:Georgia,serif;font-size:15px;color:#5b6f74;margin-bottom:8px;">This certificate is proudly presented to</p>
         
         <!-- Student name -->
-        <h2 style="font-family:Georgia,'Times New Roman',serif;font-size:36px;color:#1b2a4a;margin-bottom:4px;font-style:italic;">
+        <h2 style="font-family:Georgia,'Times New Roman',serif;font-size:36px;color:#12343b;margin-bottom:4px;font-style:italic;">
           ${escapeHTML(data.studentName)}
         </h2>
         <div style="width:300px;height:1px;background:#d4a843;margin-bottom:16px;"></div>
         
         <!-- Lesson -->
-        <p style="font-size:14px;color:#6e685e;margin-bottom:4px;">for mastering</p>
-        <h3 style="font-family:Georgia,serif;font-size:26px;color:#1b2a4a;margin-bottom:8px;">
+        <p style="font-size:14px;color:#5b6f74;margin-bottom:4px;">for mastering</p>
+        <h3 style="font-family:Georgia,serif;font-size:26px;color:#12343b;margin-bottom:8px;">
           Lesson ${escapeHTML(data.lessonNumber)}
         </h3>
         <p style="font-size:13px;color:#9a9488;margin-bottom:6px;">Grade 9 Advanced Mathematics · Reveal Integrated 1</p>
         
         <!-- Score -->
         <div style="background:#f5f0e8;border-radius:8px;padding:6px 20px;margin-bottom:16px;">
-          <span style="font-size:18px;font-weight:700;color:#1b2a4a;">${data.scorePct}%</span>
+          <span style="font-size:18px;font-weight:700;color:#12343b;">${data.scorePct}%</span>
         </div>
 
         <!-- Seal/Rosette -->
@@ -64,13 +64,13 @@ const CertificateGen = (() => {
         <div style="margin-top:auto;width:100%;display:flex;align-items:flex-end;justify-content:space-between;">
           <div style="text-align:center;flex:1;">
             <p style="font-size:12px;color:#9a9488;margin-bottom:4px;">${dateStr}</p>
-            <div style="width:200px;border-top:1px solid #1b2a4a;margin:0 auto 4px;"></div>
-            <p style="font-size:12px;color:#6e685e;">Date</p>
+            <div style="width:200px;border-top:1px solid #12343b;margin:0 auto 4px;"></div>
+            <p style="font-size:12px;color:#5b6f74;">Date</p>
           </div>
           <div style="text-align:center;flex:1;">
-            <p style="font-size:14px;color:#1b2a4a;font-weight:600;margin-bottom:4px;">${escapeHTML(data.teacherName)}</p>
-            <div style="width:200px;border-top:1px solid #1b2a4a;margin:0 auto 4px;"></div>
-            <p style="font-size:12px;color:#6e685e;">${escapeHTML(data.schoolName)}</p>
+            <p style="font-size:14px;color:#12343b;font-weight:600;margin-bottom:4px;">${escapeHTML(data.teacherName)}</p>
+            <div style="width:200px;border-top:1px solid #12343b;margin:0 auto 4px;"></div>
+            <p style="font-size:12px;color:#5b6f74;">${escapeHTML(data.schoolName)}</p>
           </div>
           <div style="flex:0 0 auto;padding-left:16px;">
             <div style="background:white;border-radius:8px;padding:4px 8px;box-shadow:0 1px 4px rgba(0,0,0,0.1);">
@@ -88,7 +88,7 @@ const CertificateGen = (() => {
     return `<g transform="translate(${cx},${cy}) scale(${sx},${sy})">
       <path d="M0,0 L20,0 M0,0 L0,20" stroke="#d4a843" stroke-width="2" fill="none"/>
       <circle cx="0" cy="0" r="3" fill="#d4a843"/>
-      <path d="M4,4 L14,4 M4,4 L4,14" stroke="#1b2a4a" stroke-width="0.8" fill="none"/>
+      <path d="M4,4 L14,4 M4,4 L4,14" stroke="#12343b" stroke-width="0.8" fill="none"/>
     </g>`;
   }
 
@@ -105,10 +105,10 @@ const CertificateGen = (() => {
     points += 'Z';
     return `<svg width="100" height="100" viewBox="0 0 100 100">
       <path d="${points}" fill="none" stroke="#d4a843" stroke-width="2"/>
-      <circle cx="50" cy="50" r="32" fill="none" stroke="#1b2a4a" stroke-width="1"/>
+      <circle cx="50" cy="50" r="32" fill="none" stroke="#12343b" stroke-width="1"/>
       <circle cx="50" cy="50" r="28" fill="none" stroke="#d4a843" stroke-width="0.5"/>
-      <text x="50" y="46" text-anchor="middle" font-size="10" fill="#1b2a4a" font-family="Georgia,serif">★</text>
-      <text x="50" y="58" text-anchor="middle" font-size="7" fill="#1b2a4a" font-family="Georgia,serif" font-weight="700">MASTERY</text>
+      <text x="50" y="46" text-anchor="middle" font-size="10" fill="#12343b" font-family="Georgia,serif">★</text>
+      <text x="50" y="58" text-anchor="middle" font-size="7" fill="#12343b" font-family="Georgia,serif" font-weight="700">MASTERY</text>
     </svg>`;
   }
 
@@ -168,7 +168,7 @@ const Confetti = (() => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const colors = ['#d4a843', '#e8854a', '#5ba4a4', '#1b2a4a', '#3a9a5c'];
+    const colors = ['#d4a843', '#d9783a', '#1f7a85', '#12343b', '#3a9a5c'];
     particles = [];
     for (let i = 0; i < 150; i++) {
       particles.push({

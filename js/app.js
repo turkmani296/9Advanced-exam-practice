@@ -323,6 +323,15 @@
   function generateQuestions(tileNum, seed) {
     const bank = QUESTION_BANK[tileNum];
     if (!bank) return [];
+    // MCQ: a random handful from the set's 30-question bank (same seed → same five)
+    if (bank.pick) {
+      try {
+        return bank.pick(seed, CONFIG.MCQ_SET_SIZE).map((q, i) => ({ ...q, templateIndex: i }));
+      } catch (e) {
+        console.error(`Error drawing questions for Q${tileNum}:`, e);
+        return [];
+      }
+    }
     return bank.questions.map((q, i) => {
       try {
         return { ...q.generate(seed + i * 7), templateIndex: i, id: q.id };
@@ -447,13 +456,15 @@
       <div class="landing-cards">
         <button class="landing-card" id="card-mcq" tabindex="0" aria-label="Multiple Choice Questions 1 to 20">
           <span class="card-icon">📝</span>
-          <span class="card-type">MCQ</span>
-          <span class="card-range">1 – 20</span>
+          <span class="card-type">Multiple Choice</span>
+          <span class="card-range">Q1 – Q20</span>
+          <span class="card-desc">${CONFIG.MCQ_SET_SIZE} random questions each visit, from a bank of ${CONFIG.MCQ_BANK_SIZE} per question</span>
         </button>
         <button class="landing-card" id="card-frq" tabindex="0" aria-label="Free Response Questions 21 to 25">
           <span class="card-icon">✏️</span>
-          <span class="card-type">FRQ</span>
-          <span class="card-range">21 – 25</span>
+          <span class="card-type">Written Answer</span>
+          <span class="card-range">Q21 – Q25</span>
+          <span class="card-desc">Show your working, then check it against the model solution</span>
         </button>
       </div>
       <footer class="landing-footer">
@@ -695,9 +706,9 @@
   function renderList() {
     const isMCQ = state.currentSection === 'mcq';
     const tiles = TILE_BLUEPRINT.filter(t => t.type === (isMCQ ? 'mcq' : 'frq'));
-    const title = isMCQ ? 'MCQ 1–20' : 'FRQ 21–25';
+    const title = isMCQ ? 'Multiple Choice · Q1–Q20' : 'Written Answer · Q21–Q25';
 
-    let tilesHTML = tiles.map(t => {
+    const tileHTML = t => {
       const status = getTileStatus(t.tile);
       const scoreData = getTileScore(t.tile);
       const lessons = t.lessons.split(',').map(s => s.trim());
@@ -716,7 +727,17 @@
         ${scoreData ? `<span class="tile-score">${formatScore(scoreData.score)}/${scoreData.total}</span>` : ''}
         <span class="tile-status ${status}"></span>
       </button>`;
-    }).join('');
+    };
+
+    // Group the tiles by module, in the order of the coverage sheet
+    const moduleOf = t => t.lessons.trim()[0];
+    const moduleIds = [...new Set(tiles.map(moduleOf))];
+    const names = (typeof MODULES !== 'undefined') ? MODULES : {};
+    const tilesHTML = moduleIds.map(id => `
+      <section class="module-group">
+        <h3 class="module-heading"><span class="module-tag">Module ${id}</span>${names[id] || ''}</h3>
+        <div class="tile-grid">${tiles.filter(t => moduleOf(t) === id).map(tileHTML).join('')}</div>
+      </section>`).join('');
 
     return `
     <div class="list-screen">
@@ -729,7 +750,10 @@
         </div>
         <button class="cert-btn" id="open-certs">🏅 Certificates</button>
       </header>
-      <div class="tile-grid">${tilesHTML}</div>
+      <p class="list-note">${isMCQ
+        ? `Each question has a bank of <strong>${CONFIG.MCQ_BANK_SIZE}</strong> exam-style questions. Every time you open one you get <strong>${CONFIG.MCQ_SET_SIZE} at random</strong>, so come back for more practice.`
+        : 'Solve each question on paper first, then reveal the model solution and mark your own work.'}</p>
+      <div class="module-list ${isMCQ ? 'is-mcq' : 'is-frq'}">${tilesHTML}</div>
     </div>`;
   }
 
@@ -851,7 +875,9 @@
 
   function renderMCQQuestion(q, answered, qi) {
     if (!q.options) return '<p>No options available</p>';
-    return `<div class="mcq-options">
+    // Square graphs as options sit side by side; number lines stay one per row
+    const graphGrid = q.options.every(o => /<svg/.test(o.text) && !/viewBox="0 0 460 64"/.test(o.text));
+    return `<div class="mcq-options${graphGrid ? ' graph-grid' : ''}">
       ${q.options.map((opt, oi) => {
         let cls = 'mcq-option';
         let feedbackHTML = '';
@@ -889,41 +915,41 @@
     let ticks = '';
     for (let v = min; v <= max; v++) {
       const x = toPx(v);
-      ticks += `<line x1="${x}" y1="${lineY - 6}" x2="${x}" y2="${lineY + 6}" stroke="#1b2a4a" stroke-width="1.5"/>
-                <text x="${x}" y="${lineY + 22}" text-anchor="middle" font-size="12" fill="#1b2a4a" font-family="Inter,sans-serif">${v}</text>`;
+      ticks += `<line x1="${x}" y1="${lineY - 6}" x2="${x}" y2="${lineY + 6}" stroke="#12343b" stroke-width="1.5"/>
+                <text x="${x}" y="${lineY + 22}" text-anchor="middle" font-size="12" fill="#12343b" font-family="Inter,sans-serif">${v}</text>`;
     }
 
     let shade = '';
     if (cfg.shadeBetween && cfg.p1 != null && cfg.p2 != null) {
       const x1 = toPx(cfg.p1);
       const x2 = toPx(cfg.p2);
-      shade = `<line x1="${x1}" y1="${lineY}" x2="${x2}" y2="${lineY}" stroke="#5ba4a4" stroke-width="7" stroke-linecap="round"/>`;
+      shade = `<line x1="${x1}" y1="${lineY}" x2="${x2}" y2="${lineY}" stroke="#1f7a85" stroke-width="7" stroke-linecap="round"/>`;
     }
 
     let points = '';
     if (cfg.p1 != null) {
       const x1 = toPx(cfg.p1);
       const isClosed = cfg.p1Type === 'closed';
-      points += `<circle cx="${x1}" cy="${lineY}" r="6" fill="${isClosed ? '#1b2a4a' : '#ffffff'}" stroke="#1b2a4a" stroke-width="2.5"/>`;
+      points += `<circle cx="${x1}" cy="${lineY}" r="6" fill="${isClosed ? '#12343b' : '#ffffff'}" stroke="#12343b" stroke-width="2.5"/>`;
     }
     if (cfg.p2 != null) {
       const x2 = toPx(cfg.p2);
       const isClosed = cfg.p2Type === 'closed';
-      points += `<circle cx="${x2}" cy="${lineY}" r="6" fill="${isClosed ? '#1b2a4a' : '#ffffff'}" stroke="#1b2a4a" stroke-width="2.5"/>`;
+      points += `<circle cx="${x2}" cy="${lineY}" r="6" fill="${isClosed ? '#12343b' : '#ffffff'}" stroke="#12343b" stroke-width="2.5"/>`;
     }
 
     return `
     <div class="number-line-container" style="margin:16px 0;text-align:center;">
-      <svg width="100%" height="${height}" viewBox="0 0 ${width} ${height}" style="max-width:${width}px;background:#faf9f7;border:1px solid #e0dbd2;border-radius:8px;box-shadow:var(--shadow);">
+      <svg width="100%" height="${height}" viewBox="0 0 ${width} ${height}" style="max-width:${width}px;background:#f8fafb;border:1px solid #dbe5e7;border-radius:8px;box-shadow:var(--shadow);">
         <defs>
           <marker id="arrow-left" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M 10 0 L 0 5 L 10 10 z" fill="#1b2a4a"/>
+            <path d="M 10 0 L 0 5 L 10 10 z" fill="#12343b"/>
           </marker>
           <marker id="arrow-right" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-            <path d="M 0 0 L 10 5 L 0 10 z" fill="#1b2a4a"/>
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#12343b"/>
           </marker>
         </defs>
-        <line x1="15" y1="${lineY}" x2="${width - 15}" y2="${lineY}" stroke="#1b2a4a" stroke-width="2" marker-start="url(#arrow-left)" marker-end="url(#arrow-right)"/>
+        <line x1="15" y1="${lineY}" x2="${width - 15}" y2="${lineY}" stroke="#12343b" stroke-width="2" marker-start="url(#arrow-left)" marker-end="url(#arrow-right)"/>
         ${ticks}
         ${shade}
         ${points}
@@ -945,8 +971,8 @@
     for (let v = min; v <= max; v++) {
       const px = toPx(v);
       const py = toPy(v);
-      gridLines += `<line x1="${px}" y1="${pad}" x2="${px}" y2="${size - pad}" stroke="#e0dbd2" stroke-width="1"/>`;
-      gridLines += `<line x1="${pad}" y1="${py}" x2="${size - pad}" y2="${py}" stroke="#e0dbd2" stroke-width="1"/>`;
+      gridLines += `<line x1="${px}" y1="${pad}" x2="${px}" y2="${size - pad}" stroke="#dbe5e7" stroke-width="1"/>`;
+      gridLines += `<line x1="${pad}" y1="${py}" x2="${size - pad}" y2="${py}" stroke="#dbe5e7" stroke-width="1"/>`;
     }
 
     const originX = toPx(0);
@@ -954,20 +980,20 @@
 
     let labels = '';
     [-4, -2, 2, 4].forEach(v => {
-      labels += `<text x="${toPx(v)}" y="${originY + 14}" text-anchor="middle" font-size="10" fill="#6e685e">${v}</text>`;
-      labels += `<text x="${originX - 10}" y="${toPy(v) + 4}" text-anchor="end" font-size="10" fill="#6e685e">${v}</text>`;
+      labels += `<text x="${toPx(v)}" y="${originY + 14}" text-anchor="middle" font-size="10" fill="#5b6f74">${v}</text>`;
+      labels += `<text x="${originX - 10}" y="${toPy(v) + 4}" text-anchor="end" font-size="10" fill="#5b6f74">${v}</text>`;
     });
 
     let plots = '';
     if (cfg.p1) {
       const [x1, y1] = cfg.p1;
-      plots += `<circle cx="${toPx(x1)}" cy="${toPy(y1)}" r="5" fill="#1b2a4a"/>`;
-      plots += `<text x="${toPx(x1) + 8}" y="${toPy(y1) - 6}" font-size="11" font-weight="600" fill="#1b2a4a">(${x1}, ${y1})</text>`;
+      plots += `<circle cx="${toPx(x1)}" cy="${toPy(y1)}" r="5" fill="#12343b"/>`;
+      plots += `<text x="${toPx(x1) + 8}" y="${toPy(y1) - 6}" font-size="11" font-weight="600" fill="#12343b">(${x1}, ${y1})</text>`;
     }
     if (cfg.p2) {
       const [x2, y2] = cfg.p2;
-      plots += `<circle cx="${toPx(x2)}" cy="${toPy(y2)}" r="5" fill="#e8854a"/>`;
-      plots += `<text x="${toPx(x2) + 8}" y="${toPy(y2) - 6}" font-size="11" font-weight="600" fill="#e8854a">(${x2}, ${y2})</text>`;
+      plots += `<circle cx="${toPx(x2)}" cy="${toPy(y2)}" r="5" fill="#d9783a"/>`;
+      plots += `<text x="${toPx(x2) + 8}" y="${toPy(y2) - 6}" font-size="11" font-weight="600" fill="#d9783a">(${x2}, ${y2})</text>`;
     }
 
     let linePath = '';
@@ -983,18 +1009,18 @@
         const yStart = m * xStart + b;
         const xEnd = max;
         const yEnd = m * xEnd + b;
-        linePath = `<line x1="${toPx(xStart)}" y1="${toPy(yStart)}" x2="${toPx(xEnd)}" y2="${toPy(yEnd)}" stroke="#5ba4a4" stroke-width="2.5"/>`;
+        linePath = `<line x1="${toPx(xStart)}" y1="${toPy(yStart)}" x2="${toPx(xEnd)}" y2="${toPy(yEnd)}" stroke="#1f7a85" stroke-width="2.5"/>`;
       }
     }
 
     return `
     <div class="coord-grid-container" style="margin:16px 0;text-align:center;">
-      <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="background:#faf9f7;border:1px solid #e0dbd2;border-radius:8px;box-shadow:var(--shadow);">
+      <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="background:#f8fafb;border:1px solid #dbe5e7;border-radius:8px;box-shadow:var(--shadow);">
         ${gridLines}
-        <line x1="${pad}" y1="${originY}" x2="${size - pad}" y2="${originY}" stroke="#1b2a4a" stroke-width="2"/>
-        <line x1="${originX}" y1="${size - pad}" x2="${originX}" y2="${pad}" stroke="#1b2a4a" stroke-width="2"/>
-        <text x="${size - pad + 12}" y="${originY + 4}" font-size="12" font-weight="700" fill="#1b2a4a">x</text>
-        <text x="${originX}" y="${pad - 8}" font-size="12" font-weight="700" fill="#1b2a4a" text-anchor="middle">y</text>
+        <line x1="${pad}" y1="${originY}" x2="${size - pad}" y2="${originY}" stroke="#12343b" stroke-width="2"/>
+        <line x1="${originX}" y1="${size - pad}" x2="${originX}" y2="${pad}" stroke="#12343b" stroke-width="2"/>
+        <text x="${size - pad + 12}" y="${originY + 4}" font-size="12" font-weight="700" fill="#12343b">x</text>
+        <text x="${originX}" y="${pad - 8}" font-size="12" font-weight="700" fill="#12343b" text-anchor="middle">y</text>
         ${labels}
         ${linePath}
         ${plots}
@@ -1268,7 +1294,7 @@
     // is marked out of the questions the student actually answered)
     let totalScore = 0;
     const totalPossible = countAnswered(progress);
-    progress.setSize = questions.length; // 12 for MCQ, 5 for FRQ
+    progress.setSize = questions.length; // 5 per visit (MCQ: drawn from a bank of 30)
 
     questions.forEach((q, i) => {
       const ans = progress.answers[i];
@@ -1375,7 +1401,7 @@
         </div>
         <div class="question-text" style="font-size:0.95rem;">${q.text || ''}</div>
         ${info.type === 'frq' && q.fields ? `
-          <div class="review-answers-box" style="margin-top:10px;padding:12px;background:#faf8f3;border-radius:6px;border-left:3px solid var(--teal);">
+          <div class="review-answers-box" style="margin-top:10px;padding:12px;background:#f8fafb;border-radius:6px;border-left:3px solid var(--teal);">
             <strong style="color:var(--navy);font-size:0.9rem;">Expected Answers:</strong>
             <ul style="margin:6px 0 0 18px;font-size:0.9rem;color:var(--gray-700);">
               ${q.fields.map(f => `<li><strong>${cleanStepLabel(f.label)}:</strong> ${formatAnswerMath(f.correctDisplay || f.correct)}</li>`).join('')}
@@ -1402,7 +1428,7 @@
         <div class="results-msg">${msg}</div>
         ${total < questions.length ? `<p class="results-early-note">Submitted early: ${total} of ${questions.length} questions answered.</p>` : ''}
         <div class="results-actions">
-          <button class="btn btn-accent" id="retry-btn">🔄 Retry with new numbers</button>
+          <button class="btn btn-accent" id="retry-btn">🔄 ${info.type === 'mcq' ? `Try ${CONFIG.MCQ_SET_SIZE} new questions` : 'Retry with new numbers'}</button>
           <button class="btn btn-secondary" id="print-btn">🖨 Print / Save as PDF</button>
           <button class="btn btn-primary" id="back-list-btn">← Back to list</button>
         </div>
