@@ -13,13 +13,13 @@ A responsive practice site that follows the End of Term 1 coverage sheet: one pr
    - Every time a student opens a set they get **5 questions drawn at random**, each from a different question pattern, ordered easy → hard.
    - "Try 5 new questions" draws another five.
    - Every bank question follows a pattern from the teacher's Question Booklet: same structure and same kind of distractors, different numbers.
-2. **Written-answer sets (Q21–Q25)**: 5 multi-part questions each, with new numbers on every retry, a hidden model solution and self-marking.
+2. **Written-answer sets (Q21–Q25)**: each has a fixed bank of **10 questions** and every visit draws **2 at random**, with a hidden model solution and self-marking. Q21 has two tiles, one per part: Part 1 (Lesson 2-4) is listed under Module 2 and Part 2 (Lesson 6-3) under Module 6.
 3. **Feedback and hints**: instant marking, a "why this is wrong" note on every distractor, three hints (the third is a worked example with different numbers) and a full explanation.
 4. **Tools**: scientific calculator, number line and coordinate grid.
 5. **Lesson mastery and certificates**: score at least 80% across a lesson's sets to earn a printable certificate.
 6. **Teacher portal** with student activity (local storage + Firebase sync).
 
-Both set sizes are in `js/config.js`: `MCQ_SET_SIZE` (5) and `MCQ_BANK_SIZE` (30).
+The sizes are in `js/config.js`: `MCQ_SET_SIZE` (5), `MCQ_BANK_SIZE` (30), `FRQ_SET_SIZE` (2) and `FRQ_BANK_SIZE` (10). A set is marked when the student reaches the last question and presses Finish; there is no early submit.
 `SHOW_OUTCOME_NAMES` switches the topic names on the tiles on or off.
 
 ---
@@ -53,7 +53,8 @@ Both set sizes are in `js/config.js`: `MCQ_SET_SIZE` (5) and `MCQ_BANK_SIZE` (30
 ### Written answer (Q21–Q25)
 | Q | Lesson | Learning outcome | Reveal |
 | :---: | :---: | :--- | :--- |
-| Q21 | 2-4, 6-3 | Distributive Property (part 1) and compound "and" inequalities (part 2) | pp. 97, 363 |
+| Q21 · Part 1 | 2-4 | Solve equations using the Distributive Property | p. 97 · Ex. 7–16 |
+| Q21 · Part 2 | 6-3 | Solve and graph compound inequalities with *and* | p. 363 |
 | Q22 | 2-7 | Solve equations for a specific variable | pp. 120, 126 |
 | Q23 | 4-1 | Graph lines using the x- and y-intercepts | p. 216 · Ex. 9–14 |
 | Q24 | 4-5 | Apply the arithmetic sequence formula | p. 256 · Ex. 23–26 |

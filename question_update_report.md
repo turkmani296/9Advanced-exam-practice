@@ -36,3 +36,11 @@
 - **Q23** still uses a −6…6 grid; the new booklet prints −8…8.
 - **Q25 Ex. 52** (explain without finding slopes) is not included, because it has no numerical answer to self-mark.
 - **Topic names on the tiles** are now switched on (`SHOW_OUTCOME_NAMES` in `js/config.js`).
+
+## Update 2 (12 November 2026)
+
+- **Written-answer sets** now work like the MCQ sets: a fixed bank of 10 questions each, 2 drawn at random per visit.
+- **Q21 is split into two tiles.** Part 1 (Distributive Property, Lesson 2-4) is under Module 2. Part 2 (compound inequalities, Lesson 6-3) is under Module 6 and is stored as tile 26. Earlier Q21 attempts are shown under Part 1.
+- Four patterns were added so each part has enough variety: `a(bv − c) = d(ev + f)`, `k − a(v + b) = v − d`, two simple inequalities joined by *and*, and a pair where dividing by a negative reverses the sign.
+- **Submit early is removed.** A set is marked only when the student finishes it.
+- Fixed: the compound-inequality answer was written as `\lev` (no space), which KaTeX could not display.

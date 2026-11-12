@@ -121,8 +121,8 @@
     recordAttempt(name, tileNum, score, total, type) {
       if (!name) return 1;
       const clean = name.trim();
+      if (!this.getStudent(clean)) this.loginStudent(clean);
       const data = this.getData();
-      if (!data.students[clean]) this.loginStudent(clean);
       const s = data.students[clean];
 
       s.tileAttempts = s.tileAttempts || {};
@@ -146,7 +146,7 @@
       s.activities = s.activities || [];
       s.activities.unshift({
         type: 'attempt',
-        text: `Completed Q${tileNum} (${type.toUpperCase()}) — Score: ${score}/${total} (${pct}%) [Attempt #${attemptNum}]`,
+        text: `Completed ${qLabel(tileNum)} (${type.toUpperCase()}) — Score: ${score}/${total} (${pct}%) [Attempt #${attemptNum}]`,
         time: dateStr
       });
 
@@ -157,8 +157,8 @@
     recordCertificate(name, lesson, scorePct, attemptNum) {
       if (!name) return;
       const clean = name.trim();
+      if (!this.getStudent(clean)) this.loginStudent(clean);
       const data = this.getData();
-      if (!data.students[clean]) this.loginStudent(clean);
       const s = data.students[clean];
 
       s.certificates = s.certificates || [];
@@ -323,10 +323,10 @@
   function generateQuestions(tileNum, seed) {
     const bank = QUESTION_BANK[tileNum];
     if (!bank) return [];
-    // MCQ: a random handful from the set's 30-question bank (same seed → same five)
+    // A random handful from the set's question bank (same seed → same questions)
     if (bank.pick) {
       try {
-        return bank.pick(seed, CONFIG.MCQ_SET_SIZE).map((q, i) => ({ ...q, templateIndex: i }));
+        return bank.pick(seed, bank.type === 'frq' ? CONFIG.FRQ_SET_SIZE : CONFIG.MCQ_SET_SIZE).map((q, i) => ({ ...q, templateIndex: i }));
       } catch (e) {
         console.error(`Error drawing questions for Q${tileNum}:`, e);
         return [];
@@ -464,7 +464,7 @@
           <span class="card-icon">✏️</span>
           <span class="card-type">Written Answer</span>
           <span class="card-range">Q21 – Q25</span>
-          <span class="card-desc">Show your working, then check it against the model solution</span>
+          <span class="card-desc">${CONFIG.FRQ_SET_SIZE} random questions each visit, from a bank of ${CONFIG.FRQ_BANK_SIZE} per question</span>
         </button>
       </div>
       <footer class="landing-footer">
@@ -538,7 +538,7 @@
 
         <div class="profile-stats-grid">
           <div class="stat-box">
-            <span class="stat-number">${new Set(completedTiles.map(h => h.tile)).size} / 25</span>
+            <span class="stat-number">${new Set(completedTiles.map(h => h.tile)).size} / ${TILE_BLUEPRINT.length}</span>
             <span class="stat-desc">Sets Completed</span>
           </div>
           <div class="stat-box">
@@ -579,7 +579,7 @@
                 return `
                 <div class="profile-history-row">
                   <div class="history-q-col">
-                    <span class="history-q-badge">Q${h.tile}</span>
+                    <span class="history-q-badge">${qLabel(h.tile)}</span>
                     <div>
                       <span class="history-q-type">${h.type.toUpperCase()} · P.${info ? info.pages : ''} · L ${info ? info.lessons : ''}</span>
                       <div class="history-q-date">${h.date}</div>
@@ -718,7 +718,7 @@
       return `
       <button class="tile" data-tile="${t.tile}" tabindex="0" aria-label="Question ${t.tile}">
         ${starred ? '<span class="tile-star" title="Lesson mastered">★</span>' : ''}
-        <div class="tile-q">Q${t.tile}</div>
+        <div class="tile-q">${qLabel(t.tile)}</div>
         ${outcomeHTML}
         <div class="tile-meta">
           <span>P.${t.pages}</span>
@@ -752,7 +752,7 @@
       </header>
       <p class="list-note">${isMCQ
         ? `Each question has a bank of <strong>${CONFIG.MCQ_BANK_SIZE}</strong> exam-style questions. Every time you open one you get <strong>${CONFIG.MCQ_SET_SIZE} at random</strong>, so come back for more practice.`
-        : 'Solve each question on paper first, then reveal the model solution and mark your own work.'}</p>
+        : `Each question has a bank of <strong>${CONFIG.FRQ_BANK_SIZE}</strong> written questions and you get <strong>${CONFIG.FRQ_SET_SIZE} at random</strong> each time. Solve on paper first, then reveal the model solution and mark your own work.`}</p>
       <div class="module-list ${isMCQ ? 'is-mcq' : 'is-frq'}">${tilesHTML}</div>
     </div>`;
   }
@@ -824,8 +824,6 @@
 
     const pct = ((qi + 1) / total * 100).toFixed(0);
     const outcomeLabel = CONFIG.SHOW_OUTCOME_NAMES ? ` · ${info.outcome}` : '';
-    const answeredCount = countAnswered(progress);
-    const minToSubmit = CONFIG.MIN_QUESTIONS_TO_SUBMIT;
 
     let questionBody = '';
     if (info.type === 'mcq') {
@@ -838,7 +836,7 @@
     <div class="practice-screen">
       <header class="section-header">
         <button class="back-btn" id="back-to-list" aria-label="Back to list">←</button>
-        <h2 class="section-title">Q${tileNum} · P.${info.pages} · L ${info.lessons}${outcomeLabel}</h2>
+        <h2 class="section-title">${qLabel(tileNum)} · P.${info.pages} · L ${info.lessons}${outcomeLabel}</h2>
         <div class="student-info">
           <span class="student-name">${escapeHTML(state.studentName)}</span>
         </div>
@@ -860,10 +858,6 @@
       <div class="question-nav">
         <button class="nav-btn nav-btn-prev" id="prev-q" ${qi === 0 ? 'disabled' : ''}>← Previous</button>
         <div class="question-nav-right">
-          ${answeredCount < total
-            ? `<button class="nav-btn nav-btn-submit" id="submit-early" ${answeredCount < minToSubmit ? `disabled title="Answer at least ${minToSubmit} questions to submit early"` : ''}>Submit early</button>`
-            : ''
-          }
           ${qi < total - 1
             ? `<button class="nav-btn nav-btn-next" id="next-q" ${answered == null ? 'disabled' : ''}>Next →</button>`
             : `<button class="nav-btn nav-btn-next btn-accent" id="finish-set" ${answered == null ? 'disabled' : ''}>Finish</button>`
@@ -1273,7 +1267,6 @@
       render();
     });
     if (finishBtn) finishBtn.addEventListener('click', () => finishSet());
-    document.getElementById('submit-early')?.addEventListener('click', () => finishSet());
   }
 
   function handleMCQAnswer(qi, oi) {
@@ -1294,7 +1287,7 @@
     // is marked out of the questions the student actually answered)
     let totalScore = 0;
     const totalPossible = countAnswered(progress);
-    progress.setSize = questions.length; // 5 per visit (MCQ: drawn from a bank of 30)
+    progress.setSize = questions.length; // drawn at random from the set's bank
 
     questions.forEach((q, i) => {
       const ans = progress.answers[i];
@@ -1417,7 +1410,7 @@
     <div class="results-screen">
       <header class="section-header">
         <button class="back-btn" id="back-to-list" aria-label="Back to list">←</button>
-        <h2 class="section-title">Results · Q${tileNum}</h2>
+        <h2 class="section-title">Results · ${qLabel(tileNum)}</h2>
       </header>
       <div class="results-card">
         <div class="results-score">
@@ -1428,7 +1421,7 @@
         <div class="results-msg">${msg}</div>
         ${total < questions.length ? `<p class="results-early-note">Submitted early: ${total} of ${questions.length} questions answered.</p>` : ''}
         <div class="results-actions">
-          <button class="btn btn-accent" id="retry-btn">🔄 ${info.type === 'mcq' ? `Try ${CONFIG.MCQ_SET_SIZE} new questions` : 'Retry with new numbers'}</button>
+          <button class="btn btn-accent" id="retry-btn">🔄 ${`Try ${info.type === 'mcq' ? CONFIG.MCQ_SET_SIZE : CONFIG.FRQ_SET_SIZE} new questions`}</button>
           <button class="btn btn-secondary" id="print-btn">🖨 Print / Save as PDF</button>
           <button class="btn btn-primary" id="back-list-btn">← Back to list</button>
         </div>
@@ -1487,7 +1480,7 @@
       const retryBtns = lessonTiles.map(t => {
         const p = state.tileProgress[t];
         const tScore = p ? `${formatScore(p.score)}/${p.total}` : 'Not attempted';
-        return `<button class="btn btn-accent retry-tile-btn" data-tile="${t}">Retry Q${t} (${tScore})</button>`;
+        return `<button class="btn btn-accent retry-tile-btn" data-tile="${t}">Retry ${qLabel(t)} (${tScore})</button>`;
       }).join('');
 
       return `
@@ -1720,7 +1713,7 @@
               const info = getTileInfo(h.tile);
               return `
               <div class="teacher-attempt-chip">
-                <span class="chip-q">Q${h.tile} (${h.type.toUpperCase()})</span>
+                <span class="chip-q">${qLabel(h.tile)} (${h.type.toUpperCase()})</span>
                 <span class="chip-score">${h.score}/${h.total} (${h.pct}%)</span>
                 <small class="attempt-badge">Attempt #${h.attemptNumber}</small>
                 <span class="chip-time">${h.date}</span>
@@ -1882,7 +1875,7 @@
       students.forEach(s => {
         const setsCount = s.history ? s.history.length : 0;
         const certsCount = s.certificates ? s.certificates.length : 0;
-        const details = (s.history || []).map(h => `Q${h.tile}:${h.score}/${h.total}(Att#${h.attemptNumber})`).join('; ');
+        const details = (s.history || []).map(h => `${qLabel(h.tile)}:${h.score}/${h.total}(Att#${h.attemptNumber})`).join('; ');
         csv += `"${(s.name || '').replace(/"/g, '""')}","${s.firstSeenDisplay || ''}","${s.lastSeenDisplay || ''}",${s.visits || 1},${setsCount},${certsCount},"${details}"\n`;
       });
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });

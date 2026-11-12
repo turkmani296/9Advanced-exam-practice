@@ -123,7 +123,7 @@ function slotFor(tile, setSeed, i, n) {
 
 // bookletSignatures.js was generated with the earlier tile numbers. Map each
 // current tile to the tile its booklet numbers are stored under (0 = none).
-const SIG_TILE = { 7: 0, 9: 0, 10: 0, 11: 9, 12: 11, 13: 12, 14: 13, 15: 14, 16: 15 };
+const SIG_TILE = { 26: 21, 7: 0, 9: 0, 10: 0, 11: 9, 12: 11, 13: 12, 14: 13, 15: 14, 16: 15 };
 
 function mcqInstance(tile, pat, base, avoidSig, avoidText) {
   for (let t = 0; t < 120; t++) {
@@ -200,17 +200,17 @@ function mixSeed(seed) {
   h = Math.imul(h ^ (h >>> 16), 0x45d9f3b);
   return (h ^ (h >>> 16)) & 0x7fffffff;
 }
-function buildMCQ(tile, set) {
+function buildBank(tile, type, set, size, make) {
   const N = set.patterns.length;
   let cache = null;
   function all() {
     if (cache) return cache;
     const used = new Set(), out = [];
-    for (let i = 0; i < BANK_SIZE; i++) {
+    for (let i = 0; i < size; i++) {
       let q = null;
       for (let t = 0; t < 16 && !q; t++) {
         const pi = (i + (t >= 8 ? t - 7 : 0)) % N;      // after 8 tries, borrow the next pattern
-        const cand = makeMCQ(tile, set.patterns[pi], i, BANK_SIZE, BANK_SEED + tile * 100003 + i * 613 + t * 7907, set);
+        const cand = make(set.patterns[pi], i, BANK_SEED + tile * 100003 + i * 613 + t * 7907);
         if (cand && !used.has(cand.key)) q = { ...cand, pattern: pi, bankIndex: i, id: `q${tile}_${i + 1}` };
       }
       if (q) { used.add(q.key); out.push(q); }
@@ -229,7 +229,10 @@ function buildMCQ(tile, set) {
     for (const i of order) { if (chosen.length >= k) break; if (!chosen.includes(i)) chosen.push(i); }
     return chosen.map(i => bank[i]).sort((a, b) => (a.level - b.level) || (a.bankIndex - b.bankIndex));
   }
-  QUESTION_BANK[tile] = { tile, type: 'mcq', bankSize: BANK_SIZE, patternCount: N, all, pick };
+  QUESTION_BANK[tile] = { tile, type, bankSize: size, patternCount: N, all, pick };
+}
+function buildMCQ(tile, set) {
+  buildBank(tile, 'mcq', set, BANK_SIZE, (pat, i, seed) => makeMCQ(tile, pat, i, BANK_SIZE, seed, set));
 }
 
 function frqInstance(tile, pat, base, avoidSig) {
@@ -238,19 +241,21 @@ function frqInstance(tile, pat, base, avoidSig) {
     try { q = pat(seededRandom(mod(base + t * 7919))); } catch (e) { continue; }
     if (!q) continue;
     const sig = numSig(`${q.stem} ${q.final}`);
-    if ((BOOK_SIGS[tile] || []).includes(sig) || sig === avoidSig) continue;
+    if ((BOOK_SIGS[SIG_TILE[tile] ?? tile] || []).includes(sig) || sig === avoidSig) continue;
     if (typeof QCHECK !== 'undefined' && !QCHECK.checkFRQ(q).ok) continue;
     return { q, sig };
   }
   return null;
 }
 
+// Written-answer sets work the same way as MCQ sets: a fixed bank (10 questions)
+// built from the set's patterns, and a random draw (2 questions) on every visit.
+const FRQ_BANK_SIZE = (typeof CONFIG !== 'undefined' && CONFIG.FRQ_BANK_SIZE) || 10;
 function buildFRQ(tile, set) {
-  QUESTION_BANK[tile] = {
-    tile, type: 'frq',
-    questions: set.patterns.map((pat, i) => ({
-      id: `q${tile}_${i + 1}`,
-      generate: memo(seed => {
+  buildBank(tile, 'frq', set, FRQ_BANK_SIZE, (pat, i, seed) => makeFRQ(tile, pat, i, seed, set));
+}
+function makeFRQ(tile, pat, i, seed, set) {
+      {
         const main = frqInstance(tile, pat, seed * 31 + i * 1009 + tile * 97);
         if (!main) return null;
         const ex = frqInstance(tile, pat, seed * 17 + i * 331 + 12345, main.sig);
@@ -267,11 +272,10 @@ function buildFRQ(tile, set) {
           ].map(safeMath),
           hasNumberLine: !!q.numberLine, numberLineConfig: q.numberLine,
           hasCoordGrid: !!q.coordGrid, coordConfig: q.coordGrid,
-          verify: q.verify, level: q.level, sig: main.sig
+          verify: q.verify, level: q.level, sig: main.sig,
+          key: q.text + '|' + q.final
         };
-      })
-    }))
-  };
+      }
 }
 
 // Option builders: [text, whyWrong, value]
@@ -1598,7 +1602,7 @@ const steps = list => list.join('<br>');
       verify: [{ k: 'eq', v, eq, val: x }] };
   }
   function andQ(level, v, stem, tex, lo, loC, hi, hiC, lines) {
-    const ans = `${lo}${loC ? '\\le' : '<'}${v}${hiC ? '\\le' : '<'}${hi}`;
+    const ans = `${lo}${loC ? '\\le ' : '<'}${v}${hiC ? '\\le ' : '<'}${hi}`;   // the space keeps "\le" apart from the variable
     return { level, instr: 'Solve the compound inequality, then graph the solution set on the number line.', stem, text: stem, final: `$${ans}$`,
       numberLine: { min: -10, max: 10 },
       fields: [field('Solution', `$${ans}$`), field('Graph', `${loC ? 'Closed' : 'Open'} dot at ${lo}, ${hiC ? 'closed' : 'open'} dot at ${hi}, shaded between`)],
@@ -1634,11 +1638,39 @@ const steps = list => list.join('<br>');
       const eq = `${lead(k, v)}-${a}(${lin(1, v, -b)})=${c}(${lin(1, v, -d)})`;
       return distQ(3, v, eq, x, [`Distribute (watch the $-${a}$): $${lead(k, v)}${next(-a, v)}${pm(a * b)}=${lin(c, v, -c * d)}$`, `Combine: $${lin(k - a, v, a * b)}=${lin(c, v, -c * d)}$`, `Subtract $${c}${v}$: $${lin(co, v, a * b)}=${-c * d}$`, `$${co}${v}=${-c * d - a * b}$, divide by ${co}.`]); }
   ];
+  // L2 · a(b v - c) = d(e v + f)
+  const distBoth = r => { const v = r.pick(VARS), a = r.nextInt(2, 6), b = r.nextInt(2, 4), d = r.nextInt(2, 6), e = r.nextInt(1, 3), x = r.nz(-8, 8), c = r.nextInt(1, 9);
+    if (a * b === d * e) return null; const t = a * (b * x - c) - d * e * x; if (t % d) return null; const f = t / d; if (f === 0) return null;
+    const eq = `${a}(${b}${v}-${c})=${d}(${lin(e, v, f)})`, co = a * b - d * e;
+    return distQ(2, v, eq, x, [`Distribute: $${lin(a * b, v, -a * c)}=${lin(d * e, v, d * f)}$`, `Subtract $${d * e}${v}$: $${lin(co, v, -a * c)}=${d * f}$`, `Add ${a * c}: $${lead(co, v)}=${d * f + a * c}$`, `Divide by ${co}.`]); };
+  // L3 · k - a(v + b) = v - d
+  const distMinus = r => { const v = r.pick(VARS), k = r.nextInt(2, 9), a = r.nextInt(2, 6), b = r.nz(-6, 6), x = r.nz(-8, 8), d = (a + 1) * x + a * b - k; if (d === 0) return null;
+    const eq = `${k}-${a}(${lin(1, v, b)})=${v}${pm(-d)}`;
+    return distQ(3, v, eq, x, [`Distribute (watch the $-${a}$): $${k}${next(-a, v)}${pm(-a * b)}=${v}${pm(-d)}$`, `Combine: $${lin(-a, v, k - a * b)}=${v}${pm(-d)}$`, `Subtract $${v}$: $${lin(-a - 1, v, k - a * b)}=${-d}$`, `$${-a - 1}${v}=${-d - k + a * b}$, divide by $${-a - 1}$.`]); };
+  // L1 · v - a < b and v - c ≥ d
+  const andSimple = r => { const v = r.pick(VARS), lo = r.nextInt(-8, 4), hi = lo + r.nextInt(2, 7), a = r.nz(-9, 9), c = r.nz(-9, 9); if (hi > 9 || a === c) return null;
+    const i1 = `${lin(1, v, -a)}<${hi - a}`, i2 = `${lin(1, v, -c)}\\ge${lo - c}`;
+    return andQ(1, v, `Solve $${i1}$ and $${i2}$.`, `${i1} and ${i2}`, lo, true, hi, false,
+      [`First: ${a > 0 ? 'add' : 'subtract'} ${Math.abs(a)}, so $${v}<${hi}$.`, `Second: ${c > 0 ? 'add' : 'subtract'} ${Math.abs(c)}, so $${v}\\ge${lo}$.`, 'Both must be true (and).']); };
+  // L3 · -a v + b ≥ c and e < f v - g  (dividing by a negative reverses the sign)
+  const andNegative = r => { const v = r.pick(VARS), lo = r.nextInt(-8, 3), hi = lo + r.nextInt(1, 6), a = r.nextInt(2, 6), b = r.nextInt(1, 15), f = r.nextInt(2, 7), g = r.nextInt(1, 15); if (hi > 9) return null;
+    const c = -a * hi + b, e = f * lo - g;
+    const i1 = `${lin(-a, v, b)}\\ge${c}`, i2 = `${e}<${f}${v}-${g}`;
+    return andQ(3, v, `Solve $${i1}$ and $${i2}$.`, `${i1} and ${i2}`, lo, false, hi, true,
+      [`First: subtract ${b}: $-${a}${v}\\ge${c - b}$. Divide by $-${a}$ and <b>reverse the sign</b>: $${v}\\le${hi}$.`, `Second: add ${g}: $${e + g}<${f}${v}$, so $${v}>${lo}$.`, 'Both must be true (and).']); };
+
+  // The exam's Q21 has two parts. Each part has its own tile and its own bank.
   buildFRQ(21, {
-    instr: 'Solve. Show every step, then write your final answer.',
+    instr: 'Solve the equation. Show every step, then write your final answer.',
     tips: ['Distributive Property: multiply the number outside the brackets by <b>every</b> term inside, including the signs.',
-      'For a compound inequality, do the same operation to every part. "And" means the solution is the overlap of both inequalities.'],
-    patterns: P
+      'After distributing, collect the variable terms on one side and the numbers on the other, then divide.'],
+    patterns: [P[0], P[1], distBoth, distMinus, P[4]]
+  });
+  buildFRQ(26, {
+    instr: 'Solve the compound inequality, then graph the solution set on the number line.',
+    tips: ['Do the same operation to every part. If you multiply or divide by a negative number, reverse the inequality sign.',
+      '"And" means both inequalities must be true: the solution is the overlap, shaded between the two endpoints.'],
+    patterns: [andSimple, P[2], P[3], andNegative]
   });
 })();
 

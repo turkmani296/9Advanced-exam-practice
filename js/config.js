@@ -6,8 +6,8 @@ const CONFIG = {
   SHOW_OUTCOME_NAMES: true,
   MCQ_SET_SIZE: 5,              // questions drawn at random for each MCQ visit
   MCQ_BANK_SIZE: 30,            // questions in each MCQ set's bank
-  FRQ_SET_SIZE: 5,
-  MIN_QUESTIONS_TO_SUBMIT: 2,   // answered questions needed before "Submit early" unlocks
+  FRQ_SET_SIZE: 2,              // questions drawn at random for each written-answer visit
+  FRQ_BANK_SIZE: 10,            // questions in each written-answer set's bank
 };
 
 // ── Firebase Cloud Sync Configuration ────────────────────────
@@ -47,11 +47,13 @@ const TILE_BLUEPRINT = [
   { tile: 19, type: "mcq", pages: "352, 354", lessons: "6-2", outcome: "Multi-step inequalities" },
   { tile: 20, type: "mcq", pages: "371",      lessons: "6-4", outcome: "Absolute value inequalities" },
   // FRQ tiles Q21–Q25
-  { tile: 21, type: "frq", pages: "97, 363",  lessons: "2-4, 6-3", outcome: "Distributive Property & compound inequalities" },
+  // Q21 has two parts in the exam, so it has two tiles: part 1 sits in Module 2, part 2 (tile 26) in Module 6
+  { tile: 21, type: "frq", pages: "97",       lessons: "2-4", label: "Q21 · Part 1", outcome: "Solve equations using the Distributive Property" },
   { tile: 22, type: "frq", pages: "120, 126", lessons: "2-7", outcome: "Solve for a specific variable" },
   { tile: 23, type: "frq", pages: "216",      lessons: "4-1", outcome: "Graph using intercepts" },
   { tile: 24, type: "frq", pages: "256",      lessons: "4-5", outcome: "Arithmetic sequence formula" },
   { tile: 25, type: "frq", pages: "301–306",  lessons: "5-2", outcome: "Parallel and perpendicular lines" },
+  { tile: 26, type: "frq", pages: "363",      lessons: "6-3", label: "Q21 · Part 2", outcome: "Solve and graph compound inequalities with and" },
 ];
 
 // ── Module names (used to group the question list) ─────────
@@ -82,6 +84,11 @@ const LESSON_GROUPS = {
   "5-6": [17],
   "6-1": [18],
   "6-2": [19],
-  "6-3": [21],       // Q21 part 2: compound inequalities
+  "6-3": [26],       // Q21 part 2: compound inequalities
   "6-4": [20],
 };
+// Display name of a tile ("Q7", or "Q21 · Part 1" for the split question)
+function qLabel(tile) {
+  const t = TILE_BLUEPRINT.find(x => x.tile === Number(tile));
+  return (t && t.label) || `Q${tile}`;
+}
