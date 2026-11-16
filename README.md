@@ -79,6 +79,7 @@ Every bank question is recomputed by an independent answer checker (`js/verify.j
 │   ├── questionBank.js       # runner + sets Q1–Q6, Q8, Q11–Q25
 │   ├── questionBankExtra.js  # sets Q7, Q9, Q10
 │   ├── calculator.js, certificate.js, app.js
+├── vendor/katex/             # KaTeX 0.16.9 (math rendering), served from the site itself
 └── assets/                   # logos and banner
 ```
 

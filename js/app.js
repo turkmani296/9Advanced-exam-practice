@@ -246,17 +246,41 @@
       case 'mastery': app.innerHTML = renderMastery(); bindMastery(); break;
       case 'teacher-dashboard': app.innerHTML = renderTeacherDashboard(); bindTeacherDashboard(); break;
     }
-    // Render KaTeX
-    if (window.renderMathInElement) {
-      renderMathInElement(app, {
-        delimiters: [
-          { left: '$$', right: '$$', display: true },
-          { left: '$', right: '$', display: false },
-        ],
-        throwOnError: false
-      });
-    }
+    renderMath(app);
     saveState();
+  }
+
+  // ── Math rendering (KaTeX) ─────────────────────────
+  // If KaTeX is not ready yet (slow network), keep checking for a few seconds
+  // and redraw the math the moment it arrives, so "$…$" is never left on screen.
+  const MATH_OPTS = {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '$', right: '$', display: false },
+    ],
+    throwOnError: false
+  };
+  let mathRetry = null;
+  function renderMath(el) {
+    if (!el) return;
+    if (window.renderMathInElement) {
+      try { renderMathInElement(el, MATH_OPTS); } catch (e) { console.warn('Math rendering error:', e); }
+      return;
+    }
+    if (mathRetry) return;
+    let tries = 0;
+    mathRetry = setInterval(() => {
+      tries++;
+      if (window.renderMathInElement) {
+        clearInterval(mathRetry); mathRetry = null;
+        renderMath(document.getElementById('app'));
+        const profile = document.getElementById('profile-modal-content');
+        if (profile) renderMath(profile);
+      } else if (tries > 100) {          // ~20 s
+        clearInterval(mathRetry); mathRetry = null;
+        console.warn('KaTeX did not load; math is shown as plain text.');
+      }
+    }, 200);
   }
 
   // ── Helpers ────────────────────────────────────────
