@@ -1352,7 +1352,7 @@ const BOOKLET_Q16 = [[-4, 2, 3], [1, -2, -1.5], [3, -2, 1], [4, -3, 3], [0, 2, -
 // ═══════════════════════════════════════════════════════════
 // Q18 · L 6-1 · Graph the solutions of an inequality (p.347, Ex. 7–12)
 // ═══════════════════════════════════════════════════════════
-const OPS = { '<': '<', '<=': '\\le', '>': '>', '>=': '\\ge' };
+const OPS = { '<': '<', '<=': '\\le ', '>': '>', '>=': '\\ge ' };
 const ineqTex = (v, op, b) => `${v}${OPS[op]}${typeof b === 'object' ? rs(b) : b}`;
 (function() {
   const I = (v, op, b, why) => [`$${ineqTex(v, op, b)}$`, why, ineqTex(v, op, b)];
@@ -1513,8 +1513,9 @@ const ineqTex = (v, op, b) => `${v}${OPS[op]}${typeof b === 'object' ? rs(b) : b
 // Q20 · L 6-4 · Absolute value inequalities (p.371, Ex. 1–10)
 // ═══════════════════════════════════════════════════════════
 (function() {
-  const andT = (v, lo, hi, s) => `${rs(lo)}${s}${v}${s}${rs(hi)}`;
-  const orT = (v, lo, hi, closed) => `${v}${closed ? '\\le' : '<'}${rs(lo)}\\text{ or }${v}${closed ? '\\ge' : '>'}${rs(hi)}`;
+  // the spaces keep "\le" / "\lt" apart from the variable ("\le r", not "\ler")
+  const andT = (v, lo, hi, s) => `${rs(lo)}${s} ${v}${s} ${rs(hi)}`;
+  const orT = (v, lo, hi, closed) => `${v}${closed ? '\\le ' : '<'}${rs(lo)}\\text{ or }${v}${closed ? '\\ge ' : '>'}${rs(hi)}`;
   const O = (t, why) => [`$${t}$`, why, t];
   // |a v + b| (< or ≤) c
   function less(r, level, aR, closed, bSign) {
@@ -1522,7 +1523,7 @@ const ineqTex = (v, op, b) => `${v}${OPS[op]}${typeof b === 'object' ? rs(b) : b
     if ((a * (hi - lo)) % 2) return null;
     const c = a * (hi - lo) / 2, b = -a * (lo + hi) / 2;
     if (b === 0 || (bSign && Math.sign(b) !== bSign)) return null;
-    const s = closed ? '\\le' : '<', stem = `|${lin(a, v, b)}|${s}${c}`;
+    const s = closed ? '\\le ' : '<', stem = `|${lin(a, v, b)}|${s}${c}`;
     return { level, stem: `$${stem}$`, correct: `$${andT(v, rI(lo), rI(hi), s)}$`, cv: andT(v, rI(lo), rI(hi), s),
       wrongs: [O(andT(v, rI(-hi), rI(-lo), s), `Sign error when undoing $${pm(b)}$.`), O(orT(v, rI(lo), rI(hi), closed), '"Less than" gives an <b>and</b> (between) solution, not an <b>or</b>.'),
         a > 1 ? O(andT(v, rI(-c - b), rI(c - b), s), `Forgot to divide by ${a}.`) : O(`${v}${s}${hi}`, 'This is only one of the two cases.'), O(`${v}${s}${hi}`, 'This is only one of the two cases.')],
@@ -1534,11 +1535,11 @@ const ineqTex = (v, op, b) => `${v}${OPS[op]}${typeof b === 'object' ? rs(b) : b
     const v = r.pick(VARS), a = aR(r), lo = r.nextInt(-9, 3), hi = lo + 2 * r.nextInt(1, 5);
     if ((a * (hi - lo)) % 2) return null;
     const c = a * (hi - lo) / 2, b = -a * (lo + hi) / 2; if (b === 0) return null;
-    const s = closed ? '\\ge' : '>', stem = `|${lin(a, v, b)}|${s}${c}`;
+    const s = closed ? '\\ge ' : '>', stem = `|${lin(a, v, b)}|${s}${c}`;
     return { level, stem: `$${stem}$`, correct: `$${orT(v, rI(lo), rI(hi), closed)}$`, cv: orT(v, rI(lo), rI(hi), closed),
-      wrongs: [O(andT(v, rI(lo), rI(hi), closed ? '\\le' : '<'), '"Greater than" gives an <b>or</b> solution (outside), not between.'), O(orT(v, rI(-hi), rI(-lo), closed), `Sign error when undoing $${pm(b)}$.`),
+      wrongs: [O(andT(v, rI(lo), rI(hi), closed ? '\\le ' : '<'), '"Greater than" gives an <b>or</b> solution (outside), not between.'), O(orT(v, rI(-hi), rI(-lo), closed), `Sign error when undoing $${pm(b)}$.`),
         O(`${v}${s}${hi}`, 'This is only one of the two cases.'), a > 1 ? O(orT(v, rI(-c - b), rI(c - b), closed), `Forgot to divide by ${a}.`) : null],
-      steps: [`$${lin(a, v, b)}${closed ? '\\le' : '<'}-${c}$ or $${lin(a, v, b)}${s}${c}$`, `Solve each: $${orT(v, rI(lo), rI(hi), closed)}$`],
+      steps: [`$${lin(a, v, b)}${closed ? '\\le ' : '<'}-${c}$ or $${lin(a, v, b)}${s}${c}$`, `Solve each: $${orT(v, rI(lo), rI(hi), closed)}$`],
       verify: { k: 'ineq', v, ineq: stem } };
   }
   function empty(r, level) {
@@ -1550,21 +1551,21 @@ const ineqTex = (v, op, b) => `${v}${OPS[op]}${typeof b === 'object' ? rs(b) : b
   }
   // |v + b| ≥ −c is true for every number
   function allReals(r, level) {
-    const v = r.pick(VARS), b = r.nz(-8, 8), c = r.nextInt(1, 9), closed = r.next() < 0.5, s = closed ? '\\ge' : '>', stem = `|${lin(1, v, b)}|${s}-${c}`;
+    const v = r.pick(VARS), b = r.nz(-8, 8), c = r.nextInt(1, 9), closed = r.next() < 0.5, s = closed ? '\\ge ' : '>', stem = `|${lin(1, v, b)}|${s}-${c}`;
     return { level, stem: `$${stem}$`, correct: 'all real numbers', cv: 'all',
       wrongs: [['$\\varnothing$', 'An absolute value is always $\\ge 0$, so it is always greater than a negative number.', 'none'],
-        O(andT(v, rI(-b - c), rI(-b + c), closed ? '\\le' : '<'), 'An absolute value is always greater than a negative number, so every number works.'),
+        O(andT(v, rI(-b - c), rI(-b + c), closed ? '\\le ' : '<'), 'An absolute value is always greater than a negative number, so every number works.'),
         O(`${v}${s}${-b + c}`, 'An absolute value is always greater than a negative number, so every number works.')],
       steps: [`$|${lin(1, v, b)}|$ is always $\\ge 0$, so it is always greater than $-${c}$.`, 'Solution: all real numbers.'],
       verify: { k: 'ineq', v, ineq: stem } };
   }
   // |v| > c
   function plain(r, level) {
-    const v = r.pick(VARS), c = r.nextInt(2, 9), closed = r.next() < 0.4, s = closed ? '\\ge' : '>', stem = `|${v}|${s}${c}`;
+    const v = r.pick(VARS), c = r.nextInt(2, 9), closed = r.next() < 0.4, s = closed ? '\\ge ' : '>', stem = `|${v}|${s}${c}`;
     return { level, stem: `$${stem}$`, correct: `$${orT(v, rI(-c), rI(c), closed)}$`, cv: orT(v, rI(-c), rI(c), closed),
-      wrongs: [O(andT(v, rI(-c), rI(c), closed ? '\\le' : '<'), '"Greater than" gives an <b>or</b> solution (outside), not between.'),
-        O(`${v}${s}${c}`, 'This is only one of the two cases.'), O(`${v}${s}${-c}`, `The second case is $${v}${closed ? '\\le' : '<'}-${c}$.`)],
-      steps: [`$${v}${closed ? '\\le' : '<'}-${c}$ or $${v}${s}${c}$`],
+      wrongs: [O(andT(v, rI(-c), rI(c), closed ? '\\le ' : '<'), '"Greater than" gives an <b>or</b> solution (outside), not between.'),
+        O(`${v}${s}${c}`, 'This is only one of the two cases.'), O(`${v}${s}${-c}`, `The second case is $${v}${closed ? '\\le ' : '<'}-${c}$.`)],
+      steps: [`$${v}${closed ? '\\le ' : '<'}-${c}$ or $${v}${s}${c}$`],
       verify: { k: 'ineq', v, ineq: stem } };
   }
   const one = () => 1, small = r => r.nextInt(2, 4);
@@ -1623,8 +1624,8 @@ const steps = list => list.join('<br>');
     // L2 · L (< or ≤) a v + b (< or ≤) U
     r => { const v = r.pick(VARS), lo = r.nextInt(-8, 4), hi = lo + r.nextInt(2, 9), a = r.nextInt(2, 7), b = r.nz(-9, 9); if (hi > 8) return null;
       const loC = r.next() < 0.5, hiC = r.next() < 0.5, L = a * lo + b, U = a * hi + b;
-      const tex = `${L}${loC ? '\\le' : '<'}${lin(a, v, b)}${hiC ? '\\le' : '<'}${U}`;
-      return andQ(2, v, `Solve $${tex}$.`, tex, lo, loC, hi, hiC, [`$${tex}$`, `${b > 0 ? 'Subtract' : 'Add'} ${Math.abs(b)} in all three parts: $${L - b}${loC ? '\\le' : '<'}${a}${v}${hiC ? '\\le' : '<'}${U - b}$`, `Divide all three parts by ${a}.`]); },
+      const tex = `${L}${loC ? '\\le ' : '<'}${lin(a, v, b)}${hiC ? '\\le ' : '<'}${U}`;
+      return andQ(2, v, `Solve $${tex}$.`, tex, lo, loC, hi, hiC, [`$${tex}$`, `${b > 0 ? 'Subtract' : 'Add'} ${Math.abs(b)} in all three parts: $${L - b}${loC ? '\\le ' : '<'}${a}${v}${hiC ? '\\le ' : '<'}${U - b}$`, `Divide all three parts by ${a}.`]); },
     // L2 · a v - b ≥ c and d v + e < f
     r => { const v = r.pick(VARS), lo = r.nextInt(-8, 3), hi = lo + r.nextInt(1, 6), a = r.nextInt(2, 7), d = r.nextInt(2, 9), b = r.nextInt(1, 9), e = r.nz(-12, 12);
       if (hi > 8) return null;

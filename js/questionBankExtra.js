@@ -215,7 +215,7 @@
     if (BOOK.includes([f.m1, f.b1, f.m2, f.b2, f.c].join(','))) return null;
     return { f, v1, v2 };
   }
-  const tex = (f, name) => `${name}(x)=\\begin{cases}${lin(f.m1, 'x', f.b1)} & \\text{if } x${f.leftClosed ? '\\le' : '<'}${f.c}\\\\ ${lin(f.m2, 'x', f.b2)} & \\text{if } x${f.leftClosed ? '>' : '\\ge'}${f.c}\\end{cases}`;
+  const tex = (f, name) => `${name}(x)=\\begin{cases}${lin(f.m1, 'x', f.b1)} & \\text{if } x${f.leftClosed ? '\\le ' : '<'}${f.c}\\\\ ${lin(f.m2, 'x', f.b2)} & \\text{if } x${f.leftClosed ? '>' : '\\ge '}${f.c}\\end{cases}`;
   const ANY = [1, 2, 3, -1, -2], UP = [1, 2, 3], DOWN = [-1, -2, -3];
   const N = (x, why) => [`$${x}$`, why, x];
   const par = x => x < 0 ? `(${x})` : `${x}`;
@@ -226,7 +226,7 @@
     const x = where === 'boundary' ? f.c : where === 'left' ? f.c - r.nextInt(1, 4) : f.c + r.nextInt(1, 4);
     const first = x < f.c || (x === f.c && f.leftClosed);
     const [m, b, mo, bo] = first ? [f.m1, f.b1, f.m2, f.b2] : [f.m2, f.b2, f.m1, f.b1];
-    const ans = m * x + b, cond = first ? `x${f.leftClosed ? '\\le' : '<'}${f.c}` : `x${f.leftClosed ? '>' : '\\ge'}${f.c}`;
+    const ans = m * x + b, cond = first ? `x${f.leftClosed ? '\\le ' : '<'}${f.c}` : `x${f.leftClosed ? '>' : '\\ge '}${f.c}`;
     return { level, stem: `For $${tex(f, name)}$, find $${name}(${x})$.`, correct: `$${ans}$`, cv: ans,
       wrongs: [N(mo * x + bo, `Used the wrong rule. $x=${x}$ satisfies $${cond}$, so use the ${first ? 'first' : 'second'} rule.`),
         b !== 0 ? N(m * x, `Forgot the constant term $${b}$.`) : null,
@@ -242,7 +242,7 @@
     const G = (spec, why) => [GRAPH.piecewise(spec), why, spec];
     const stem = `Which graph shows $${tex(f, name)}$?`, c = G(f);
     return { level, stem, sig: stem, correct: c[0], cv: c[2],
-      wrongs: [G({ ...f, leftClosed: !f.leftClosed }, `The dots are reversed. The rule with $${f.leftClosed ? '\\le' : '\\ge'}$ includes $x=${f.c}$, so it gets the closed dot.`),
+      wrongs: [G({ ...f, leftClosed: !f.leftClosed }, `The dots are reversed. The rule with $${f.leftClosed ? '\\le ' : '\\ge '}$ includes $x=${f.c}$, so it gets the closed dot.`),
         G({ ...f, m2: -f.m2, b2: v2 + f.m2 * f.c }, `The right-hand piece has slope $${f.m2}$, so it should ${f.m2 > 0 ? 'rise' : 'fall'}.`),
         G({ ...f, m1: f.m2, b1: f.b2, m2: f.m1, b2: f.b1 }, 'The two rules are drawn on the wrong sides of the boundary.'),
         G({ ...f, m1: -f.m1, b1: v1 + f.m1 * f.c }, `The left-hand piece has slope $${f.m1}$, so it should ${f.m1 > 0 ? 'rise' : 'fall'} from left to right.`)],
@@ -255,17 +255,17 @@
     const g = gen(r, { m1: ANY, m2: ANY }); if (!g) return null;
     const { f, v1 } = g, name = r.pick(['f', 'g', 'h']), F = (t, why, v) => [t, why, v];
     return { level, stem: `What is the <b>domain</b> of $${tex(f, name)}$?`, correct: 'all real numbers', cv: 'all real numbers',
-      wrongs: [F(`$x${f.leftClosed ? '\\le' : '<'}${f.c}$`, 'That is only the interval of the first rule. Together the two rules cover every $x$.', 'first'),
-        F(`$x${f.leftClosed ? '>' : '\\ge'}${f.c}$`, 'That is only the interval of the second rule. Together the two rules cover every $x$.', 'second'),
+      wrongs: [F(`$x${f.leftClosed ? '\\le ' : '<'}${f.c}$`, 'That is only the interval of the first rule. Together the two rules cover every $x$.', 'first'),
+        F(`$x${f.leftClosed ? '>' : '\\ge '}${f.c}$`, 'That is only the interval of the second rule. Together the two rules cover every $x$.', 'second'),
         F(`$y\\le ${v1}$`, 'That describes outputs ($y$-values). The domain is the set of inputs ($x$-values).', 'y')],
-      steps: [`The first rule covers $x${f.leftClosed ? '\\le' : '<'}${f.c}$ and the second covers $x${f.leftClosed ? '>' : '\\ge'}${f.c}$.`, 'Together they cover every $x$: the domain is all real numbers.'],
+      steps: [`The first rule covers $x${f.leftClosed ? '\\le ' : '<'}${f.c}$ and the second covers $x${f.leftClosed ? '>' : '\\ge '}${f.c}$.`, 'Together they cover every $x$: the domain is all real numbers.'],
       verify: { k: 'fact', answer: 'all real numbers' } };
   }
 
   // peak: rises to a closed dot, then falls from a lower open dot → range y ≤ top
   function rangeQ(r, level, peak) {
     const g = gen(r, peak ? { m1: UP, m2: DOWN, leftClosed: true, peak: true } : { m1: DOWN, m2: UP, leftClosed: true, valley: true }); if (!g) return null;
-    const { f, v1, v2 } = g, name = r.pick(['f', 'g', 'h']), s = peak ? '\\le' : '\\ge', o = peak ? '\\ge' : '\\le';
+    const { f, v1, v2 } = g, name = r.pick(['f', 'g', 'h']), s = peak ? '\\le ' : '\\ge ', o = peak ? '\\ge ' : '\\le ';
     const F = (t, why, v) => [t, why, v];
     return { level, stem: `What is the <b>range</b> of $${tex(f, name)}$?`, correct: `$y${s}${v1}$`, cv: { t: peak ? 'le' : 'ge', v: v1 },
       wrongs: [F('all real numbers', `The graph never goes ${peak ? 'above' : 'below'} $y=${v1}$.`, { t: 'all' }),
