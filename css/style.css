@@ -1934,3 +1934,23 @@ body {
 .mcq-options.graph-grid .mcq-option > div { flex: 1; min-width: 0; }
 .mcq-options.graph-grid .option-text { display: block; }
 @media (min-width: 1000px) { .mcq-options.graph-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+/* Small rectangular buttons under the two main cards */
+.landing-extras {
+  display: flex; justify-content: center; gap: 28px; flex-wrap: wrap;
+  margin: -8px auto 24px;
+}
+.extra-btn {
+  width: 320px; display: flex; align-items: center; gap: 12px;
+  padding: 10px 16px; text-align: left;
+  background: var(--white); border: 1px solid var(--gray-200); border-left: 4px solid var(--mustard);
+  border-radius: var(--radius-sm); box-shadow: var(--shadow);
+  transition: all var(--transition);
+}
+.extra-btn-exam { border-left-color: var(--navy); }
+.extra-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); border-color: var(--gray-300); border-left-color: var(--mustard); }
+.extra-btn-exam:hover { border-left-color: var(--navy); }
+.extra-icon { font-size: 1.25rem; line-height: 1; }
+.extra-text { display: flex; flex-direction: column; line-height: 1.3; }
+.extra-text strong { font-size: 0.95rem; color: var(--navy); }
+.extra-text small { font-size: 0.75rem; color: var(--gray-500); }
+@media (max-width: 640px) { .extra-btn { width: 100%; } .landing-extras { gap: 12px; } }

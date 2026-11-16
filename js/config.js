@@ -54,6 +54,9 @@ const TILE_BLUEPRINT = [
   { tile: 24, type: "frq", pages: "256",      lessons: "4-5", outcome: "Arithmetic sequence formula" },
   { tile: 25, type: "frq", pages: "301–306",  lessons: "5-2", outcome: "Parallel and perpendicular lines" },
   { tile: 26, type: "frq", pages: "363",      lessons: "6-3", label: "Q21 · Part 2", outcome: "Solve and graph compound inequalities with and" },
+  // Full mock exam: one question from every exam question (20 MCQ, then 5 written).
+  // Not shown in the MCQ / FRQ lists and not part of lesson mastery.
+  { tile: 99, type: "exam", pages: "all",     lessons: "all", label: "Full Exam", outcome: "One question from every exam question" },
 ];
 
 // ── Module names (used to group the question list) ─────────

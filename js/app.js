@@ -344,7 +344,26 @@
     return info ? info.lessons.split(',').map(s => s.trim()) : [];
   }
 
+  const EXAM_TILE = 99;
+  // Full exam: one question from each of Q1–Q20 in random order, then one from each
+  // written question (Q21 uses Part 1 or Part 2 at random), also in random order.
+  function generateExam(seed) {
+    const r = seededRandom(mixSeed(seed));
+    const one = (t, k) => {
+      const q = QUESTION_BANK[t].pick(seed + t * 7919 + k, 1)[0];
+      return q ? { ...q, qtype: QUESTION_BANK[t].type, srcTile: t } : null;
+    };
+    const mcq = r.shuffle(TILE_BLUEPRINT.filter(t => t.type === 'mcq').map(t => t.tile)).map(t => one(t, 1));
+    const frqTiles = [r.next() < 0.5 ? 21 : 26, 22, 23, 24, 25];
+    const frq = r.shuffle(frqTiles).map(t => one(t, 2));
+    return [...mcq, ...frq].filter(Boolean).map((q, i) => ({ ...q, templateIndex: i }));
+  }
+  const qTypeOf = (q, info) => (q && q.qtype) || info.type;
+
   function generateQuestions(tileNum, seed) {
+    if (tileNum === EXAM_TILE) {
+      try { return generateExam(seed); } catch (e) { console.error('Error building the full exam:', e); return []; }
+    }
     const bank = QUESTION_BANK[tileNum];
     if (!bank) return [];
     // A random handful from the set's question bank (same seed → same questions)
@@ -491,6 +510,16 @@
           <span class="card-desc">${CONFIG.FRQ_SET_SIZE} random questions each visit, from a bank of ${CONFIG.FRQ_BANK_SIZE} per question</span>
         </button>
       </div>
+      <div class="landing-extras">
+        <button class="extra-btn" id="btn-random-lesson" title="Open a random practice set">
+          <span class="extra-icon">🎲</span>
+          <span class="extra-text"><strong>Random Lesson</strong><small>Practise a surprise question set</small></span>
+        </button>
+        <button class="extra-btn extra-btn-exam" id="btn-full-exam" title="25 questions: one from every exam question">
+          <span class="extra-icon">📋</span>
+          <span class="extra-text"><strong>Full Exam</strong><small>25 questions · 20 MCQ, then 5 written</small></span>
+        </button>
+      </div>
       <footer class="landing-footer">
         <div class="footer-profile-col">
           <button class="student-profile-pill" id="open-student-profile" title="View my progress, attempts and certificates">
@@ -519,6 +548,13 @@
   function bindLanding() {
     document.getElementById('card-mcq')?.addEventListener('click', () => openSection('mcq'));
     document.getElementById('card-frq')?.addEventListener('click', () => openSection('frq'));
+    document.getElementById('btn-random-lesson')?.addEventListener('click', () => {
+      const sets = TILE_BLUEPRINT.filter(t => t.type === 'mcq' || t.type === 'frq');
+      const pickTile = sets[Math.floor(Math.random() * sets.length)];
+      state.currentSection = pickTile.type;
+      startPractice(pickTile.tile);
+    });
+    document.getElementById('btn-full-exam')?.addEventListener('click', () => startPractice(EXAM_TILE));
     document.getElementById('open-student-profile')?.addEventListener('click', () => showStudentProfileModal());
     document.getElementById('landing-teacher-btn')?.addEventListener('click', () => openTeacherModal());
   }
@@ -562,7 +598,7 @@
 
         <div class="profile-stats-grid">
           <div class="stat-box">
-            <span class="stat-number">${new Set(completedTiles.map(h => h.tile)).size} / ${TILE_BLUEPRINT.length}</span>
+            <span class="stat-number">${new Set(completedTiles.filter(h => h.tile !== EXAM_TILE).map(h => h.tile)).size} / ${TILE_BLUEPRINT.filter(t => t.type !== 'exam').length}</span>
             <span class="stat-desc">Sets Completed</span>
           </div>
           <div class="stat-box">
@@ -847,10 +883,15 @@
       <button class="btn btn-primary" id="back-to-list-err">Back to list</button></div>`;
 
     const pct = ((qi + 1) / total * 100).toFixed(0);
-    const outcomeLabel = CONFIG.SHOW_OUTCOME_NAMES ? ` · ${info.outcome}` : '';
+    const qt = qTypeOf(q, info);
+    // In the full exam, say which exam question this one comes from
+    const src = q.srcTile ? getTileInfo(q.srcTile) : null;
+    const titleText = src
+      ? `Full Exam · ${qLabel(q.srcTile)} · L ${src.lessons}${CONFIG.SHOW_OUTCOME_NAMES ? ` · ${src.outcome}` : ''}`
+      : `${qLabel(tileNum)} · P.${info.pages} · L ${info.lessons}${CONFIG.SHOW_OUTCOME_NAMES ? ` · ${info.outcome}` : ''}`;
 
     let questionBody = '';
-    if (info.type === 'mcq') {
+    if (qt === 'mcq') {
       questionBody = renderMCQQuestion(q, answered, qi);
     } else {
       questionBody = renderFRQQuestion(q, answered, qi, tileNum);
@@ -860,7 +901,7 @@
     <div class="practice-screen">
       <header class="section-header">
         <button class="back-btn" id="back-to-list" aria-label="Back to list">←</button>
-        <h2 class="section-title">${qLabel(tileNum)} · P.${info.pages} · L ${info.lessons}${outcomeLabel}</h2>
+        <h2 class="section-title">${titleText}</h2>
         <div class="student-info">
           <span class="student-name">${escapeHTML(state.studentName)}</span>
         </div>
@@ -877,7 +918,7 @@
         <div class="question-text">${q.text || ''}</div>
         ${questionBody}
         ${renderHints(q, qi)}
-        ${info.type === 'mcq' && answered != null ? renderExplanation(q) : ''}
+        ${qt === 'mcq' && answered != null ? renderExplanation(q) : ''}
       </div>
       <div class="question-nav">
         <button class="nav-btn nav-btn-prev" id="prev-q" ${qi === 0 ? 'disabled' : ''}>← Previous</button>
@@ -1193,14 +1234,8 @@
   function bindPractice() {
     const backBtn = document.getElementById('back-to-list');
     const backErrBtn = document.getElementById('back-to-list-err');
-    if (backBtn) backBtn.addEventListener('click', () => {
-      state.currentScreen = 'list';
-      render();
-    });
-    if (backErrBtn) backErrBtn.addEventListener('click', () => {
-      state.currentScreen = 'list';
-      render();
-    });
+    if (backBtn) backBtn.addEventListener('click', goBack);
+    if (backErrBtn) backErrBtn.addEventListener('click', goBack);
 
     // Calculator
     const calcBtn = document.getElementById('open-calc');
@@ -1316,7 +1351,7 @@
     questions.forEach((q, i) => {
       const ans = progress.answers[i];
       if (ans == null) return;
-      if (info.type === 'mcq') {
+      if (qTypeOf(q, info) === 'mcq') {
         // MCQ: 1 point if first answer is correct
         if (q.options && q.options[ans] && q.options[ans].correct) totalScore += 1;
       } else {
@@ -1393,7 +1428,7 @@
       let mark = 'wrong';
       let markText = '✗ 0/1';
       
-      if (info.type === 'mcq') {
+      if (qTypeOf(q, info) === 'mcq') {
         if (ans != null && q.options && q.options[ans] && q.options[ans].correct) {
           mark = 'correct'; markText = '✓ Correct (1/1)';
         } else {
@@ -1413,11 +1448,11 @@
 
       return `<div class="review-item">
         <div class="review-q-header">
-          <span class="review-q-num">Question ${i + 1}</span>
+          <span class="review-q-num">Question ${i + 1}${q.srcTile ? ` · ${qLabel(q.srcTile)}` : ''}</span>
           <span class="review-mark ${mark}">${markText}</span>
         </div>
         <div class="question-text" style="font-size:0.95rem;">${q.text || ''}</div>
-        ${info.type === 'frq' && q.fields ? `
+        ${qTypeOf(q, info) === 'frq' && q.fields ? `
           <div class="review-answers-box" style="margin-top:10px;padding:12px;background:#f8fafb;border-radius:6px;border-left:3px solid var(--teal);">
             <strong style="color:var(--navy);font-size:0.9rem;">Expected Answers:</strong>
             <ul style="margin:6px 0 0 18px;font-size:0.9rem;color:var(--gray-700);">
@@ -1445,28 +1480,28 @@
         <div class="results-msg">${msg}</div>
         ${total < questions.length ? `<p class="results-early-note">Submitted early: ${total} of ${questions.length} questions answered.</p>` : ''}
         <div class="results-actions">
-          <button class="btn btn-accent" id="retry-btn">🔄 ${`Try ${info.type === 'mcq' ? CONFIG.MCQ_SET_SIZE : CONFIG.FRQ_SET_SIZE} new questions`}</button>
+          <button class="btn btn-accent" id="retry-btn">🔄 ${info.type === 'exam' ? 'Take a new exam' : `Try ${info.type === 'mcq' ? CONFIG.MCQ_SET_SIZE : CONFIG.FRQ_SET_SIZE} new questions`}</button>
           <button class="btn btn-secondary" id="print-btn">🖨 Print / Save as PDF</button>
-          <button class="btn btn-primary" id="back-list-btn">← Back to list</button>
+          <button class="btn btn-primary" id="back-list-btn">← Back to ${info.type === 'exam' ? 'home' : 'list'}</button>
         </div>
       </div>
       <div class="results-review">${reviewHTML}</div>
     </div>`;
   }
 
+  // Back from a set: to its question list, or home from the full exam
+  function goBack() {
+    state.currentScreen = state.currentTile === EXAM_TILE ? 'landing' : 'list';
+    render();
+  }
+
   function bindResults() {
-    document.getElementById('back-to-list')?.addEventListener('click', () => {
-      state.currentScreen = 'list';
-      render();
-    });
+    document.getElementById('back-to-list')?.addEventListener('click', goBack);
     document.getElementById('retry-btn')?.addEventListener('click', () => {
       startPractice(state.currentTile, Date.now());
     });
     document.getElementById('print-btn')?.addEventListener('click', () => window.print());
-    document.getElementById('back-list-btn')?.addEventListener('click', () => {
-      state.currentScreen = 'list';
-      render();
-    });
+    document.getElementById('back-list-btn')?.addEventListener('click', goBack);
   }
 
   // ── MASTERY ────────────────────────────────────────

@@ -14,7 +14,10 @@ A responsive practice site that follows the End of Term 1 coverage sheet: one pr
    - "Try 5 new questions" draws another five.
    - Every bank question follows a pattern from the teacher's Question Booklet: same structure and same kind of distractors, different numbers.
 2. **Written-answer sets (Q21–Q25)**: each has a fixed bank of **10 questions** and every visit draws **2 at random**, with a hidden model solution and self-marking. Q21 has two tiles, one per part: Part 1 (Lesson 2-4) is listed under Module 2 and Part 2 (Lesson 6-3) under Module 6.
-3. **Feedback and hints**: instant marking, a "why this is wrong" note on every distractor, three hints (the third is a worked example with different numbers) and a full explanation.
+3. **Random Lesson and Full Exam** (small buttons under the two main cards)
+   - **Random Lesson** opens a random practice set (any of Q1–Q25).
+   - **Full Exam** is a 25-question mock exam: one random question from each of Q1–Q20 in random order, then one from each written question (Q21 Part 1 or Part 2, Q22–Q25), also in random order. It is recorded as "Full Exam" in the teacher portal and does not count towards lesson certificates.
+4. **Feedback and hints**: instant marking, a "why this is wrong" note on every distractor, three hints (the third is a worked example with different numbers) and a full explanation.
 4. **Tools**: scientific calculator, number line and coordinate grid.
 5. **Lesson mastery and certificates**: score at least 80% across a lesson's sets to earn a printable certificate.
 6. **Teacher portal** with student activity (local storage + Firebase sync).
